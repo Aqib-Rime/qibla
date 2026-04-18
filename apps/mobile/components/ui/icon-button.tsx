@@ -17,6 +17,7 @@ const iconButtonVariants = cva("items-center justify-center", {
     variant: {
       default: "border border-line/80 bg-white",
       filled: "bg-green",
+      ghost: "bg-transparent",
     },
   },
   defaultVariants: {
@@ -84,7 +85,8 @@ export function IconButton({
   const variantKey = variant ?? "default"
   const resolvedTone: Tone =
     tone ?? (variantKey === "filled" ? "white" : "ink")
-  const shadow = sizeKey === "md" ? SHADOW_MD : SHADOW_SM
+  const shadow =
+    variantKey === "ghost" ? null : sizeKey === "md" ? SHADOW_MD : SHADOW_SM
 
   return (
     <Pressable
@@ -101,7 +103,7 @@ export function IconButton({
           transform: [{ scale: pressed ? 0.94 : 1 }],
           opacity: disabled ? 0.5 : 1,
         },
-      ]}
+      ].filter(Boolean) as never}
       hitSlop={hitSlop}
       {...rest}
     >
