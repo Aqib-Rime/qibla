@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Icon, type IconName } from "@/components/ui/icon"
 import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
+import { markOnboardingCompleted } from "@/lib/onboarding"
 import * as Location from "expo-location"
 import { useRouter } from "expo-router"
 import { useEffect, useRef, useState } from "react"
@@ -35,12 +36,17 @@ export default function PermissionScreen() {
     }
   }, [ring1, ring2])
 
+  const continueToAuth = async () => {
+    await markOnboardingCompleted()
+    router.replace("/(auth)/sign-in")
+  }
+
   const requestPermission = async () => {
     setAsking(true)
     try {
       await Location.requestForegroundPermissionsAsync()
     } catch {}
-    router.replace("/(auth)/sign-in")
+    await continueToAuth()
   }
 
   const ringStyle = (anim: Animated.Value) => ({
@@ -109,7 +115,7 @@ export default function PermissionScreen() {
           loading={asking}
           onPress={requestPermission}
         />
-        <Pressable onPress={() => router.replace("/(auth)/sign-in")}>
+        <Pressable onPress={continueToAuth}>
           <Text variant="label" tone="muted" className="text-center py-s-3">
             Not now
           </Text>

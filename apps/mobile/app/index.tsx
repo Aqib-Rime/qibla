@@ -1,10 +1,14 @@
 import { MosqueMark } from "@/components/ui/mosque-mark"
 import { Text } from "@/components/ui/text"
+import { authClient } from "@/lib/auth"
+import { hasCompletedOnboarding } from "@/lib/onboarding"
 import { useRouter } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, useRef } from "react"
 import { ActivityIndicator, Animated, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+
+const MIN_SPLASH_MS = 900
 
 export default function SplashScreenRoute() {
   const router = useRouter()
@@ -33,12 +37,39 @@ export default function SplashScreenRoute() {
         useNativeDriver: true,
       })
     ).start()
+  }, [scale, ring])
 
-    const t = setTimeout(() => {
-      router.replace("/onboard/1")
-    }, 1800)
-    return () => clearTimeout(t)
-  }, [router, scale, ring])
+  useEffect(() => {
+    let cancelled = false
+    const start = Date.now()
+
+    ;(async () => {
+      const [sessionResult, onboarded] = await Promise.all([
+        authClient.getSession().catch(() => null),
+        hasCompletedOnboarding(),
+      ])
+
+      const elapsed = Date.now() - start
+      if (elapsed < MIN_SPLASH_MS) {
+        await new Promise((r) => setTimeout(r, MIN_SPLASH_MS - elapsed))
+      }
+
+      if (cancelled) return
+
+      const hasSession = !!sessionResult?.data?.user
+      if (hasSession) {
+        router.replace("/(tabs)/map")
+      } else if (onboarded) {
+        router.replace("/(auth)/sign-in")
+      } else {
+        router.replace("/onboard/1")
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [router])
 
   const ringScale = ring.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1.3] })
   const ringOpacity = ring.interpolate({ inputRange: [0, 1], outputRange: [0.8, 0] })
