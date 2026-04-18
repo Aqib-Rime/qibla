@@ -1,6 +1,5 @@
 import type { MosqueListItem } from "@/features/mosques"
 import { Marker } from "react-native-maps"
-import { MARKER_COLOR } from "../lib/region"
 
 type Props = {
   mosques: readonly MosqueListItem[]
@@ -14,7 +13,6 @@ export function MapMarkers({ mosques, onSelect }: Props) {
         <Marker
           key={m.id}
           coordinate={{ latitude: m.lat, longitude: m.lng }}
-          pinColor={MARKER_COLOR}
           onPress={(e) => {
             e.stopPropagation()
             onSelect(m)

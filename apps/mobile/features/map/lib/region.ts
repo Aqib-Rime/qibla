@@ -6,5 +6,3 @@ export const DHAKA_REGION: Region = {
   latitudeDelta: 0.12,
   longitudeDelta: 0.12,
 }
-
-export const MARKER_COLOR = "#2e5d45"
