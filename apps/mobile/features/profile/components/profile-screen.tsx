@@ -1,5 +1,5 @@
-import { Text } from "@/components/ui/text"
 import { useSession } from "@/lib/auth"
+import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { ScrollView, View } from "react-native"
 import { useProfileStats } from "../hooks/use-profile-stats"
@@ -42,9 +42,15 @@ export function ProfileScreen() {
 
         <ProfileSection title="My Qibla">
           <ProfileRow
+            icon="compass"
+            label="Find Qibla"
+            onPress={() => router.push("/qibla")}
+          />
+          <ProfileRow
             icon="heart"
             label="Saved mosques"
             right={String(stats.savedCount)}
+            onPress={() => router.push("/(tabs)/saved")}
           />
           <ProfileRow icon="clock" label="Prayer reminders" right="On" />
           <ProfileRow icon="calendar" label="Calendar sync" right="Off" isLast />

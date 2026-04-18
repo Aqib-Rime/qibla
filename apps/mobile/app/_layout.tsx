@@ -59,6 +59,7 @@ export default function RootLayout() {
                 name="filter"
                 options={{ presentation: "modal", animation: "slide_from_bottom" }}
               />
+              <Stack.Screen name="qibla" />
             </Stack>
           </Providers>
         </SafeAreaProvider>

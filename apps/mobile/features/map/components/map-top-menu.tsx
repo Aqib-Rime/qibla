@@ -21,6 +21,14 @@ const MENU_SHADOW = {
 export function MapTopMenu({ onClose }: { onClose: () => void }) {
   const items: MenuItem[] = [
     {
+      label: "Find Qibla",
+      icon: "compass",
+      onPress: () => {
+        onClose()
+        router.push("/qibla")
+      },
+    },
+    {
       label: "Saved mosques",
       icon: "heart",
       onPress: () => {
@@ -31,14 +39,6 @@ export function MapTopMenu({ onClose }: { onClose: () => void }) {
     {
       label: "Profile",
       icon: "user",
-      onPress: () => {
-        onClose()
-        router.push("/(tabs)/profile")
-      },
-    },
-    {
-      label: "Settings",
-      icon: "settings",
       onPress: () => {
         onClose()
         router.push("/(tabs)/profile")
