@@ -24,6 +24,7 @@ export default function TabsLayout() {
         options={{
           title: "Map",
           tabBarIcon: ({ color }) => <TabIcon name="pin" color={color} />,
+          tabBarStyle: { display: "none" },
         }}
       />
       <Tabs.Screen
