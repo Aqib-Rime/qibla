@@ -1,32 +1,32 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@qibla/ui/components/card";
 import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
+import { ReviewsPage } from "@/features/reviews/components/reviews-page";
 
-export const Route = createFileRoute("/_admin/reviews/")({
-  component: ReviewsPage,
+const searchSchema = z.object({
+  page: z.number().optional().default(1),
+  pageSize: z.number().optional().default(20),
+  status: z.enum(["approved", "pending", "hidden"]).optional().default("pending"),
 });
 
-function ReviewsPage() {
+export const Route = createFileRoute("/_admin/reviews/")({
+  validateSearch: searchSchema,
+  component: ReviewsRoute,
+});
+
+function ReviewsRoute() {
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Reviews</h2>
-        <p className="text-sm text-muted-foreground">
-          Moderate user-submitted mosque reviews.
-        </p>
-      </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Coming soon</CardTitle>
-        </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
-          Review moderation UI will ship in the next batch.
-        </CardContent>
-      </Card>
-    </div>
+    <ReviewsPage
+      page={search.page ?? 1}
+      pageSize={search.pageSize ?? 20}
+      status={search.status}
+      onStatusChange={(status) =>
+        navigate({
+          search: (prev) => ({ ...prev, status, page: 1 }),
+        })
+      }
+    />
   );
 }
