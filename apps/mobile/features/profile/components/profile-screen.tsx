@@ -1,3 +1,4 @@
+import { useHydrateSettings, useSettingsStore } from "@/features/settings"
 import { useSession } from "@/lib/auth"
 import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
@@ -11,8 +12,10 @@ import { ProfileSignOut, ProfileVersion } from "./profile-sign-out"
 import { ProfileStats } from "./profile-stats"
 
 export function ProfileScreen() {
+  useHydrateSettings()
   const { data: session } = useSession()
   const stats = useProfileStats()
+  const prayerReminders = useSettingsStore((s) => s.prayerReminders)
 
   const name = session?.user?.name ?? "Guest"
   const email = session?.user?.email ?? ""
@@ -52,20 +55,46 @@ export function ProfileScreen() {
             right={String(stats.savedCount)}
             onPress={() => router.push("/(tabs)/saved")}
           />
-          <ProfileRow icon="clock" label="Prayer reminders" right="On" />
-          <ProfileRow icon="calendar" label="Calendar sync" right="Off" isLast />
+          <ProfileRow
+            icon="clock"
+            label="Prayer reminders"
+            right={prayerReminders ? "On" : "Off"}
+            onPress={() => router.push("/settings")}
+            isLast
+          />
         </ProfileSection>
 
         <ProfileSection title="Settings">
-          <ProfileRow icon="locate" label="Location" right="Allowed" />
-          <ProfileRow icon="bell" label="Notifications" />
-          <ProfileRow icon="user" label="Account" isLast />
+          <ProfileRow
+            icon="settings"
+            label="Preferences"
+            onPress={() => router.push("/settings")}
+          />
+          <ProfileRow
+            icon="user"
+            label="Account"
+            onPress={() => router.push("/settings")}
+            isLast
+          />
         </ProfileSection>
 
         <ProfileSection title="About">
-          <ProfileRow icon="book" label="Help & guides" />
-          <ProfileRow icon="star" label="Rate Qibla" />
-          <ProfileRow icon="share" label="Invite friends" isLast />
+          <ProfileRow
+            icon="book"
+            label="Help & guides"
+            onPress={() => router.push("/settings")}
+          />
+          <ProfileRow
+            icon="star"
+            label="Rate Qibla"
+            onPress={() => router.push("/settings")}
+          />
+          <ProfileRow
+            icon="share"
+            label="Invite friends"
+            onPress={() => router.push("/settings")}
+            isLast
+          />
         </ProfileSection>
 
         <ProfileSignOut />

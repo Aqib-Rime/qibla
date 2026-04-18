@@ -7,14 +7,18 @@ export const prayerTimesKeys = {
     [...prayerTimesKeys.all, "byCoordinates", lat, lng, date ?? null] as const,
 }
 
-export function usePrayerTimes(params: {
-  lat: number
-  lng: number
-  date?: string
-}) {
+export function usePrayerTimes(
+  params: { lat: number; lng: number; date?: string } | null | undefined
+) {
   return useQuery({
-    queryKey: prayerTimesKeys.byCoordinates(params.lat, params.lng, params.date),
-    queryFn: () => api.prayerTimes.byCoordinates(params),
+    enabled: !!params,
+    queryKey: prayerTimesKeys.byCoordinates(
+      params?.lat ?? 0,
+      params?.lng ?? 0,
+      params?.date
+    ),
+    queryFn: () =>
+      api.prayerTimes.byCoordinates(params as { lat: number; lng: number }),
     staleTime: 1000 * 60 * 60,
   })
 }

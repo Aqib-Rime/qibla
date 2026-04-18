@@ -60,6 +60,7 @@ export default function RootLayout() {
                 options={{ presentation: "modal", animation: "slide_from_bottom" }}
               />
               <Stack.Screen name="qibla" />
+              <Stack.Screen name="settings" />
             </Stack>
           </Providers>
         </SafeAreaProvider>

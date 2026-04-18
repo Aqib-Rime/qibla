@@ -1,4 +1,5 @@
 import { Icon, type IconName } from "@/components/ui/icon"
+import { usePrayerReminderSync } from "@/features/settings"
 import { Tabs } from "expo-router"
 
 function TabIcon({ name, color }: { name: IconName; color: string }) {
@@ -6,6 +7,8 @@ function TabIcon({ name, color }: { name: IconName; color: string }) {
 }
 
 export default function TabsLayout() {
+  usePrayerReminderSync()
+
   return (
     <Tabs
       screenOptions={{
