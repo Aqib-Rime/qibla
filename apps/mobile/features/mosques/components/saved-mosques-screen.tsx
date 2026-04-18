@@ -1,9 +1,10 @@
-import { Screen } from "@/components/ui/screen"
 import { Text } from "@/components/ui/text"
+import { StatusBar } from "expo-status-bar"
 import { ScrollView, View } from "react-native"
 import { useSavedMosques } from "../hooks/use-mosques"
 import { SavedMosqueCard } from "./saved-mosque-card"
 import { SavedMosquesEmpty } from "./saved-mosques-empty"
+import { SavedMosquesHeader } from "./saved-mosques-header"
 import { SavedMosquesSkeleton } from "./saved-mosques-skeleton"
 
 function chunkPairs<T>(items: readonly T[]): [T, T | null][] {
@@ -20,10 +21,11 @@ export function SavedMosquesScreen() {
   const pairs = chunkPairs(rows)
 
   return (
-    <Screen bg="cream" padded={false}>
-      <View className="px-s-6 pt-s-4">
-        <Text variant="display-lg">Saved</Text>
-        <Text variant="body" tone="muted" className="mt-s-1">
+    <View className="flex-1 bg-cream">
+      <StatusBar style="dark" />
+      <SavedMosquesHeader />
+      <View className="px-s-6 pt-s-2">
+        <Text variant="body" tone="muted">
           {rows.length
             ? `${rows.length} mosque${rows.length === 1 ? "" : "s"} saved`
             : "Your bookmarks live here"}
@@ -73,6 +75,6 @@ export function SavedMosquesScreen() {
           </View>
         </ScrollView>
       )}
-    </Screen>
+    </View>
   )
 }
