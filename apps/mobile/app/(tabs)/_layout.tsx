@@ -1,35 +1,45 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Icon, type IconName } from "@/components/ui/icon"
+import { Tabs } from "expo-router"
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+function TabIcon({ name, color }: { name: IconName; color: string }) {
+  return <Icon name={name} size={22} color={color} />
+}
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: "#2e5d45",
+        tabBarInactiveTintColor: "#6b7a70",
+        tabBarLabelStyle: { fontFamily: "Geist_500Medium", fontSize: 11 },
+        tabBarStyle: {
+          backgroundColor: "#faf6ec",
+          borderTopColor: "#e6e0cc",
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="map"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Map",
+          tabBarIcon: ({ color }) => <TabIcon name="pin" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="saved"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Saved",
+          tabBarIcon: ({ color }) => <TabIcon name="heart" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => <TabIcon name="user" color={color} />,
         }}
       />
     </Tabs>
-  );
+  )
 }
