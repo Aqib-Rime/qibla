@@ -46,6 +46,7 @@ export default function RootLayout() {
               <Stack.Screen name="onboard/permission" />
               <Stack.Screen name="(auth)" />
               <Stack.Screen name="(tabs)" options={{ animation: "fade" }} />
+              <Stack.Screen name="mosque/[id]" />
             </Stack>
           </Providers>
         </SafeAreaProvider>

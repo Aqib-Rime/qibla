@@ -2,6 +2,8 @@ import type { LucideProps } from "lucide-react-native"
 import {
   AlertCircle,
   ArrowRight,
+  BookOpen,
+  Car,
   ChevronLeft,
   ChevronRight,
   Clock,
@@ -14,15 +16,20 @@ import {
   Search,
   Settings,
   Share2,
+  Snowflake,
   Star,
   User,
+  Users,
+  Wifi,
   X,
 } from "lucide-react-native"
 
 export const iconMap = {
+  ac: Snowflake,
   alert: AlertCircle,
   arrow: ArrowRight,
   back: ChevronLeft,
+  book: BookOpen,
   chevron: ChevronRight,
   clock: Clock,
   compass: Compass,
@@ -30,6 +37,7 @@ export const iconMap = {
   mail: Mail,
   mosque: MapPin,
   navigation: Navigation,
+  parking: Car,
   phone: Phone,
   pin: MapPin,
   search: Search,
@@ -37,6 +45,8 @@ export const iconMap = {
   share: Share2,
   star: Star,
   user: User,
+  users: Users,
+  wifi: Wifi,
   x: X,
 } as const
 
