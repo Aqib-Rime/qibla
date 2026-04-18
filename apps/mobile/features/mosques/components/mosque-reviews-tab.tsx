@@ -1,10 +1,8 @@
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import {
-  PendingReviewBanner,
-  useMyReviewsForMosque,
-  WriteReviewButton,
-} from "@/features/reviews"
+import { PendingReviewBanner } from "@/features/reviews/components/pending-review-banner"
+import { WriteReviewButton } from "@/features/reviews/components/write-review-button"
+import { useMyReviewsForMosque } from "@/features/reviews/hooks/use-reviews"
 import { useSession } from "@/lib/auth"
 import { View } from "react-native"
 import type { Review } from "../lib/types"

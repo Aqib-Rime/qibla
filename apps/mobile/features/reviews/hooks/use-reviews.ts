@@ -1,6 +1,6 @@
 import { api } from "@/lib/api"
 import { useSession } from "@/lib/auth"
-import { mosquesKeys } from "@/features/mosques"
+import { mosquesKeys } from "@/features/mosques/hooks/use-mosques"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export const reviewsKeys = {

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
-import { useMosque } from "@/features/mosques"
+import { useMosque } from "@/features/mosques/hooks/use-mosques"
 import { router, useLocalSearchParams } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useState } from "react"
