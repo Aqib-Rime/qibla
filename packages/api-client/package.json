@@ -1,0 +1,21 @@
+{
+  "name": "@qibla/api-client",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@orpc/client": "^1.10.0",
+    "@orpc/server": "^1.10.0",
+    "@qibla/api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "typescript": "5.9.3"
+  }
+}
