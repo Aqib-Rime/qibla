@@ -12,8 +12,7 @@ export function MosqueSaveButton({ mosqueId, isSaved }: Props) {
   return (
     <IconButton
       icon="heart"
-      tone={isSaved ? "danger" : "ink"}
-      iconProps={{ fill: isSaved ? "#b42318" : "none" }}
+      variant={isSaved ? "filled" : "default"}
       onPress={() => toggle.mutate({ mosqueId, save: !isSaved })}
       disabled={toggle.isPending}
       accessibilityLabel={isSaved ? "Unsave mosque" : "Save mosque"}

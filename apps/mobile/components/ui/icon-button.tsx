@@ -4,25 +4,27 @@ import type { LucideProps } from "lucide-react-native"
 import { Pressable, type PressableProps } from "react-native"
 import { Icon, type IconName } from "./icon"
 
-const iconButtonVariants = cva(
-  "items-center justify-center border border-line/80 bg-white",
-  {
-    variants: {
-      size: {
-        sm: "h-10 w-10",
-        md: "h-14 w-14",
-      },
-      shape: {
-        pill: "rounded-pill",
-        square: "rounded-lg",
-      },
+const iconButtonVariants = cva("items-center justify-center", {
+  variants: {
+    size: {
+      sm: "h-10 w-10",
+      md: "h-14 w-14",
     },
-    defaultVariants: {
-      size: "sm",
-      shape: "pill",
+    shape: {
+      pill: "rounded-pill",
+      square: "rounded-lg",
     },
-  }
-)
+    variant: {
+      default: "border border-line/80 bg-white",
+      filled: "bg-green",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+    shape: "square",
+    variant: "default",
+  },
+})
 
 const ICON_SIZE: Record<"sm" | "md", number> = {
   sm: 18,
@@ -40,9 +42,9 @@ const SHADOW_SM = {
 const SHADOW_MD = {
   shadowColor: "#1a2a22",
   shadowOffset: { width: 0, height: 6 },
-  shadowOpacity: 0.18,
+  shadowOpacity: 0.14,
   shadowRadius: 16,
-  elevation: 8,
+  elevation: 6,
 }
 
 const TONE_COLORS = {
@@ -50,6 +52,7 @@ const TONE_COLORS = {
   green: "#2e5d45",
   muted: "#6b7a70",
   danger: "#b42318",
+  white: "#ffffff",
 } as const
 
 type Tone = keyof typeof TONE_COLORS
@@ -67,7 +70,8 @@ export function IconButton({
   icon,
   size,
   shape,
-  tone = "ink",
+  variant,
+  tone,
   iconProps,
   onPress,
   disabled,
@@ -76,7 +80,10 @@ export function IconButton({
   hitSlop = 6,
   ...rest
 }: Props) {
-  const sizeKey = size ?? "sm"
+  const sizeKey = size ?? "md"
+  const variantKey = variant ?? "default"
+  const resolvedTone: Tone =
+    tone ?? (variantKey === "filled" ? "white" : "ink")
   const shadow = sizeKey === "md" ? SHADOW_MD : SHADOW_SM
 
   return (
@@ -87,7 +94,7 @@ export function IconButton({
       }}
       disabled={disabled}
       accessibilityLabel={accessibilityLabel}
-      className={iconButtonVariants({ size, shape, className })}
+      className={iconButtonVariants({ size, shape, variant, className })}
       style={({ pressed }) => [
         shadow,
         {
@@ -101,7 +108,7 @@ export function IconButton({
       <Icon
         name={icon}
         size={ICON_SIZE[sizeKey]}
-        color={TONE_COLORS[tone]}
+        color={TONE_COLORS[resolvedTone]}
         {...iconProps}
       />
     </Pressable>
