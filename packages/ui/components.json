@@ -9,13 +9,13 @@
     "baseColor": "neutral",
     "cssVariables": true
   },
-  "iconLibrary": "hugeicons",
+  "iconLibrary": "lucide",
   "aliases": {
-    "components": "@workspace/ui/components",
-    "utils": "@workspace/ui/lib/utils",
-    "hooks": "@workspace/ui/hooks",
-    "lib": "@workspace/ui/lib",
-    "ui": "@workspace/ui/components"
+    "components": "@qibla/ui/components",
+    "utils": "@qibla/ui/lib/utils",
+    "hooks": "@qibla/ui/hooks",
+    "lib": "@qibla/ui/lib",
+    "ui": "@qibla/ui/components"
   },
   "rtl": false,
   "menuColor": "default",
