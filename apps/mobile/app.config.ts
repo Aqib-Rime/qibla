@@ -11,11 +11,18 @@ const config: ExpoConfig = {
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
+    bundleIdentifier: "com.aqib.qibla",
+    infoPlist: {
+      NSLocationWhenInUseUsageDescription:
+        "Qibla uses your location to show nearby mosques, prayer times, and the direction to Mecca.",
+      ITSAppUsesNonExemptEncryption: false,
+    },
     config: {
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY_IOS,
     },
   },
   android: {
+    package: "com.aqib.qibla",
     adaptiveIcon: {
       backgroundColor: "#E6F4FE",
       foregroundImage: "./assets/images/android-icon-foreground.png",
@@ -24,6 +31,11 @@ const config: ExpoConfig = {
     },
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
+    permissions: [
+      "ACCESS_FINE_LOCATION",
+      "ACCESS_COARSE_LOCATION",
+      "POST_NOTIFICATIONS",
+    ],
     config: {
       googleMaps: {
         apiKey: process.env.GOOGLE_MAPS_API_KEY_ANDROID,
@@ -49,6 +61,20 @@ const config: ExpoConfig = {
       },
     ],
     "expo-secure-store",
+    "expo-dev-client",
+    [
+      "expo-notifications",
+      {
+        color: "#2e5d45",
+      },
+    ],
+    [
+      "expo-location",
+      {
+        locationWhenInUsePermission:
+          "Qibla uses your location to show nearby mosques and direction to Mecca.",
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,
