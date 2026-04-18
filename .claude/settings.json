@@ -1,0 +1,7 @@
+{
+  "enabledPlugins": {
+    "aqib-backend-drizzle@aqib-skills": true,
+    "aqib-universal@aqib-skills": true,
+    "aqib-framework-tanstack@aqib-skills": true
+  }
+}
