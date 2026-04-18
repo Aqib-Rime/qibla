@@ -11,6 +11,7 @@
     "./client": "./src/client.ts"
   },
   "dependencies": {
+    "@better-auth/expo": "^1.6.5",
     "@qibla/db": "workspace:*",
     "better-auth": "^1.2.0"
   },

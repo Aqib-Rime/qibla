@@ -1,11 +1,20 @@
+import { expo } from "@better-auth/expo";
 import { db } from "@qibla/db";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin } from "better-auth/plugins";
 
+const extraTrustedOrigins = (process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL,
+  // Native clients don't send an Origin header by default.
+  // Declare the app scheme + any LAN/dev origins so Better Auth accepts them.
+  trustedOrigins: ["qibla://", "qibla://*", ...extraTrustedOrigins],
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
@@ -24,6 +33,7 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    expo(),
     admin({
       defaultRole: "user",
       adminRoles: ["admin"],
