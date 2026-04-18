@@ -51,6 +51,14 @@ export default function RootLayout() {
                 name="review/[mosqueId]"
                 options={{ presentation: "modal", animation: "slide_from_bottom" }}
               />
+              <Stack.Screen
+                name="search"
+                options={{ presentation: "modal", animation: "slide_from_bottom" }}
+              />
+              <Stack.Screen
+                name="filter"
+                options={{ presentation: "modal", animation: "slide_from_bottom" }}
+              />
             </Stack>
           </Providers>
         </SafeAreaProvider>
