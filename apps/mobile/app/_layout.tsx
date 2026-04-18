@@ -1,26 +1,55 @@
-import '../global.css';
+import "../global.css"
 
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Providers } from "@/components/providers"
+import {
+  Geist_400Regular,
+  Geist_500Medium,
+  Geist_600SemiBold,
+  useFonts as useGeist,
+} from "@expo-google-fonts/geist"
+import { GeistMono_400Regular } from "@expo-google-fonts/geist-mono"
+import { Stack } from "expo-router"
+import * as SplashScreen from "expo-splash-screen"
+import { useEffect } from "react"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+SplashScreen.preventAutoHideAsync().catch(() => {})
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const [fontsLoaded] = useGeist({
+    Geist_400Regular,
+    Geist_500Medium,
+    Geist_600SemiBold,
+    GeistMono_400Regular,
+  })
+
+  useEffect(() => {
+    if (fontsLoaded) SplashScreen.hideAsync().catch(() => {})
+  }, [fontsLoaded])
+
+  if (!fontsLoaded) return null
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KeyboardProvider>
+        <SafeAreaProvider>
+          <Providers>
+            <Stack
+              screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+            >
+              <Stack.Screen name="index" options={{ animation: "fade" }} />
+              <Stack.Screen name="onboard/1" />
+              <Stack.Screen name="onboard/2" />
+              <Stack.Screen name="onboard/3" />
+              <Stack.Screen name="onboard/permission" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(tabs)" options={{ animation: "fade" }} />
+            </Stack>
+          </Providers>
+        </SafeAreaProvider>
+      </KeyboardProvider>
+    </GestureHandlerRootView>
+  )
 }
