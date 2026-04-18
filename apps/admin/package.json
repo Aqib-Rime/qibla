@@ -1,0 +1,63 @@
+{
+  "name": "@qibla/admin",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "deploy": "bun run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@cloudflare/vite-plugin": "^1.26.0",
+    "@hugeicons/core-free-icons": "^4.1.1",
+    "@hugeicons/react": "^1.1.6",
+    "@orpc/client": "^1.10.0",
+    "@orpc/react-query": "^1.10.0",
+    "@orpc/server": "^1.10.0",
+    "@qibla/api": "workspace:*",
+    "@qibla/auth": "workspace:*",
+    "@qibla/db": "workspace:*",
+    "@qibla/ui": "workspace:*",
+    "@t3-oss/env-core": "^0.13.8",
+    "@tabler/icons-react": "^3.34.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/form-core": "^1.2.0",
+    "@tanstack/react-form": "^1.2.0",
+    "@tanstack/react-query": "^5.75.0",
+    "@tanstack/react-router": "^1.132.0",
+    "@tanstack/react-start": "^1.132.0",
+    "@tanstack/react-table": "^8.20.0",
+    "@tanstack/router-plugin": "^1.132.0",
+    "better-auth": "^1.2.0",
+    "date-fns": "^4.1.0",
+    "drizzle-orm": "^0.45.2",
+    "nitro": "latest",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sonner": "^1.7.4",
+    "tailwindcss": "^4.1.18",
+    "vite-tsconfig-paths": "^5.1.4",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "^0.31.10",
+    "typescript": "5.9.3",
+    "vite": "^7.3.2",
+    "wrangler": "^4.70.0"
+  },
+  "trustedDependencies": [
+    "esbuild",
+    "lightningcss",
+    "@biomejs/biome",
+    "@tailwindcss/oxide",
+    "workerd"
+  ]
+}
