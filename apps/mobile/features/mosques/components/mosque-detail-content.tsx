@@ -48,7 +48,7 @@ export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
         ) : tab === "events" ? (
           <MosqueEventsTab events={events} />
         ) : (
-          <MosqueReviewsTab reviews={reviews} />
+          <MosqueReviewsTab mosqueId={mosque.id} reviews={reviews} />
         )}
       </View>
     </ScrollView>
