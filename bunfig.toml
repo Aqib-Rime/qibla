@@ -1,0 +1,5 @@
+[install]
+# Expo/Metro + Babel can't resolve transitive deps under Bun's default isolated
+# linker. Hoisted flattens node_modules so Babel's plugin resolver works.
+# https://docs.expo.dev/guides/using-bun/
+linker = "hoisted"
