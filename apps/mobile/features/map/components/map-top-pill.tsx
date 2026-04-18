@@ -1,4 +1,4 @@
-import { Icon } from "@/components/ui/icon"
+import { Icon, type IconName } from "@/components/ui/icon"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Text } from "@/components/ui/text"
 import {
@@ -8,7 +8,6 @@ import {
   type Timings,
 } from "@/features/prayer-times"
 import { Pressable, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
 
 type Props = {
   mosqueCount: number
@@ -16,14 +15,37 @@ type Props = {
   mosquesError: boolean
   timings: Timings | null
   onRetry: () => void
+  onSearch: () => void
+  onOpenMenu: () => void
 }
 
 const PILL_SHADOW = {
   shadowColor: "#1a2a22",
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.12,
-  shadowRadius: 16,
+  shadowOffset: { width: 0, height: 6 },
+  shadowOpacity: 0.14,
+  shadowRadius: 18,
   elevation: 6,
+}
+
+function PillIconButton({
+  icon,
+  onPress,
+  accessibilityLabel,
+}: {
+  icon: IconName
+  onPress: () => void
+  accessibilityLabel: string
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}
+      hitSlop={14}
+      style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+    >
+      <Icon name={icon} size={22} color="#1a2a22" />
+    </Pressable>
+  )
 }
 
 export function MapTopPill({
@@ -32,6 +54,8 @@ export function MapTopPill({
   mosquesError,
   timings,
   onRetry,
+  onSearch,
+  onOpenMenu,
 }: Props) {
   const next = timings ? nextPrayer(timings) : null
 
@@ -44,38 +68,40 @@ export function MapTopPill({
         : `${mosqueCount} mosques nearby`
 
   return (
-    <SafeAreaView
-      edges={["top", "left", "right"]}
-      pointerEvents="box-none"
-      className="absolute left-0 right-0 top-0"
+    <View
+      className="flex-row items-center gap-s-4 rounded-md border border-line/80 bg-white px-s-5 py-s-3"
+      style={PILL_SHADOW}
     >
-      <View
-        className="mx-s-5 mt-s-3 flex-row items-center gap-s-3 rounded-md bg-white px-s-4 py-s-3"
-        style={PILL_SHADOW}
-      >
-        <View className="h-8 w-8 items-center justify-center rounded-sm bg-green-tint">
-          <Icon name="clock" size={16} color="#2e5d45" />
-        </View>
-        <View className="flex-1">
-          {title ? (
-            <Text variant="label" tone="ink">
-              {title}
-            </Text>
-          ) : (
-            <Skeleton className="h-4 w-32 rounded-sm" />
-          )}
-          <Text variant="caption" tone="muted">
-            Tap a pin for details
+      <PillIconButton
+        icon="search"
+        onPress={onSearch}
+        accessibilityLabel="Search mosques"
+      />
+      <View className="flex-1">
+        {title ? (
+          <Text variant="label" tone="ink" numberOfLines={1}>
+            {title}
           </Text>
-        </View>
-        {mosquesError ? (
-          <Pressable onPress={onRetry}>
-            <Text variant="label" tone="green">
-              Retry
-            </Text>
-          </Pressable>
-        ) : null}
+        ) : (
+          <Skeleton className="h-4 w-32 rounded-sm" />
+        )}
+        <Text variant="caption" tone="muted" numberOfLines={1}>
+          Tap a pin for details
+        </Text>
       </View>
-    </SafeAreaView>
+      {mosquesError ? (
+        <Pressable onPress={onRetry} hitSlop={10}>
+          <Text variant="label" tone="green">
+            Retry
+          </Text>
+        </Pressable>
+      ) : (
+        <PillIconButton
+          icon="more"
+          onPress={onOpenMenu}
+          accessibilityLabel="Open menu"
+        />
+      )}
+    </View>
   )
 }

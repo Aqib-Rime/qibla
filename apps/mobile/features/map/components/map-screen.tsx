@@ -1,4 +1,7 @@
 import {
+  applyFilters,
+  countActive,
+  useMosqueFilters,
   useMosquesList,
   type MosqueListItem,
 } from "@/features/mosques"
@@ -6,14 +9,13 @@ import { usePrayerTimes } from "@/features/prayer-times"
 import type BottomSheet from "@gorhom/bottom-sheet"
 import { StatusBar } from "expo-status-bar"
 import { useCallback, useMemo, useRef, useState } from "react"
-import { View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
-import { useUserLocation } from "../hooks/use-user-location"
+import { useUserLocation } from "@/lib/use-user-location"
 import { DHAKA_REGION } from "../lib/region"
-import { MapFloatingControls } from "./map-floating-controls"
 import { MapMarkers } from "./map-markers"
 import { MapMosqueSheet } from "./map-mosque-sheet"
-import { MapTopPill } from "./map-top-pill"
+import { MapTopOverlay } from "./map-top-overlay"
 
 export function MapScreen() {
   const {
@@ -22,9 +24,15 @@ export function MapScreen() {
     error,
     refetch,
   } = useMosquesList({ pageSize: 50 })
-  const mosques = useMemo(() => data?.data ?? [], [data])
+  const filters = useMosqueFilters()
+  const activeFilters = countActive(filters)
+  const mosques = useMemo(
+    () => applyFilters(data?.data ?? [], filters),
+    [data, filters]
+  )
 
   const [selected, setSelected] = useState<MosqueListItem | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
   const sheetRef = useRef<BottomSheet>(null)
   const mapRef = useRef<MapView>(null)
 
@@ -51,6 +59,7 @@ export function MapScreen() {
 
   const handleCloseSheet = useCallback(() => {
     sheetRef.current?.close()
+    setMenuOpen(false)
   }, [])
 
   const handleRecenter = useCallback(() => {
@@ -87,17 +96,25 @@ export function MapScreen() {
         <MapMarkers mosques={mosques} onSelect={handleMarkerPress} />
       </MapView>
 
-      <MapTopPill
+      {menuOpen ? (
+        <Pressable
+          onPress={() => setMenuOpen(false)}
+          style={StyleSheet.absoluteFill}
+        />
+      ) : null}
+
+      <MapTopOverlay
         mosqueCount={mosques.length}
         mosquesLoading={isLoading}
         mosquesError={Boolean(error)}
         timings={prayer?.timings ?? null}
         onRetry={() => refetch()}
-      />
-
-      <MapFloatingControls
         onRecenter={handleRecenter}
         canRecenter={Boolean(userPos)}
+        activeFilters={activeFilters}
+        menuOpen={menuOpen}
+        onOpenMenu={() => setMenuOpen(true)}
+        onCloseMenu={() => setMenuOpen(false)}
       />
 
       <MapMosqueSheet
