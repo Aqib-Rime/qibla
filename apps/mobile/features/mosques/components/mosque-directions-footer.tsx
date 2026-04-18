@@ -14,7 +14,7 @@ export function MosqueDirectionsFooter({ mosque }: { mosque: Mosque }) {
       <View className="border-line border-t px-s-6 py-s-3">
         <Button
           label="Directions"
-          leading={<Icon name="navigation" size={18} color="#ffffff" />}
+          leading={<Icon name="directions" size={18} color="#ffffff" />}
           onPress={() =>
             openDirections({
               lat: mosque.lat,

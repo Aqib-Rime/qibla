@@ -11,7 +11,7 @@ export function MosqueSheetActions({ mosque }: { mosque: MosqueListItem }) {
       <View className="flex-1">
         <Button
           label="Directions"
-          leading={<Icon name="navigation" size={16} color="#ffffff" />}
+          leading={<Icon name="directions" size={16} color="#ffffff" />}
           onPress={() =>
             openDirections({
               lat: mosque.lat,

@@ -5,7 +5,7 @@ import { View } from "react-native"
 const BENEFITS: { icon: IconName; label: string }[] = [
   { icon: "pin", label: "Nearby mosques on the map" },
   { icon: "clock", label: "Prayer times for your area" },
-  { icon: "navigation", label: "Walking and driving routes" },
+  { icon: "directions", label: "Walking and driving routes" },
 ]
 
 export function PermissionBenefits() {

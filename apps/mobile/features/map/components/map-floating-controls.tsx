@@ -16,13 +16,13 @@ export function MapFloatingControls({
   return (
     <View className="items-end gap-s-3">
       <MapFloatingAction
-        icon="settings"
+        icon="filter"
         onPress={() => router.push("/filter")}
         accessibilityLabel="Filter mosques"
         badgeCount={activeFilters}
       />
       <MapFloatingAction
-        icon="navigation"
+        icon="recenter"
         onPress={onRecenter}
         disabled={!canRecenter}
         accessibilityLabel="Recenter on my location"
