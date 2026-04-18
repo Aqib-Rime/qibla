@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { MapPin } from "lucide-react-native"
-import { View } from "react-native"
+import { View, type ViewProps } from "react-native"
 
 const markVariants = cva(
   "items-center justify-center rounded-md bg-green shadow-lg",
@@ -17,19 +17,25 @@ const markVariants = cva(
   }
 )
 
-const iconSize: Record<NonNullable<VariantProps<typeof markVariants>["size"]>, number> = {
+const iconSize: Record<
+  NonNullable<VariantProps<typeof markVariants>["size"]>,
+  number
+> = {
   sm: 16,
   md: 26,
   lg: 36,
   xl: 42,
 }
 
-export function MosqueMark({
-  size = "md",
-  className,
-}: VariantProps<typeof markVariants> & { className?: string }) {
+type Props = VariantProps<typeof markVariants> &
+  Pick<ViewProps, "onLayout"> & {
+    className?: string
+  }
+
+export function MosqueMark({ size = "md", className, onLayout }: Props) {
   return (
     <View
+      onLayout={onLayout}
       className={markVariants({ size, className })}
       style={{
         shadowColor: "#2e5d45",

@@ -1,5 +1,4 @@
 import { Icon } from "@/components/ui/icon"
-import { MosqueMark } from "@/components/ui/mosque-mark"
 import { Text } from "@/components/ui/text"
 import { api } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
@@ -12,6 +11,8 @@ import MapView, {
   type Region,
 } from "react-native-maps"
 import { SafeAreaView } from "react-native-safe-area-context"
+
+const MARKER_COLOR = "#2e5d45"
 
 const DHAKA_REGION: Region = {
   latitude: 23.7806,
@@ -44,10 +45,8 @@ export default function MapScreen() {
             coordinate={{ latitude: m.lat, longitude: m.lng }}
             title={m.name}
             description={m.area ?? undefined}
-            tracksViewChanges={false}
-          >
-            <MosqueMark size="sm" />
-          </Marker>
+            pinColor={MARKER_COLOR}
+          />
         ))}
       </MapView>
 
