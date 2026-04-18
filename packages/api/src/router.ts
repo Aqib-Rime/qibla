@@ -1,5 +1,6 @@
 import { publicProcedure } from "./router-base.ts";
 import { mosquesRouter } from "./routers/mosques.ts";
+import { prayerTimesRouter } from "./routers/prayer-times.ts";
 
 export {
   adminProcedure,
@@ -13,6 +14,7 @@ export const appRouter = {
     at: new Date().toISOString(),
   })),
   mosques: mosquesRouter,
+  prayerTimes: prayerTimesRouter,
 };
 
 export type AppRouter = typeof appRouter;
