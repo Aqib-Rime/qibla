@@ -15,7 +15,7 @@ export function MosqueDetailScreen() {
   return (
     <View className="flex-1 bg-cream">
       <StatusBar style="dark" />
-      <MosqueDetailHeader />
+      <MosqueDetailHeader mosqueId={data?.mosque.id} isSaved={data?.isSaved} />
 
       {isLoading ? (
         <MosqueDetailSkeleton />
