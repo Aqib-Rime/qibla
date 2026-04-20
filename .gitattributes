@@ -1,0 +1,26 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Mark auto-generated and lock files so they don't skew the GitHub language bar
+bun.lock linguist-generated
+*.lock linguist-generated
+**/dist/** linguist-generated
+**/.turbo/** linguist-generated
+**/.output/** linguist-generated
+**/.tanstack/** linguist-generated
+**/.vinxi/** linguist-generated
+**/node_modules/** linguist-vendored
+
+# Expo prebuild output — regenerated from app.config, not handwritten
+apps/mobile/ios/** linguist-generated
+apps/mobile/android/** linguist-generated
+
+# Treat common binary assets correctly
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.ttf binary
+*.otf binary
