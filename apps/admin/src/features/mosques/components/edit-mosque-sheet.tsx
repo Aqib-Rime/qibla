@@ -68,6 +68,7 @@ export function EditMosqueSheet({ mosqueId, onClose }: Props) {
     },
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: form from useForm is stable; re-running on form identity would loop
   useEffect(() => {
     if (!mosque) return;
     form.reset({
@@ -86,7 +87,6 @@ export function EditMosqueSheet({ mosqueId, onClose }: Props) {
       facilities: mosque.facilities ?? [],
     });
     setErrorMessage(null);
-    // biome-ignore lint/correctness/useExhaustiveDependencies: form is stable
   }, [mosque]);
 
   const isSubmitting = useStore(form.store, (state) => state.isSubmitting);

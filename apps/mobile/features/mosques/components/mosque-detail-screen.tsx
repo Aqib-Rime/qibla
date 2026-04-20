@@ -15,9 +15,9 @@ export function MosqueDetailScreen() {
   const { data, isLoading, error, refetch } = useMosque(id);
   const pushRecent = usePushRecentMosque();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pushRecent is a stable mutation; we only want to fire when the id changes
   useEffect(() => {
     if (data?.mosque.id) pushRecent.mutate(data.mosque.id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.mosque.id]);
 
   return (

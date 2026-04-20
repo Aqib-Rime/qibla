@@ -53,6 +53,7 @@ export function QiblaScreen() {
   // Location permission may have been denied during onboarding.
   // If after a short wait we still have no userPos, show the gate.
   const [showGate, setShowGate] = useState(false);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: permissionKey is a poke dep to re-evaluate after the user grants location access
   useEffect(() => {
     if (userPos) {
       setShowGate(false);
