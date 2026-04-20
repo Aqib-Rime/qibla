@@ -4,7 +4,8 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin } from "better-auth/plugins";
 
-const extraTrustedOrigins = (process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
+const trustedOriginsEnv: string = process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "";
+const extraTrustedOrigins = trustedOriginsEnv
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);
