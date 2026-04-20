@@ -1,0 +1,79 @@
+name: Bug report
+description: Report a bug in the mobile app, admin, or backend
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. Please fill in as much detail as you can — it helps us ship a fix faster.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where did the bug happen?
+      options:
+        - Mobile app (iOS)
+        - Mobile app (Android)
+        - Admin panel (web)
+        - Backend / API
+        - Build / deploy / monorepo tooling
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of what went wrong and what you expected instead.
+      placeholder: "When I tap the qibla compass, the dial freezes and stops responding to phone movement…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The minimal set of steps to trigger the bug.
+      placeholder: |
+        1. Open the app
+        2. Go to Profile → Find Qibla
+        3. Rotate the phone 180°
+        4. Observe: dial does not rotate
+    validations:
+      required: true
+
+  - type: input
+    id: platform-version
+    attributes:
+      label: Platform + OS version
+      description: e.g. iOS 18.2 on iPhone 15 Pro, Android 14 on Pixel 8, Chrome 130 on macOS 15
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App / commit version
+      description: Git SHA or EAS build number (check Settings → About in the app)
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, screenshots, or screen recordings
+      description: Drop them here. Metro / Wrangler / console output is especially helpful for crashes.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: prechecks
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I searched existing issues and this one isn't already reported
+          required: true
+        - label: I am running the latest `main` (or have noted the exact commit above)
+          required: true

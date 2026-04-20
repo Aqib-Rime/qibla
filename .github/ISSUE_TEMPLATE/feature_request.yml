@@ -1,0 +1,55 @@
+name: Feature request
+description: Suggest a new feature or an improvement to an existing one
+title: "feat: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing, please check the [V2 scope](https://github.com/Aqib-Rime/qibla) to see if the idea is already planned. For anything larger than a small tweak, please describe the use case first — implementation details can come later.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: The user-facing problem or friction point. Skip the solution for now — focus on the "why".
+      placeholder: "When I travel between neighborhoods I want to compare mosques by distance, but the list is only sortable by name…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How you think it could work. Mockups, code sketches, or links to similar features in other apps are all welcome.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which surface?
+      options:
+        - Mobile app (iOS + Android)
+        - Admin panel
+        - Backend / API
+        - Monorepo tooling / build
+        - Cross-cutting
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you thought about and why you set them aside.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: prechecks
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I searched existing issues and this isn't already requested
+          required: true
