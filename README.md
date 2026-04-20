@@ -6,12 +6,20 @@
 
 A production-grade mosque finder for iOS, Android, and the web — built as a Bun + Turborepo monorepo with Expo, TanStack Start, oRPC, Drizzle, and Better Auth.
 
+[![CI](https://github.com/Aqib-Rime/qibla/actions/workflows/ci.yml/badge.svg)](https://github.com/Aqib-Rime/qibla/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/Aqib-Rime/qibla?color=blue)](./LICENSE)
+[![Last commit](https://img.shields.io/github/last-commit/Aqib-Rime/qibla)](https://github.com/Aqib-Rime/qibla/commits/main)
+[![Issues](https://img.shields.io/github/issues/Aqib-Rime/qibla)](https://github.com/Aqib-Rime/qibla/issues)
+![Bun](https://img.shields.io/badge/bun-%E2%89%A51.3-fbf0df?logo=bun&logoColor=black)
+![Node](https://img.shields.io/badge/node-%E2%89%A524-5fa04e?logo=node.js&logoColor=white)
+![Expo SDK](https://img.shields.io/badge/expo-54-000020?logo=expo&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-5.9-3178c6?logo=typescript&logoColor=white)
+
 </div>
 
 <!--
   v2 additions planned for this hero section:
   - Logo / banner (SVG)
-  - Badges: build status, license, Expo SDK, Node, Bun
   - App Store / Play Store / TestFlight links when published
 -->
 
