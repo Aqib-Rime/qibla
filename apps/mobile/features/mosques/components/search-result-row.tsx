@@ -1,8 +1,8 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { Pressable, View } from "react-native"
-import type { MosqueListItem } from "../lib/types"
+import { router } from "expo-router";
+import { Pressable, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import type { MosqueListItem } from "../lib/types";
 
 export function SearchResultRow({ mosque }: { mosque: MosqueListItem }) {
   return (
@@ -19,7 +19,12 @@ export function SearchResultRow({ mosque }: { mosque: MosqueListItem }) {
           {mosque.name}
         </Text>
         {mosque.area ? (
-          <Text variant="caption" tone="muted" className="mt-s-1" numberOfLines={1}>
+          <Text
+            variant="caption"
+            tone="muted"
+            className="mt-s-1"
+            numberOfLines={1}
+          >
             {mosque.area}
           </Text>
         ) : null}
@@ -31,5 +36,5 @@ export function SearchResultRow({ mosque }: { mosque: MosqueListItem }) {
         </View>
       ) : null}
     </Pressable>
-  )
+  );
 }

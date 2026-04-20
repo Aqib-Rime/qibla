@@ -1,12 +1,12 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { Pressable, View } from "react-native"
+import { Pressable, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  name: string
-  email: string
-  onPress?: () => void
-}
+  name: string;
+  email: string;
+  onPress?: () => void;
+};
 
 const AVATAR_SHADOW = {
   shadowColor: "#2e5d45",
@@ -14,11 +14,11 @@ const AVATAR_SHADOW = {
   shadowOpacity: 0.3,
   shadowRadius: 18,
   elevation: 6,
-}
+};
 
 function initial(name: string) {
-  const letter = name.trim().charAt(0)
-  return letter ? letter.toUpperCase() : "?"
+  const letter = name.trim().charAt(0);
+  return letter ? letter.toUpperCase() : "?";
 }
 
 export function ProfileHeroCard({ name, email, onPress }: Props) {
@@ -33,10 +33,7 @@ export function ProfileHeroCard({ name, email, onPress }: Props) {
         className="h-16 w-16 items-center justify-center rounded-pill bg-green"
         style={AVATAR_SHADOW}
       >
-        <Text
-          tone="white"
-          className="font-sans-semibold text-[26px]"
-        >
+        <Text tone="white" className="font-sans-semibold text-[26px]">
           {initial(name)}
         </Text>
       </View>
@@ -44,11 +41,16 @@ export function ProfileHeroCard({ name, email, onPress }: Props) {
         <Text variant="display-sm" numberOfLines={1}>
           {name}
         </Text>
-        <Text variant="body-sm" tone="muted" numberOfLines={1} className="mt-s-1">
+        <Text
+          variant="body-sm"
+          tone="muted"
+          numberOfLines={1}
+          className="mt-s-1"
+        >
           {email}
         </Text>
       </View>
       {onPress ? <Icon name="chevron" size={18} color="#6b7a70" /> : null}
     </Pressable>
-  )
+  );
 }

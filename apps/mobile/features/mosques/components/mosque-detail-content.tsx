@@ -1,17 +1,17 @@
-import { Text } from "@/components/ui/text"
-import { PrayerTimesTab } from "@/features/prayer-times"
-import { useState } from "react"
-import { ScrollView, View } from "react-native"
-import type { MosqueDetail } from "../lib/types"
-import { MosqueDetailTabs, type MosqueTab } from "./mosque-detail-tabs"
-import { MosqueEventsTab } from "./mosque-events-tab"
-import { MosqueMetaRow } from "./mosque-meta-row"
-import { MosqueOverviewTab } from "./mosque-overview-tab"
-import { MosqueReviewsTab } from "./mosque-reviews-tab"
+import { useState } from "react";
+import { ScrollView, View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { PrayerTimesTab } from "@/features/prayer-times";
+import type { MosqueDetail } from "../lib/types";
+import { MosqueDetailTabs, type MosqueTab } from "./mosque-detail-tabs";
+import { MosqueEventsTab } from "./mosque-events-tab";
+import { MosqueMetaRow } from "./mosque-meta-row";
+import { MosqueOverviewTab } from "./mosque-overview-tab";
+import { MosqueReviewsTab } from "./mosque-reviews-tab";
 
 export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
-  const [tab, setTab] = useState<MosqueTab>("overview")
-  const { mosque, imam, events, reviews } = data
+  const [tab, setTab] = useState<MosqueTab>("overview");
+  const { mosque, imam, events, reviews } = data;
 
   return (
     <ScrollView
@@ -52,5 +52,5 @@ export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
         )}
       </View>
     </ScrollView>
-  )
+  );
 }

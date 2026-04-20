@@ -1,23 +1,23 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Text } from "@/components/ui/text"
+import { Pressable, View } from "react-native";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Text } from "@/components/ui/text";
 import {
   formatTime12,
   nextPrayer,
   PRAYER_LABEL,
   type Timings,
-} from "@/features/prayer-times"
-import { Pressable, View } from "react-native"
+} from "@/features/prayer-times";
 
 type Props = {
-  mosqueCount: number
-  mosquesLoading: boolean
-  mosquesError: boolean
-  timings: Timings | null
-  onRetry: () => void
-  onSearch: () => void
-  onOpenMenu: () => void
-}
+  mosqueCount: number;
+  mosquesLoading: boolean;
+  mosquesError: boolean;
+  timings: Timings | null;
+  onRetry: () => void;
+  onSearch: () => void;
+  onOpenMenu: () => void;
+};
 
 const PILL_SHADOW = {
   shadowColor: "#1a2a22",
@@ -25,16 +25,16 @@ const PILL_SHADOW = {
   shadowOpacity: 0.14,
   shadowRadius: 18,
   elevation: 6,
-}
+};
 
 function PillIconButton({
   icon,
   onPress,
   accessibilityLabel,
 }: {
-  icon: IconName
-  onPress: () => void
-  accessibilityLabel: string
+  icon: IconName;
+  onPress: () => void;
+  accessibilityLabel: string;
 }) {
   return (
     <Pressable
@@ -45,7 +45,7 @@ function PillIconButton({
     >
       <Icon name={icon} size={22} color="#1a2a22" />
     </Pressable>
-  )
+  );
 }
 
 export function MapTopPill({
@@ -57,7 +57,7 @@ export function MapTopPill({
   onSearch,
   onOpenMenu,
 }: Props) {
-  const next = timings ? nextPrayer(timings) : null
+  const next = timings ? nextPrayer(timings) : null;
 
   const title = next
     ? `${next.tomorrow ? "Tomorrow · " : ""}${PRAYER_LABEL[next.name]} · ${formatTime12(next.time)}`
@@ -65,7 +65,7 @@ export function MapTopPill({
       ? null
       : mosquesError
         ? "Could not load mosques"
-        : `${mosqueCount} mosques nearby`
+        : `${mosqueCount} mosques nearby`;
 
   return (
     <View
@@ -103,5 +103,5 @@ export function MapTopPill({
         />
       )}
     </View>
-  )
+  );
 }

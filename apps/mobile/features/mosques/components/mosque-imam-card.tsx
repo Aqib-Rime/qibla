@@ -1,10 +1,10 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
-import type { Imam } from "../lib/types"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import type { Imam } from "../lib/types";
 
 export function MosqueImamCard({ imam }: { imam: Imam }) {
-  if (!imam) return null
+  if (!imam) return null;
   return (
     <View>
       <Text variant="eyebrow" tone="muted">
@@ -23,5 +23,5 @@ export function MosqueImamCard({ imam }: { imam: Imam }) {
         </View>
       </View>
     </View>
-  )
+  );
 }

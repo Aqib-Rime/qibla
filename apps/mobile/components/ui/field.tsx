@@ -1,19 +1,15 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { forwardRef } from "react"
-import {
-  TextInput,
-  type TextInputProps,
-  View,
-} from "react-native"
+import { forwardRef } from "react";
+import { TextInput, type TextInputProps, View } from "react-native";
+import { Icon, type IconName } from "@/components/ui/icon";
 
 type Props = TextInputProps & {
-  icon?: IconName
-  trailing?: React.ReactNode
-}
+  icon?: IconName;
+  trailing?: React.ReactNode;
+};
 
 export const Field = forwardRef<TextInput, Props>(function Field(
   { icon, trailing, ...props },
-  ref
+  ref,
 ) {
   return (
     <View className="flex-row items-center gap-s-3 rounded-md border border-line bg-white px-s-4 py-s-3">
@@ -26,5 +22,5 @@ export const Field = forwardRef<TextInput, Props>(function Field(
       />
       {trailing}
     </View>
-  )
-})
+  );
+});

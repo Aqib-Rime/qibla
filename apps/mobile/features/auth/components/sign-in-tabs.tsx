@@ -1,7 +1,7 @@
-import { Text } from "@/components/ui/text"
-import { Pressable, View } from "react-native"
+import { Pressable, View } from "react-native";
+import { Text } from "@/components/ui/text";
 
-type Tab = "in" | "up"
+type Tab = "in" | "up";
 
 const ACTIVE_SHADOW = {
   shadowColor: "#000",
@@ -9,18 +9,18 @@ const ACTIVE_SHADOW = {
   shadowOpacity: 0.06,
   shadowRadius: 2,
   elevation: 1,
-}
+};
 
 type Props = {
-  active: Tab
-  onChange: (tab: Tab) => void
-}
+  active: Tab;
+  onChange: (tab: Tab) => void;
+};
 
 export function SignInTabs({ active, onChange }: Props) {
   return (
     <View className="flex-row rounded-pill bg-[#ece3c9] p-1">
       {(["in", "up"] as const).map((key) => {
-        const isActive = active === key
+        const isActive = active === key;
         return (
           <Pressable
             key={key}
@@ -36,8 +36,8 @@ export function SignInTabs({ active, onChange }: Props) {
               {key === "in" ? "Sign in" : "Sign up"}
             </Text>
           </Pressable>
-        )
+        );
       })}
     </View>
-  )
+  );
 }

@@ -1,15 +1,15 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import * as Haptics from "expo-haptics"
-import { Pressable, View } from "react-native"
+import * as Haptics from "expo-haptics";
+import { Pressable, View } from "react-native";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  icon: IconName
-  label: string
-  description?: string
-  active: boolean
-  onToggle: () => void
-}
+  icon: IconName;
+  label: string;
+  description?: string;
+  active: boolean;
+  onToggle: () => void;
+};
 
 export function FilterToggleRow({
   icon,
@@ -21,8 +21,8 @@ export function FilterToggleRow({
   return (
     <Pressable
       onPress={() => {
-        Haptics.selectionAsync().catch(() => {})
-        onToggle()
+        Haptics.selectionAsync().catch(() => {});
+        onToggle();
       }}
       className={`flex-row items-center gap-s-4 rounded-md border bg-white px-s-4 py-s-4 ${
         active ? "border-green" : "border-line"
@@ -52,5 +52,5 @@ export function FilterToggleRow({
         {active ? <Icon name="arrow" size={14} color="#ffffff" /> : null}
       </View>
     </Pressable>
-  )
+  );
 }

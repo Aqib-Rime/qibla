@@ -5,7 +5,10 @@ import { ReviewsPage } from "@/features/reviews/components/reviews-page";
 const searchSchema = z.object({
   page: z.number().optional().default(1),
   pageSize: z.number().optional().default(20),
-  status: z.enum(["approved", "pending", "hidden"]).optional().default("pending"),
+  status: z
+    .enum(["approved", "pending", "hidden"])
+    .optional()
+    .default("pending"),
 });
 
 export const Route = createFileRoute("/_admin/reviews/")({

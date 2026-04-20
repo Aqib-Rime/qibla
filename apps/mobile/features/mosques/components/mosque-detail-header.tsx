@@ -1,13 +1,13 @@
-import { IconButton } from "@/components/ui/icon-button"
-import { router } from "expo-router"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { MosqueSaveButton } from "./mosque-save-button"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IconButton } from "@/components/ui/icon-button";
+import { MosqueSaveButton } from "./mosque-save-button";
 
 type Props = {
-  mosqueId?: string
-  isSaved?: boolean
-}
+  mosqueId?: string;
+  isSaved?: boolean;
+};
 
 export function MosqueDetailHeader({ mosqueId, isSaved }: Props) {
   return (
@@ -25,5 +25,5 @@ export function MosqueDetailHeader({ mosqueId, isSaved }: Props) {
         )}
       </View>
     </SafeAreaView>
-  )
+  );
 }

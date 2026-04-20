@@ -1,19 +1,19 @@
-import { ORPCError } from "@orpc/server"
-import { db } from "@qibla/db"
-import { mosque, review } from "@qibla/db/schema/mosque"
-import { and, desc, eq } from "drizzle-orm"
-import { z } from "zod"
-import { authedProcedure } from "../router-base.ts"
+import { ORPCError } from "@orpc/server";
+import { db } from "@qibla/db";
+import { mosque, review } from "@qibla/db/schema/mosque";
+import { and, desc, eq } from "drizzle-orm";
+import { z } from "zod";
+import { authedProcedure } from "../router-base.ts";
 
 function reviewId() {
-  return `r_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`
+  return `r_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
 }
 
 const createInput = z.object({
   mosqueId: z.string().min(1),
   rating: z.number().int().min(1).max(5),
   body: z.string().max(1000).optional(),
-})
+});
 
 export const reviewsRouter = {
   create: authedProcedure
@@ -23,9 +23,9 @@ export const reviewsRouter = {
         .select({ id: mosque.id })
         .from(mosque)
         .where(eq(mosque.id, input.mosqueId))
-        .limit(1)
+        .limit(1);
       if (!m) {
-        throw new ORPCError("NOT_FOUND", { message: "Mosque not found" })
+        throw new ORPCError("NOT_FOUND", { message: "Mosque not found" });
       }
 
       const [row] = await db
@@ -38,9 +38,9 @@ export const reviewsRouter = {
           body: input.body,
           status: "pending",
         })
-        .returning()
+        .returning();
 
-      return row
+      return row;
     }),
 
   myForMosque: authedProcedure
@@ -52,10 +52,10 @@ export const reviewsRouter = {
         .where(
           and(
             eq(review.mosqueId, input.mosqueId),
-            eq(review.userId, context.user.id)
-          )
+            eq(review.userId, context.user.id),
+          ),
         )
-        .orderBy(desc(review.createdAt))
-      return { data: rows }
+        .orderBy(desc(review.createdAt));
+      return { data: rows };
     }),
-}
+};

@@ -1,3 +1,3 @@
-import { QiblaScreen } from "@/features/qibla"
+import { QiblaScreen } from "@/features/qibla";
 
-export default QiblaScreen
+export default QiblaScreen;

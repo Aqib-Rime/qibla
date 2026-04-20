@@ -1,5 +1,5 @@
-import { cva, type VariantProps } from "class-variance-authority"
-import { Text as RNText, type TextProps } from "react-native"
+import { cva, type VariantProps } from "class-variance-authority";
+import { Text as RNText, type TextProps } from "react-native";
 
 export const textVariants = cva("text-ink", {
   variants: {
@@ -28,9 +28,9 @@ export const textVariants = cva("text-ink", {
     variant: "body",
     tone: "ink",
   },
-})
+});
 
-export type TextVariantProps = VariantProps<typeof textVariants>
+export type TextVariantProps = VariantProps<typeof textVariants>;
 
 export function Text({
   variant,
@@ -39,9 +39,6 @@ export function Text({
   ...props
 }: TextProps & TextVariantProps & { className?: string }) {
   return (
-    <RNText
-      className={textVariants({ variant, tone, className })}
-      {...props}
-    />
-  )
+    <RNText className={textVariants({ variant, tone, className })} {...props} />
+  );
 }

@@ -1,3 +1,3 @@
-import { FilterModalScreen } from "@/features/mosques"
+import { FilterModalScreen } from "@/features/mosques";
 
-export default FilterModalScreen
+export default FilterModalScreen;

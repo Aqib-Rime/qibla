@@ -1,21 +1,21 @@
-import { Button } from "@/components/ui/button"
-import { Field } from "@/components/ui/field"
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { useState } from "react"
-import { View } from "react-native"
-import { useSignIn, type AuthMode } from "../hooks/use-sign-in"
+import { useState } from "react";
+import { View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Field } from "@/components/ui/field";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { type AuthMode, useSignIn } from "../hooks/use-sign-in";
 
 type Props = {
-  mode: AuthMode
-}
+  mode: AuthMode;
+};
 
 export function SignInForm({ mode }: Props) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
-  const { mutate, isPending, error } = useSignIn()
+  const { mutate, isPending, error } = useSignIn();
 
   return (
     <>
@@ -61,5 +61,5 @@ export function SignInForm({ mode }: Props) {
         />
       </View>
     </>
-  )
+  );
 }

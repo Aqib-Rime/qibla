@@ -1,3 +1,3 @@
-import { MapScreen } from "@/features/map"
+import { MapScreen } from "@/features/map";
 
-export default MapScreen
+export default MapScreen;

@@ -1,8 +1,8 @@
-import { View } from "react-native"
+import { View } from "react-native";
 
 type Props = {
-  aligned: boolean
-}
+  aligned: boolean;
+};
 
 export function QiblaTopPointer({ aligned }: Props) {
   return (
@@ -24,5 +24,5 @@ export function QiblaTopPointer({ aligned }: Props) {
         }}
       />
     </View>
-  )
+  );
 }

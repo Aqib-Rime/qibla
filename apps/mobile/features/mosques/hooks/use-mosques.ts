@@ -1,6 +1,6 @@
-import { api } from "@/lib/api"
-import { useSession } from "@/lib/auth"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import { useSession } from "@/lib/auth";
 
 export const mosquesKeys = {
   all: ["mosques"] as const,
@@ -8,15 +8,15 @@ export const mosquesKeys = {
     [...mosquesKeys.all, "list", params] as const,
   detail: (id: string) => [...mosquesKeys.all, "detail", id] as const,
   saved: () => [...mosquesKeys.all, "saved"] as const,
-}
+};
 
 export function useMosquesList(
-  params: { pageSize?: number; search?: string } = {}
+  params: { pageSize?: number; search?: string } = {},
 ) {
   return useQuery({
     queryKey: mosquesKeys.list(params),
     queryFn: () => api.mosques.list({ pageSize: 50, ...params }),
-  })
+  });
 }
 
 export function useMosque(id: string | undefined) {
@@ -24,34 +24,26 @@ export function useMosque(id: string | undefined) {
     queryKey: mosquesKeys.detail(id ?? ""),
     queryFn: () => api.mosques.byId({ id: id as string }),
     enabled: Boolean(id),
-  })
+  });
 }
 
 export function useSavedMosques() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   return useQuery({
     queryKey: mosquesKeys.saved(),
     queryFn: () => api.mosques.saved(),
     enabled: Boolean(session?.user),
-  })
+  });
 }
 
 export function useToggleSaved() {
-  const qc = useQueryClient()
+  const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({
-      mosqueId,
-      save,
-    }: {
-      mosqueId: string
-      save: boolean
-    }) =>
-      save
-        ? api.mosques.save({ mosqueId })
-        : api.mosques.unsave({ mosqueId }),
+    mutationFn: ({ mosqueId, save }: { mosqueId: string; save: boolean }) =>
+      save ? api.mosques.save({ mosqueId }) : api.mosques.unsave({ mosqueId }),
     onSuccess: (_data, { mosqueId }) => {
-      qc.invalidateQueries({ queryKey: mosquesKeys.saved() })
-      qc.invalidateQueries({ queryKey: mosquesKeys.detail(mosqueId) })
+      qc.invalidateQueries({ queryKey: mosquesKeys.saved() });
+      qc.invalidateQueries({ queryKey: mosquesKeys.detail(mosqueId) });
     },
-  })
+  });
 }

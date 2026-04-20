@@ -1,21 +1,21 @@
-import "../global.css"
+import "../global.css";
 
-import { Providers } from "@/components/providers"
 import {
   Geist_400Regular,
   Geist_500Medium,
   Geist_600SemiBold,
   useFonts as useGeist,
-} from "@expo-google-fonts/geist"
-import { GeistMono_400Regular } from "@expo-google-fonts/geist-mono"
-import { Stack } from "expo-router"
-import * as SplashScreen from "expo-splash-screen"
-import { useEffect } from "react"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { KeyboardProvider } from "react-native-keyboard-controller"
-import { SafeAreaProvider } from "react-native-safe-area-context"
+} from "@expo-google-fonts/geist";
+import { GeistMono_400Regular } from "@expo-google-fonts/geist-mono";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Providers } from "@/components/providers";
 
-SplashScreen.preventAutoHideAsync().catch(() => {})
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   const [fontsLoaded] = useGeist({
@@ -23,13 +23,13 @@ export default function RootLayout() {
     Geist_500Medium,
     Geist_600SemiBold,
     GeistMono_400Regular,
-  })
+  });
 
   useEffect(() => {
-    if (fontsLoaded) SplashScreen.hideAsync().catch(() => {})
-  }, [fontsLoaded])
+    if (fontsLoaded) SplashScreen.hideAsync().catch(() => {});
+  }, [fontsLoaded]);
 
-  if (!fontsLoaded) return null
+  if (!fontsLoaded) return null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -37,7 +37,10 @@ export default function RootLayout() {
         <SafeAreaProvider>
           <Providers>
             <Stack
-              screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+              screenOptions={{
+                headerShown: false,
+                animation: "slide_from_right",
+              }}
             >
               <Stack.Screen name="index" options={{ animation: "fade" }} />
               <Stack.Screen name="onboard/1" />
@@ -49,15 +52,24 @@ export default function RootLayout() {
               <Stack.Screen name="mosque/[id]" />
               <Stack.Screen
                 name="review/[mosqueId]"
-                options={{ presentation: "modal", animation: "slide_from_bottom" }}
+                options={{
+                  presentation: "modal",
+                  animation: "slide_from_bottom",
+                }}
               />
               <Stack.Screen
                 name="search"
-                options={{ presentation: "modal", animation: "slide_from_bottom" }}
+                options={{
+                  presentation: "modal",
+                  animation: "slide_from_bottom",
+                }}
               />
               <Stack.Screen
                 name="filter"
-                options={{ presentation: "modal", animation: "slide_from_bottom" }}
+                options={{
+                  presentation: "modal",
+                  animation: "slide_from_bottom",
+                }}
               />
               <Stack.Screen name="qibla" />
               <Stack.Screen name="settings" />
@@ -66,5 +78,5 @@ export default function RootLayout() {
         </SafeAreaProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>
-  )
+  );
 }

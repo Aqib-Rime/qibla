@@ -1,10 +1,10 @@
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  title: string
-  children: React.ReactNode
-}
+  title: string;
+  children: React.ReactNode;
+};
 
 export function SettingsSection({ title, children }: Props) {
   return (
@@ -16,5 +16,5 @@ export function SettingsSection({ title, children }: Props) {
         {children}
       </View>
     </View>
-  )
+  );
 }

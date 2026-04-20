@@ -1,12 +1,12 @@
-import { router } from "expo-router"
-import { View } from "react-native"
-import { MapFloatingAction } from "./map-floating-action"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { MapFloatingAction } from "./map-floating-action";
 
 type Props = {
-  onRecenter: () => void
-  canRecenter: boolean
-  activeFilters: number
-}
+  onRecenter: () => void;
+  canRecenter: boolean;
+  activeFilters: number;
+};
 
 export function MapFloatingControls({
   onRecenter,
@@ -28,5 +28,5 @@ export function MapFloatingControls({
         accessibilityLabel="Recenter on my location"
       />
     </View>
-  )
+  );
 }

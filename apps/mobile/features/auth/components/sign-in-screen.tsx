@@ -1,16 +1,16 @@
-import { Screen } from "@/components/ui/screen"
-import { useState } from "react"
-import { View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
-import type { AuthMode } from "../hooks/use-sign-in"
-import { SignInForm } from "./sign-in-form"
-import { SignInHero } from "./sign-in-hero"
-import { SignInLegalFooter } from "./sign-in-legal-footer"
-import { SignInOAuthRow } from "./sign-in-oauth-row"
-import { SignInTabs } from "./sign-in-tabs"
+import { useState } from "react";
+import { View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { Screen } from "@/components/ui/screen";
+import type { AuthMode } from "../hooks/use-sign-in";
+import { SignInForm } from "./sign-in-form";
+import { SignInHero } from "./sign-in-hero";
+import { SignInLegalFooter } from "./sign-in-legal-footer";
+import { SignInOAuthRow } from "./sign-in-oauth-row";
+import { SignInTabs } from "./sign-in-tabs";
 
 export function SignInScreen() {
-  const [mode, setMode] = useState<AuthMode>("in")
+  const [mode, setMode] = useState<AuthMode>("in");
 
   return (
     <Screen bg="cream" padded={false}>
@@ -36,5 +36,5 @@ export function SignInScreen() {
         <SignInLegalFooter />
       </KeyboardAwareScrollView>
     </Screen>
-  )
+  );
 }

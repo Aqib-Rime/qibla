@@ -1,25 +1,25 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { PendingReviewBanner } from "@/features/reviews/components/pending-review-banner"
-import { WriteReviewButton } from "@/features/reviews/components/write-review-button"
-import { useMyReviewsForMosque } from "@/features/reviews/hooks/use-reviews"
-import { useSession } from "@/lib/auth"
-import { View } from "react-native"
-import type { Review } from "../lib/types"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { PendingReviewBanner } from "@/features/reviews/components/pending-review-banner";
+import { WriteReviewButton } from "@/features/reviews/components/write-review-button";
+import { useMyReviewsForMosque } from "@/features/reviews/hooks/use-reviews";
+import { useSession } from "@/lib/auth";
+import type { Review } from "../lib/types";
 
 type Props = {
-  mosqueId: string
-  reviews: readonly Review[]
-}
+  mosqueId: string;
+  reviews: readonly Review[];
+};
 
 export function MosqueReviewsTab({ mosqueId, reviews }: Props) {
-  const { data: session } = useSession()
-  const isAuthed = Boolean(session?.user)
-  const mine = useMyReviewsForMosque(mosqueId)
+  const { data: session } = useSession();
+  const isAuthed = Boolean(session?.user);
+  const mine = useMyReviewsForMosque(mosqueId);
 
   const hasPending = Boolean(
-    mine.data?.data.some((r) => r.status === "pending")
-  )
+    mine.data?.data.some((r) => r.status === "pending"),
+  );
 
   return (
     <View className="gap-s-3">
@@ -51,5 +51,5 @@ export function MosqueReviewsTab({ mosqueId, reviews }: Props) {
         ))
       )}
     </View>
-  )
+  );
 }

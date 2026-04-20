@@ -1,6 +1,6 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 export function QiblaSensorError() {
   return (
@@ -10,9 +10,9 @@ export function QiblaSensorError() {
         Compass unavailable
       </Text>
       <Text variant="body" tone="muted" className="max-w-[300px] text-center">
-        This device doesn't expose a magnetometer, or the sensor is disabled.
-        We still show the bearing to Mecca from your location.
+        This device doesn't expose a magnetometer, or the sensor is disabled. We
+        still show the bearing to Mecca from your location.
       </Text>
     </View>
-  )
+  );
 }

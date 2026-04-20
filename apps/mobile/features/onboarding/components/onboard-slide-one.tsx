@@ -1,5 +1,5 @@
-import { ArtMap } from "./art-map"
-import { OnboardLayout } from "./onboard-layout"
+import { ArtMap } from "./art-map";
+import { OnboardLayout } from "./onboard-layout";
 
 export function OnboardSlideOne() {
   return (
@@ -9,5 +9,5 @@ export function OnboardSlideOne() {
       body="1,240 verified mosques with live status, photos, and community reviews."
       art={<ArtMap />}
     />
-  )
+  );
 }

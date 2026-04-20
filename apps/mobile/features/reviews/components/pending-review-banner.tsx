@@ -1,6 +1,6 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 export function PendingReviewBanner() {
   return (
@@ -10,5 +10,5 @@ export function PendingReviewBanner() {
         Your review is awaiting moderation — it'll appear here once approved.
       </Text>
     </View>
-  )
+  );
 }

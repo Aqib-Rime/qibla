@@ -1,13 +1,13 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { Pressable, View } from "react-native"
-import type { MosqueListItem } from "../lib/types"
+import { router } from "expo-router";
+import { Pressable, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import type { MosqueListItem } from "../lib/types";
 
 type Props = {
-  mosque: MosqueListItem
-  distanceLabel?: string
-}
+  mosque: MosqueListItem;
+  distanceLabel?: string;
+};
 
 const CARD_SHADOW = {
   shadowColor: "#1a2a22",
@@ -15,17 +15,14 @@ const CARD_SHADOW = {
   shadowOpacity: 0.06,
   shadowRadius: 8,
   elevation: 2,
-}
+};
 
 export function SearchPopularRow({ mosque, distanceLabel }: Props) {
   return (
     <Pressable
       onPress={() => router.replace(`/mosque/${mosque.id}`)}
       className="flex-row items-center gap-s-4 rounded-md border border-line/80 bg-white p-s-4"
-      style={({ pressed }) => [
-        CARD_SHADOW,
-        { opacity: pressed ? 0.85 : 1 },
-      ]}
+      style={({ pressed }) => [CARD_SHADOW, { opacity: pressed ? 0.85 : 1 }]}
     >
       <View className="h-14 w-14 items-center justify-center rounded-md bg-green-tint">
         <Icon name="mosque" size={24} color="#2e5d45" />
@@ -41,7 +38,9 @@ export function SearchPopularRow({ mosque, distanceLabel }: Props) {
                 <Icon name="star" size={12} color="#b68a3c" />
                 <Text variant="caption">{mosque.rating.toFixed(1)}</Text>
               </View>
-              <Text variant="caption" tone="muted">·</Text>
+              <Text variant="caption" tone="muted">
+                ·
+              </Text>
             </>
           ) : null}
           {distanceLabel ? (
@@ -49,7 +48,9 @@ export function SearchPopularRow({ mosque, distanceLabel }: Props) {
               <Text variant="caption" tone="muted">
                 {distanceLabel}
               </Text>
-              <Text variant="caption" tone="muted">·</Text>
+              <Text variant="caption" tone="muted">
+                ·
+              </Text>
             </>
           ) : null}
           <View className="flex-row items-center gap-s-1">
@@ -64,5 +65,5 @@ export function SearchPopularRow({ mosque, distanceLabel }: Props) {
       </View>
       <Icon name="chevron" size={18} color="#6b7a70" />
     </Pressable>
-  )
+  );
 }

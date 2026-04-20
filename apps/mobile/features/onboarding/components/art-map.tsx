@@ -1,5 +1,5 @@
-import { MosqueMark } from "@/components/ui/mosque-mark"
-import { View } from "react-native"
+import { View } from "react-native";
+import { MosqueMark } from "@/components/ui/mosque-mark";
 
 export function ArtMap() {
   const pins = [
@@ -8,7 +8,7 @@ export function ArtMap() {
     { x: 0.44, y: 0.44 },
     { x: 0.3, y: 0.72 },
     { x: 0.78, y: 0.66 },
-  ]
+  ];
   return (
     <View className="flex-1 bg-[#ede5c8]">
       {/* soft block grid */}
@@ -25,7 +25,7 @@ export function ArtMap() {
               borderRadius: 2,
             }}
           />
-        ))
+        )),
       )}
       {pins.map((p, i) => (
         <View
@@ -37,9 +37,12 @@ export function ArtMap() {
         </View>
       ))}
       {/* highlighted centered pin */}
-      <View className="absolute" style={{ left: "50%", top: "50%", marginLeft: -28, marginTop: -28 }}>
+      <View
+        className="absolute"
+        style={{ left: "50%", top: "50%", marginLeft: -28, marginTop: -28 }}
+      >
         <MosqueMark size="md" />
       </View>
     </View>
-  )
+  );
 }

@@ -1,3 +1,3 @@
-import { SavedMosquesScreen } from "@/features/mosques"
+import { SavedMosquesScreen } from "@/features/mosques";
 
-export default SavedMosquesScreen
+export default SavedMosquesScreen;

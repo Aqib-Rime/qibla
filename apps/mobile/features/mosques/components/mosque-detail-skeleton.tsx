@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function MosqueDetailSkeleton() {
   return (
@@ -28,5 +28,5 @@ export function MosqueDetailSkeleton() {
       <Skeleton className="mt-s-5 h-16 w-full rounded-md" />
       <Skeleton className="mt-s-4 h-16 w-full rounded-md" />
     </View>
-  )
+  );
 }

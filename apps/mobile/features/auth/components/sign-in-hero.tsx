@@ -1,10 +1,10 @@
-import { MosqueMark } from "@/components/ui/mosque-mark"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { MosqueMark } from "@/components/ui/mosque-mark";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  mode: "in" | "up"
-}
+  mode: "in" | "up";
+};
 
 export function SignInHero({ mode }: Props) {
   return (
@@ -22,5 +22,5 @@ export function SignInHero({ mode }: Props) {
           : "Create an account to save your favourite mosques"}
       </Text>
     </View>
-  )
+  );
 }

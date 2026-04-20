@@ -1,27 +1,24 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { useUserLocation } from "@/lib/use-user-location"
-import { StatusBar } from "expo-status-bar"
-import { useMemo, useState } from "react"
-import { ScrollView, View } from "react-native"
-import { useMosquesList } from "../hooks/use-mosques"
-import { applySearch } from "../lib/apply-filters"
-import { SearchInputBar } from "./search-input-bar"
-import { SearchPopularSection } from "./search-popular-section"
-import { SearchRecentSection } from "./search-recent-section"
-import { SearchResultRow } from "./search-result-row"
-import { SearchResultsSkeleton } from "./search-results-skeleton"
+import { StatusBar } from "expo-status-bar";
+import { useMemo, useState } from "react";
+import { ScrollView, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { useUserLocation } from "@/lib/use-user-location";
+import { useMosquesList } from "../hooks/use-mosques";
+import { applySearch } from "../lib/apply-filters";
+import { SearchInputBar } from "./search-input-bar";
+import { SearchPopularSection } from "./search-popular-section";
+import { SearchRecentSection } from "./search-recent-section";
+import { SearchResultRow } from "./search-result-row";
+import { SearchResultsSkeleton } from "./search-results-skeleton";
 
 export function SearchModalScreen() {
-  const [query, setQuery] = useState("")
-  const { data, isLoading } = useMosquesList({ pageSize: 50 })
-  const mosques = data?.data ?? []
-  const userPos = useUserLocation()
+  const [query, setQuery] = useState("");
+  const { data, isLoading } = useMosquesList({ pageSize: 50 });
+  const mosques = data?.data ?? [];
+  const userPos = useUserLocation();
 
-  const results = useMemo(
-    () => applySearch(mosques, query),
-    [mosques, query]
-  )
+  const results = useMemo(() => applySearch(mosques, query), [mosques, query]);
 
   return (
     <View className="flex-1 bg-cream">
@@ -62,5 +59,5 @@ export function SearchModalScreen() {
         )}
       </ScrollView>
     </View>
-  )
+  );
 }

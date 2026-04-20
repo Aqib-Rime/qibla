@@ -1,21 +1,21 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { Pressable, View } from "react-native"
-import { usePrayerTimes } from "../hooks/use-prayer-times"
-import { nextPrayer, PRAYER_ORDER } from "../lib/prayer"
-import { PrayerTimesNextCard } from "./prayer-times-next-card"
-import { PrayerTimesRow } from "./prayer-times-row"
-import { PrayerTimesSkeleton } from "./prayer-times-skeleton"
+import { Pressable, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { usePrayerTimes } from "../hooks/use-prayer-times";
+import { nextPrayer, PRAYER_ORDER } from "../lib/prayer";
+import { PrayerTimesNextCard } from "./prayer-times-next-card";
+import { PrayerTimesRow } from "./prayer-times-row";
+import { PrayerTimesSkeleton } from "./prayer-times-skeleton";
 
 type Props = {
-  lat: number
-  lng: number
-}
+  lat: number;
+  lng: number;
+};
 
 export function PrayerTimesTab({ lat, lng }: Props) {
-  const { data, isLoading, error, refetch } = usePrayerTimes({ lat, lng })
+  const { data, isLoading, error, refetch } = usePrayerTimes({ lat, lng });
 
-  if (isLoading) return <PrayerTimesSkeleton />
+  if (isLoading) return <PrayerTimesSkeleton />;
 
   if (error || !data) {
     return (
@@ -30,10 +30,10 @@ export function PrayerTimesTab({ lat, lng }: Props) {
           </Text>
         </Pressable>
       </View>
-    )
+    );
   }
 
-  const next = nextPrayer(data.timings)
+  const next = nextPrayer(data.timings);
 
   return (
     <View className="gap-s-3">
@@ -51,5 +51,5 @@ export function PrayerTimesTab({ lat, lng }: Props) {
         />
       ))}
     </View>
-  )
+  );
 }

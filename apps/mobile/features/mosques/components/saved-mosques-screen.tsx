@@ -1,24 +1,24 @@
-import { Text } from "@/components/ui/text"
-import { StatusBar } from "expo-status-bar"
-import { ScrollView, View } from "react-native"
-import { useSavedMosques } from "../hooks/use-mosques"
-import { SavedMosqueCard } from "./saved-mosque-card"
-import { SavedMosquesEmpty } from "./saved-mosques-empty"
-import { SavedMosquesHeader } from "./saved-mosques-header"
-import { SavedMosquesSkeleton } from "./saved-mosques-skeleton"
+import { StatusBar } from "expo-status-bar";
+import { ScrollView, View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { useSavedMosques } from "../hooks/use-mosques";
+import { SavedMosqueCard } from "./saved-mosque-card";
+import { SavedMosquesEmpty } from "./saved-mosques-empty";
+import { SavedMosquesHeader } from "./saved-mosques-header";
+import { SavedMosquesSkeleton } from "./saved-mosques-skeleton";
 
 function chunkPairs<T>(items: readonly T[]): [T, T | null][] {
-  const pairs: [T, T | null][] = []
+  const pairs: [T, T | null][] = [];
   for (let i = 0; i < items.length; i += 2) {
-    pairs.push([items[i] as T, items[i + 1] ?? null])
+    pairs.push([items[i] as T, items[i + 1] ?? null]);
   }
-  return pairs
+  return pairs;
 }
 
 export function SavedMosquesScreen() {
-  const { data, isLoading } = useSavedMosques()
-  const rows = data?.data ?? []
-  const pairs = chunkPairs(rows)
+  const { data, isLoading } = useSavedMosques();
+  const rows = data?.data ?? [];
+  const pairs = chunkPairs(rows);
 
   return (
     <View className="flex-1 bg-cream">
@@ -76,5 +76,5 @@ export function SavedMosquesScreen() {
         </ScrollView>
       )}
     </View>
-  )
+  );
 }

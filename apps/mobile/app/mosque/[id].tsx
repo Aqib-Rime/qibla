@@ -1,3 +1,3 @@
-import { MosqueDetailScreen } from "@/features/mosques"
+import { MosqueDetailScreen } from "@/features/mosques";
 
-export default MosqueDetailScreen
+export default MosqueDetailScreen;

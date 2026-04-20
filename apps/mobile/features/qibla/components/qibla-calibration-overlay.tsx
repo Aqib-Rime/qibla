@@ -1,10 +1,10 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { useEffect, useRef } from "react"
-import { Animated, View } from "react-native"
+import { useEffect, useRef } from "react";
+import { Animated, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 export function QiblaCalibrationOverlay() {
-  const progress = useRef(new Animated.Value(0)).current
+  const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const loop = Animated.loop(
@@ -12,20 +12,20 @@ export function QiblaCalibrationOverlay() {
         toValue: 1,
         duration: 2200,
         useNativeDriver: true,
-      })
-    )
-    loop.start()
-    return () => loop.stop()
-  }, [progress])
+      }),
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [progress]);
 
   const translateX = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: [-40, 40, -40, 40, -40],
-  })
+  });
   const translateY = progress.interpolate({
     inputRange: [0, 0.25, 0.5, 0.75, 1],
     outputRange: [0, -20, 0, 20, 0],
-  })
+  });
 
   return (
     <View className="absolute inset-0 items-center justify-center bg-cream/85 px-s-6">
@@ -48,5 +48,5 @@ export function QiblaCalibrationOverlay() {
         </Text>
       </View>
     </View>
-  )
+  );
 }

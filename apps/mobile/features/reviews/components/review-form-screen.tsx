@@ -1,43 +1,43 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { useMosque } from "@/features/mosques/hooks/use-mosques"
-import { router, useLocalSearchParams } from "expo-router"
-import { StatusBar } from "expo-status-bar"
-import { useState } from "react"
-import { TextInput, View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
-import { useCreateReview } from "../hooks/use-reviews"
-import { RatingStarsInput } from "./rating-stars-input"
-import { ReviewFormHeader } from "./review-form-header"
+import { router, useLocalSearchParams } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { TextInput, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { useMosque } from "@/features/mosques/hooks/use-mosques";
+import { useCreateReview } from "../hooks/use-reviews";
+import { RatingStarsInput } from "./rating-stars-input";
+import { ReviewFormHeader } from "./review-form-header";
 
 export function ReviewFormScreen() {
-  const { mosqueId } = useLocalSearchParams<{ mosqueId: string }>()
-  const { data } = useMosque(mosqueId)
-  const [rating, setRating] = useState(0)
-  const [body, setBody] = useState("")
-  const [error, setError] = useState<string | null>(null)
+  const { mosqueId } = useLocalSearchParams<{ mosqueId: string }>();
+  const { data } = useMosque(mosqueId);
+  const [rating, setRating] = useState(0);
+  const [body, setBody] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const create = useCreateReview()
+  const create = useCreateReview();
 
   const submit = async () => {
-    if (!mosqueId) return
+    if (!mosqueId) return;
     if (rating < 1) {
-      setError("Pick a rating between 1 and 5.")
-      return
+      setError("Pick a rating between 1 and 5.");
+      return;
     }
-    setError(null)
+    setError(null);
     try {
       await create.mutateAsync({
         mosqueId,
         rating,
         body: body.trim() || undefined,
-      })
-      router.back()
+      });
+      router.back();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not submit review")
+      setError(e instanceof Error ? e.message : "Could not submit review");
     }
-  }
+  };
 
   return (
     <View className="flex-1 bg-cream">
@@ -106,5 +106,5 @@ export function ReviewFormScreen() {
         </View>
       </KeyboardAwareScrollView>
     </View>
-  )
+  );
 }

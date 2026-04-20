@@ -1,4 +1,4 @@
-import type { ExpoConfig } from "expo/config"
+import type { ExpoConfig } from "expo/config";
 
 const config: ExpoConfig = {
   name: "Qibla",
@@ -81,6 +81,6 @@ const config: ExpoConfig = {
     reactCompiler: true,
     autolinkingModuleResolution: true,
   },
-}
+};
 
-export default config
+export default config;

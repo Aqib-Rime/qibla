@@ -1,7 +1,7 @@
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
-type Stat = { value: string | number; label: string }
+type Stat = { value: string | number; label: string };
 
 export function ProfileStats({ stats }: { stats: Stat[] }) {
   return (
@@ -20,5 +20,5 @@ export function ProfileStats({ stats }: { stats: Stat[] }) {
         </View>
       ))}
     </View>
-  )
+  );
 }

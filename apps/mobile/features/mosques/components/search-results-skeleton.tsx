@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function SearchResultsSkeleton() {
   return (
@@ -8,5 +8,5 @@ export function SearchResultsSkeleton() {
         <Skeleton key={i} className="h-16 w-full rounded-md" />
       ))}
     </View>
-  )
+  );
 }

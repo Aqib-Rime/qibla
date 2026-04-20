@@ -1,18 +1,18 @@
-import { MosqueSheetContent, type MosqueListItem } from "@/features/mosques"
 import BottomSheet, {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
-} from "@gorhom/bottom-sheet"
-import { forwardRef, useCallback, useMemo } from "react"
+} from "@gorhom/bottom-sheet";
+import { forwardRef, useCallback, useMemo } from "react";
+import { type MosqueListItem, MosqueSheetContent } from "@/features/mosques";
 
 type Props = {
-  mosque: MosqueListItem | null
-  onClose: () => void
-}
+  mosque: MosqueListItem | null;
+  onClose: () => void;
+};
 
 export const MapMosqueSheet = forwardRef<BottomSheet, Props>(
   function MapMosqueSheet({ mosque, onClose }, ref) {
-    const snapPoints = useMemo(() => ["32%", "85%"], [])
+    const snapPoints = useMemo(() => ["32%", "85%"], []);
 
     const renderBackdrop = useCallback(
       (props: BottomSheetBackdropProps) => (
@@ -24,8 +24,8 @@ export const MapMosqueSheet = forwardRef<BottomSheet, Props>(
           pressBehavior="collapse"
         />
       ),
-      []
-    )
+      [],
+    );
 
     return (
       <BottomSheet
@@ -40,6 +40,6 @@ export const MapMosqueSheet = forwardRef<BottomSheet, Props>(
       >
         {mosque ? <MosqueSheetContent mosque={mosque} /> : null}
       </BottomSheet>
-    )
-  }
-)
+    );
+  },
+);

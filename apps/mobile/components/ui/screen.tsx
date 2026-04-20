@@ -1,7 +1,7 @@
-import { cva, type VariantProps } from "class-variance-authority"
-import { StatusBar } from "expo-status-bar"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { cva, type VariantProps } from "class-variance-authority";
+import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const screenVariants = cva("flex-1", {
   variants: {
@@ -15,13 +15,13 @@ const screenVariants = cva("flex-1", {
   defaultVariants: {
     bg: "cream",
   },
-})
+});
 
 type Props = VariantProps<typeof screenVariants> & {
-  children: React.ReactNode
-  padded?: boolean
-  className?: string
-}
+  children: React.ReactNode;
+  padded?: boolean;
+  className?: string;
+};
 
 export function Screen({ children, bg, padded = true, className }: Props) {
   return (
@@ -31,5 +31,5 @@ export function Screen({ children, bg, padded = true, className }: Props) {
         <View className={padded ? "flex-1 px-s-6" : "flex-1"}>{children}</View>
       </SafeAreaView>
     </>
-  )
+  );
 }

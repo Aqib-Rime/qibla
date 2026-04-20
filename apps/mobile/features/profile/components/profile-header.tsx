@@ -1,11 +1,11 @@
-import { IconButton } from "@/components/ui/icon-button"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IconButton } from "@/components/ui/icon-button";
+import { Text } from "@/components/ui/text";
 
 export function ProfileHeader() {
-  const canGoBack = router.canGoBack()
+  const canGoBack = router.canGoBack();
 
   return (
     <SafeAreaView edges={["top"]} className="bg-cream">
@@ -25,5 +25,5 @@ export function ProfileHeader() {
         <View className="h-10 w-10" />
       </View>
     </SafeAreaView>
-  )
+  );
 }

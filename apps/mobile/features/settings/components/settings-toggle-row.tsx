@@ -1,16 +1,16 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { Switch, View } from "react-native"
+import { Switch, View } from "react-native";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  icon: IconName
-  label: string
-  description?: string
-  value: boolean
-  onValueChange: (v: boolean) => void
-  disabled?: boolean
-  isLast?: boolean
-}
+  icon: IconName;
+  label: string;
+  description?: string;
+  value: boolean;
+  onValueChange: (v: boolean) => void;
+  disabled?: boolean;
+  isLast?: boolean;
+};
 
 export function SettingsToggleRow({
   icon,
@@ -47,5 +47,5 @@ export function SettingsToggleRow({
         ios_backgroundColor="#d7ddd4"
       />
     </View>
-  )
+  );
 }

@@ -1,23 +1,23 @@
-import { Button } from "@/components/ui/button"
-import { Icon, type IconName } from "@/components/ui/icon"
-import { router } from "expo-router"
-import { StatusBar } from "expo-status-bar"
-import { ScrollView, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "@/components/ui/button";
+import { Icon, type IconName } from "@/components/ui/icon";
 import {
   countActive,
-  useMosqueFilters,
   type FilterKey,
-} from "../lib/filters-store"
-import { FilterModalHeader } from "./filter-modal-header"
-import { FilterToggleRow } from "./filter-toggle-row"
+  useMosqueFilters,
+} from "../lib/filters-store";
+import { FilterModalHeader } from "./filter-modal-header";
+import { FilterToggleRow } from "./filter-toggle-row";
 
 type FilterDef = {
-  key: FilterKey
-  icon: IconName
-  label: string
-  description: string
-}
+  key: FilterKey;
+  icon: IconName;
+  label: string;
+  description: string;
+};
 
 const FILTERS: FilterDef[] = [
   {
@@ -44,11 +44,11 @@ const FILTERS: FilterDef[] = [
     label: "Jummah",
     description: "Hosts Friday prayers",
   },
-]
+];
 
 export function FilterModalScreen() {
-  const filters = useMosqueFilters()
-  const active = countActive(filters)
+  const filters = useMosqueFilters();
+  const active = countActive(filters);
 
   return (
     <View className="flex-1 bg-cream">
@@ -97,5 +97,5 @@ export function FilterModalScreen() {
         </View>
       </SafeAreaView>
     </View>
-  )
+  );
 }

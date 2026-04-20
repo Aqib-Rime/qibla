@@ -1,44 +1,44 @@
-import * as Location from "expo-location"
-import { useEffect, useState } from "react"
+import * as Location from "expo-location";
+import { useEffect, useState } from "react";
 
-export type Position = { lat: number; lng: number }
+export type Position = { lat: number; lng: number };
 
 export function useUserLocation(): Position | null {
-  const [pos, setPos] = useState<Position | null>(null)
+  const [pos, setPos] = useState<Position | null>(null);
 
   useEffect(() => {
-    let cancelled = false
+    let cancelled = false;
 
-    ;(async () => {
+    (async () => {
       try {
-        const { status } = await Location.getForegroundPermissionsAsync()
-        if (status !== "granted") return
+        const { status } = await Location.getForegroundPermissionsAsync();
+        if (status !== "granted") return;
 
-        const last = await Location.getLastKnownPositionAsync()
-        if (cancelled) return
+        const last = await Location.getLastKnownPositionAsync();
+        if (cancelled) return;
         if (last) {
-          setPos({ lat: last.coords.latitude, lng: last.coords.longitude })
-          return
+          setPos({ lat: last.coords.latitude, lng: last.coords.longitude });
+          return;
         }
 
         const current = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Balanced,
-        })
+        });
         if (!cancelled) {
           setPos({
             lat: current.coords.latitude,
             lng: current.coords.longitude,
-          })
+          });
         }
       } catch {
         // Silent — callers fall back to their own default
       }
-    })()
+    })();
 
     return () => {
-      cancelled = true
-    }
-  }, [])
+      cancelled = true;
+    };
+  }, []);
 
-  return pos
+  return pos;
 }

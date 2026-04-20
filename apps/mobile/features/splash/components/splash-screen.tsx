@@ -1,12 +1,12 @@
-import { Text } from "@/components/ui/text"
-import { StatusBar } from "expo-status-bar"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { useSplashRouting } from "../hooks/use-splash-routing"
-import { SplashPulseLogo } from "./splash-pulse-logo"
+import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Text } from "@/components/ui/text";
+import { useSplashRouting } from "../hooks/use-splash-routing";
+import { SplashPulseLogo } from "./splash-pulse-logo";
 
 export function SplashScreen() {
-  useSplashRouting()
+  useSplashRouting();
 
   return (
     <>
@@ -25,5 +25,5 @@ export function SplashScreen() {
         </View>
       </SafeAreaView>
     </>
-  )
+  );
 }

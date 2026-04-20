@@ -1,5 +1,5 @@
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
 const ROWS = [
   { name: "Fajr", time: "4:42", state: "past" },
@@ -7,15 +7,15 @@ const ROWS = [
   { name: "Asr", time: "3:42", state: "next" },
   { name: "Maghrib", time: "5:58", state: "" },
   { name: "Isha", time: "7:20", state: "" },
-] as const
+] as const;
 
 export function ArtTimes() {
   return (
     <View className="flex-1 bg-[#f5efd9] p-s-4">
       <View className="gap-s-2 mt-s-3">
         {ROWS.map((r) => {
-          const isNext = r.state === "next"
-          const isPast = r.state === "past"
+          const isNext = r.state === "next";
+          const isPast = r.state === "past";
           return (
             <View
               key={r.name}
@@ -37,9 +37,9 @@ export function ArtTimes() {
                 {r.time}
               </Text>
             </View>
-          )
+          );
         })}
       </View>
     </View>
-  )
+  );
 }

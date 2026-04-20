@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { View } from "react-native"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 export function SavedMosquesEmpty() {
   return (
@@ -23,5 +23,5 @@ export function SavedMosquesEmpty() {
         />
       </View>
     </View>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
-import { formatTime12, PRAYER_LABEL, type PrayerName } from "../lib/prayer"
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { formatTime12, PRAYER_LABEL, type PrayerName } from "../lib/prayer";
 
 type Props = {
-  name: PrayerName
-  time: string
-  active: boolean
-}
+  name: PrayerName;
+  time: string;
+  active: boolean;
+};
 
 export function PrayerTimesRow({ name, time, active }: Props) {
   return (
@@ -22,5 +22,5 @@ export function PrayerTimesRow({ name, time, active }: Props) {
         {formatTime12(time)}
       </Text>
     </View>
-  )
+  );
 }

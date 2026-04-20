@@ -1,24 +1,24 @@
-import { useHydrateSettings, useSettingsStore } from "@/features/settings"
-import { useSession } from "@/lib/auth"
-import { router } from "expo-router"
-import { StatusBar } from "expo-status-bar"
-import { ScrollView, View } from "react-native"
-import { useProfileStats } from "../hooks/use-profile-stats"
-import { ProfileHeader } from "./profile-header"
-import { ProfileHeroCard } from "./profile-hero-card"
-import { ProfileRow } from "./profile-row"
-import { ProfileSection } from "./profile-section"
-import { ProfileSignOut, ProfileVersion } from "./profile-sign-out"
-import { ProfileStats } from "./profile-stats"
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { ScrollView, View } from "react-native";
+import { useHydrateSettings, useSettingsStore } from "@/features/settings";
+import { useSession } from "@/lib/auth";
+import { useProfileStats } from "../hooks/use-profile-stats";
+import { ProfileHeader } from "./profile-header";
+import { ProfileHeroCard } from "./profile-hero-card";
+import { ProfileRow } from "./profile-row";
+import { ProfileSection } from "./profile-section";
+import { ProfileSignOut, ProfileVersion } from "./profile-sign-out";
+import { ProfileStats } from "./profile-stats";
 
 export function ProfileScreen() {
-  useHydrateSettings()
-  const { data: session } = useSession()
-  const stats = useProfileStats()
-  const prayerReminders = useSettingsStore((s) => s.prayerReminders)
+  useHydrateSettings();
+  const { data: session } = useSession();
+  const stats = useProfileStats();
+  const prayerReminders = useSettingsStore((s) => s.prayerReminders);
 
-  const name = session?.user?.name ?? "Guest"
-  const email = session?.user?.email ?? ""
+  const name = session?.user?.name ?? "Guest";
+  const email = session?.user?.email ?? "";
 
   return (
     <View className="flex-1 bg-cream">
@@ -101,5 +101,5 @@ export function ProfileScreen() {
         <ProfileVersion />
       </ScrollView>
     </View>
-  )
+  );
 }

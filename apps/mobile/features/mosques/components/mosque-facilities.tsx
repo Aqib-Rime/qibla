@@ -1,16 +1,16 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { useMemo } from "react"
-import { View } from "react-native"
-import { resolveFacilities } from "../lib/facilities"
+import { useMemo } from "react";
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { resolveFacilities } from "../lib/facilities";
 
 export function MosqueFacilities({
   facilities,
 }: {
-  facilities: readonly string[]
+  facilities: readonly string[];
 }) {
-  const resolved = useMemo(() => resolveFacilities(facilities), [facilities])
-  if (!resolved.length) return null
+  const resolved = useMemo(() => resolveFacilities(facilities), [facilities]);
+  if (!resolved.length) return null;
 
   return (
     <View>
@@ -29,5 +29,5 @@ export function MosqueFacilities({
         ))}
       </View>
     </View>
-  )
+  );
 }

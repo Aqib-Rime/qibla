@@ -1,21 +1,21 @@
-import { Text } from "@/components/ui/text"
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet"
-import { useMemo } from "react"
-import { View } from "react-native"
-import { useSavedMosques } from "../hooks/use-mosques"
-import type { MosqueListItem } from "../lib/types"
-import { MosqueAddressCard } from "./mosque-address-card"
-import { MosqueFacilities } from "./mosque-facilities"
-import { MosqueMetaRow } from "./mosque-meta-row"
-import { MosqueSaveButton } from "./mosque-save-button"
-import { MosqueSheetActions } from "./mosque-sheet-actions"
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useMemo } from "react";
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { useSavedMosques } from "../hooks/use-mosques";
+import type { MosqueListItem } from "../lib/types";
+import { MosqueAddressCard } from "./mosque-address-card";
+import { MosqueFacilities } from "./mosque-facilities";
+import { MosqueMetaRow } from "./mosque-meta-row";
+import { MosqueSaveButton } from "./mosque-save-button";
+import { MosqueSheetActions } from "./mosque-sheet-actions";
 
 export function MosqueSheetContent({ mosque }: { mosque: MosqueListItem }) {
-  const saved = useSavedMosques()
+  const saved = useSavedMosques();
   const isSaved = useMemo(
     () => Boolean(saved.data?.data.some((m) => m.id === mosque.id)),
-    [saved.data, mosque.id]
-  )
+    [saved.data, mosque.id],
+  );
 
   return (
     <BottomSheetScrollView
@@ -73,5 +73,5 @@ export function MosqueSheetContent({ mosque }: { mosque: MosqueListItem }) {
         </View>
       </View>
     </BottomSheetScrollView>
-  )
+  );
 }

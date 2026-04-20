@@ -1,12 +1,12 @@
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
-import { formatTime12, PRAYER_LABEL, type PrayerName } from "../lib/prayer"
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { formatTime12, PRAYER_LABEL, type PrayerName } from "../lib/prayer";
 
 type Props = {
-  name: PrayerName
-  time: string
-  tomorrow: boolean
-}
+  name: PrayerName;
+  time: string;
+  tomorrow: boolean;
+};
 
 export function PrayerTimesNextCard({ name, time, tomorrow }: Props) {
   return (
@@ -23,5 +23,5 @@ export function PrayerTimesNextCard({ name, time, tomorrow }: Props) {
         </Text>
       </View>
     </View>
-  )
+  );
 }

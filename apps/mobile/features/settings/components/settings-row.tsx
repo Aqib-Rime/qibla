@@ -1,14 +1,14 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { Pressable, View } from "react-native"
+import { Pressable, View } from "react-native";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  icon: IconName
-  label: string
-  right?: string
-  onPress?: () => void
-  isLast?: boolean
-}
+  icon: IconName;
+  label: string;
+  right?: string;
+  onPress?: () => void;
+  isLast?: boolean;
+};
 
 export function SettingsRow({ icon, label, right, onPress, isLast }: Props) {
   return (
@@ -33,5 +33,5 @@ export function SettingsRow({ icon, label, right, onPress, isLast }: Props) {
       ) : null}
       <Icon name="chevron" size={14} color="#6b7a70" />
     </Pressable>
-  )
+  );
 }

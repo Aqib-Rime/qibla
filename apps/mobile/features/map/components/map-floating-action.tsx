@@ -1,15 +1,15 @@
-import { IconButton } from "@/components/ui/icon-button"
-import type { IconName } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import type { IconName } from "@/components/ui/icon";
+import { IconButton } from "@/components/ui/icon-button";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  icon: IconName
-  onPress: () => void
-  disabled?: boolean
-  accessibilityLabel: string
-  badgeCount?: number
-}
+  icon: IconName;
+  onPress: () => void;
+  disabled?: boolean;
+  accessibilityLabel: string;
+  badgeCount?: number;
+};
 
 export function MapFloatingAction({
   icon,
@@ -27,9 +27,9 @@ export function MapFloatingAction({
       disabled={disabled}
       accessibilityLabel={accessibilityLabel}
     />
-  )
+  );
 
-  if (!badgeCount || badgeCount <= 0) return button
+  if (!badgeCount || badgeCount <= 0) return button;
 
   return (
     <View>
@@ -40,5 +40,5 @@ export function MapFloatingAction({
         </Text>
       </View>
     </View>
-  )
+  );
 }

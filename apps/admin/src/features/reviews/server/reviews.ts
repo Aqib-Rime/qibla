@@ -4,10 +4,7 @@ import { mosque, review } from "@qibla/db/schema/mosque";
 import { createServerFn } from "@tanstack/react-start";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { adminMiddleware } from "@/middleware/auth-middleware";
-import {
-  listReviewsSchema,
-  setReviewStatusSchema,
-} from "../lib/schemas";
+import { listReviewsSchema, setReviewStatusSchema } from "../lib/schemas";
 
 async function recomputeMosqueRating(mosqueId: string) {
   const [stats] = await db

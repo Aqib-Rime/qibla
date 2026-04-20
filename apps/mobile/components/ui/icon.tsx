@@ -1,4 +1,4 @@
-import type { LucideProps } from "lucide-react-native"
+import type { LucideProps } from "lucide-react-native";
 import {
   ArrowUpRight,
   BellRing,
@@ -16,9 +16,9 @@ import {
   MapPin,
   MoreHorizontal,
   ParkingSquare,
-  Route,
   Pencil,
   Phone,
+  Route,
   Search,
   Settings2,
   Share2,
@@ -30,7 +30,7 @@ import {
   Users,
   Wifi,
   X,
-} from "lucide-react-native"
+} from "lucide-react-native";
 
 export const iconMap = {
   ac: Snowflake,
@@ -64,9 +64,9 @@ export const iconMap = {
   users: Users,
   wifi: Wifi,
   x: X,
-} as const
+} as const;
 
-export type IconName = keyof typeof iconMap
+export type IconName = keyof typeof iconMap;
 
 export function Icon({
   name,
@@ -74,6 +74,6 @@ export function Icon({
   color = "currentColor",
   ...rest
 }: LucideProps & { name: IconName }) {
-  const Cmp = iconMap[name]
-  return <Cmp size={size} color={color} {...rest} />
+  const Cmp = iconMap[name];
+  return <Cmp size={size} color={color} {...rest} />;
 }

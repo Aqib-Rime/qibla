@@ -1,13 +1,13 @@
-import { Icon } from "@/components/ui/icon"
-import { IconButton } from "@/components/ui/icon-button"
-import { router } from "expo-router"
-import { Pressable, TextInput, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { router } from "expo-router";
+import { Pressable, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "@/components/ui/icon";
+import { IconButton } from "@/components/ui/icon-button";
 
 type Props = {
-  value: string
-  onChange: (v: string) => void
-}
+  value: string;
+  onChange: (v: string) => void;
+};
 
 const FIELD_SHADOW = {
   shadowColor: "#1a2a22",
@@ -15,7 +15,7 @@ const FIELD_SHADOW = {
   shadowOpacity: 0.06,
   shadowRadius: 6,
   elevation: 2,
-}
+};
 
 export function SearchInputBar({ value, onChange }: Props) {
   return (
@@ -56,5 +56,5 @@ export function SearchInputBar({ value, onChange }: Props) {
         </View>
       </View>
     </SafeAreaView>
-  )
+  );
 }

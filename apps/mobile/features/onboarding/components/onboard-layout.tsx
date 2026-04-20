@@ -1,26 +1,26 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { Screen } from "@/components/ui/screen"
-import { Text } from "@/components/ui/text"
-import { Link, useRouter } from "expo-router"
-import { Pressable, View } from "react-native"
+import { Link, useRouter } from "expo-router";
+import { Pressable, View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Screen } from "@/components/ui/screen";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  step: 1 | 2 | 3
-  title: string
-  body: string
-  art: React.ReactNode
-}
+  step: 1 | 2 | 3;
+  title: string;
+  body: string;
+  art: React.ReactNode;
+};
 
 const NEXT = {
   1: "/onboard/2",
   2: "/onboard/3",
   3: "/onboard/permission",
-} as const
+} as const;
 
 export function OnboardLayout({ step, title, body, art }: Props) {
-  const router = useRouter()
-  const next = NEXT[step]
+  const router = useRouter();
+  const next = NEXT[step];
 
   return (
     <Screen bg="cream">
@@ -65,5 +65,5 @@ export function OnboardLayout({ step, title, body, art }: Props) {
         />
       </View>
     </Screen>
-  )
+  );
 }

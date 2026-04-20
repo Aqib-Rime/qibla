@@ -6,10 +6,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@qibla/ui/components/dropdown-menu";
-import { IconCheck, IconDots, IconEyeOff, IconRotate } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconDots,
+  IconEyeOff,
+  IconRotate,
+} from "@tabler/icons-react";
 import { toast } from "sonner";
-import type { ReviewStatus } from "@/features/reviews/lib/schemas";
 import { useSetReviewStatus } from "@/features/reviews/hooks/use-reviews";
+import type { ReviewStatus } from "@/features/reviews/lib/schemas";
 
 type Props = {
   id: string;

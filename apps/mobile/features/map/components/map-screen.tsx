@@ -1,51 +1,46 @@
+import type BottomSheet from "@gorhom/bottom-sheet";
+import { StatusBar } from "expo-status-bar";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import {
   applyFilters,
   countActive,
+  type MosqueListItem,
   useMosqueFilters,
   useMosquesList,
-  type MosqueListItem,
-} from "@/features/mosques"
-import { usePrayerTimes } from "@/features/prayer-times"
-import type BottomSheet from "@gorhom/bottom-sheet"
-import { StatusBar } from "expo-status-bar"
-import { useCallback, useMemo, useRef, useState } from "react"
-import { Pressable, StyleSheet, View } from "react-native"
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
-import { useUserLocation } from "@/lib/use-user-location"
-import { DHAKA_REGION } from "../lib/region"
-import { MapMarkers } from "./map-markers"
-import { MapMosqueSheet } from "./map-mosque-sheet"
-import { MapTopOverlay } from "./map-top-overlay"
+} from "@/features/mosques";
+import { usePrayerTimes } from "@/features/prayer-times";
+import { useUserLocation } from "@/lib/use-user-location";
+import { DHAKA_REGION } from "../lib/region";
+import { MapMarkers } from "./map-markers";
+import { MapMosqueSheet } from "./map-mosque-sheet";
+import { MapTopOverlay } from "./map-top-overlay";
 
 export function MapScreen() {
-  const {
-    data,
-    isLoading,
-    error,
-    refetch,
-  } = useMosquesList({ pageSize: 50 })
-  const filters = useMosqueFilters()
-  const activeFilters = countActive(filters)
+  const { data, isLoading, error, refetch } = useMosquesList({ pageSize: 50 });
+  const filters = useMosqueFilters();
+  const activeFilters = countActive(filters);
   const mosques = useMemo(
     () => applyFilters(data?.data ?? [], filters),
-    [data, filters]
-  )
+    [data, filters],
+  );
 
-  const [selected, setSelected] = useState<MosqueListItem | null>(null)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const sheetRef = useRef<BottomSheet>(null)
-  const mapRef = useRef<MapView>(null)
+  const [selected, setSelected] = useState<MosqueListItem | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const sheetRef = useRef<BottomSheet>(null);
+  const mapRef = useRef<MapView>(null);
 
-  const userPos = useUserLocation()
+  const userPos = useUserLocation();
   const coords = userPos ?? {
     lat: DHAKA_REGION.latitude,
     lng: DHAKA_REGION.longitude,
-  }
-  const { data: prayer } = usePrayerTimes(coords)
+  };
+  const { data: prayer } = usePrayerTimes(coords);
 
   const handleMarkerPress = useCallback((m: MosqueListItem) => {
-    setSelected(m)
-    sheetRef.current?.snapToIndex(0)
+    setSelected(m);
+    sheetRef.current?.snapToIndex(0);
     mapRef.current?.animateToRegion(
       {
         latitude: m.lat,
@@ -53,20 +48,20 @@ export function MapScreen() {
         latitudeDelta: 0.02,
         longitudeDelta: 0.02,
       },
-      400
-    )
-  }, [])
+      400,
+    );
+  }, []);
 
   const handleCloseSheet = useCallback(() => {
-    sheetRef.current?.close()
-    setMenuOpen(false)
-  }, [])
+    sheetRef.current?.close();
+    setMenuOpen(false);
+  }, []);
 
   const handleRecenter = useCallback(() => {
     const target = userPos ?? {
       lat: DHAKA_REGION.latitude,
       lng: DHAKA_REGION.longitude,
-    }
+    };
     mapRef.current?.animateToRegion(
       {
         latitude: target.lat,
@@ -74,9 +69,9 @@ export function MapScreen() {
         latitudeDelta: 0.04,
         longitudeDelta: 0.04,
       },
-      500
-    )
-  }, [userPos])
+      500,
+    );
+  }, [userPos]);
 
   return (
     <View className="flex-1 bg-cream">
@@ -123,5 +118,5 @@ export function MapScreen() {
         onClose={() => setSelected(null)}
       />
     </View>
-  )
+  );
 }

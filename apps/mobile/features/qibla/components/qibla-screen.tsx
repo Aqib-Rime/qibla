@@ -1,66 +1,66 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Text } from "@/components/ui/text"
-import { useUserLocation } from "@/lib/use-user-location"
-import * as Haptics from "expo-haptics"
-import { StatusBar } from "expo-status-bar"
-import { useEffect, useMemo, useRef, useState } from "react"
-import { View } from "react-native"
-import { useDeviceHeading } from "../hooks/use-device-heading"
+import * as Haptics from "expo-haptics";
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { View } from "react-native";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Text } from "@/components/ui/text";
+import { useUserLocation } from "@/lib/use-user-location";
+import { useDeviceHeading } from "../hooks/use-device-heading";
 import {
   bearingDelta,
   bearingToMecca,
   distanceToMeccaKm,
-} from "../lib/bearing"
-import { QiblaCalibrationOverlay } from "./qibla-calibration-overlay"
-import { QiblaDial } from "./qibla-dial"
-import { QiblaHeader } from "./qibla-header"
-import { QiblaInfoGrid } from "./qibla-info-grid"
-import { QiblaLocationGate } from "./qibla-location-gate"
-import { QiblaSensorError } from "./qibla-sensor-error"
+} from "../lib/bearing";
+import { QiblaCalibrationOverlay } from "./qibla-calibration-overlay";
+import { QiblaDial } from "./qibla-dial";
+import { QiblaHeader } from "./qibla-header";
+import { QiblaInfoGrid } from "./qibla-info-grid";
+import { QiblaLocationGate } from "./qibla-location-gate";
+import { QiblaSensorError } from "./qibla-sensor-error";
 
-const ALIGNMENT_THRESHOLD = 5
+const ALIGNMENT_THRESHOLD = 5;
 
 export function QiblaScreen() {
-  const [permissionKey, setPermissionKey] = useState(0)
-  const userPos = useUserLocation()
-  const heading = useDeviceHeading()
+  const [permissionKey, setPermissionKey] = useState(0);
+  const userPos = useUserLocation();
+  const heading = useDeviceHeading();
 
   const qiblaBearing = useMemo(
     () => (userPos ? bearingToMecca(userPos) : null),
-    [userPos]
-  )
+    [userPos],
+  );
   const distanceKm = useMemo(
     () => (userPos ? distanceToMeccaKm(userPos) : null),
-    [userPos]
-  )
+    [userPos],
+  );
 
   const aligned =
     heading && qiblaBearing != null
       ? Math.abs(bearingDelta(qiblaBearing, heading.heading)) <=
         ALIGNMENT_THRESHOLD
-      : false
+      : false;
 
-  const prevAlignedRef = useRef(false)
+  const prevAlignedRef = useRef(false);
   useEffect(() => {
     if (aligned && !prevAlignedRef.current) {
-      Haptics.notificationAsync(
-        Haptics.NotificationFeedbackType.Success
-      ).catch(() => {})
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
+        () => {},
+      );
     }
-    prevAlignedRef.current = aligned
-  }, [aligned])
+    prevAlignedRef.current = aligned;
+  }, [aligned]);
 
   // Location permission may have been denied during onboarding.
   // If after a short wait we still have no userPos, show the gate.
-  const [showGate, setShowGate] = useState(false)
+  const [showGate, setShowGate] = useState(false);
   useEffect(() => {
     if (userPos) {
-      setShowGate(false)
-      return
+      setShowGate(false);
+      return;
     }
-    const t = setTimeout(() => setShowGate(true), 1200)
-    return () => clearTimeout(t)
-  }, [userPos, permissionKey])
+    const t = setTimeout(() => setShowGate(true), 1200);
+    return () => clearTimeout(t);
+  }, [userPos, permissionKey]);
 
   return (
     <View className="flex-1 bg-cream">
@@ -114,5 +114,5 @@ export function QiblaScreen() {
         </View>
       )}
     </View>
-  )
+  );
 }

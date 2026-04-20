@@ -1,46 +1,49 @@
-import { Text } from "@/components/ui/text"
-import { signOut, useSession } from "@/lib/auth"
-import * as Linking from "expo-linking"
-import * as Location from "expo-location"
-import { router } from "expo-router"
-import { StatusBar } from "expo-status-bar"
-import { useEffect, useState } from "react"
-import { Alert, Pressable, ScrollView, Share, View } from "react-native"
-import { useHydrateSettings, useSettingsStore } from "../hooks/use-settings-store"
+import * as Linking from "expo-linking";
+import * as Location from "expo-location";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import { Alert, Pressable, ScrollView, Share, View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { signOut, useSession } from "@/lib/auth";
+import {
+  useHydrateSettings,
+  useSettingsStore,
+} from "../hooks/use-settings-store";
 import {
   cancelPrayerReminders,
   ensureNotificationPermission,
-} from "../lib/notifications"
-import { SettingsHeader } from "./settings-header"
-import { SettingsRow } from "./settings-row"
-import { SettingsSection } from "./settings-section"
-import { SettingsToggleRow } from "./settings-toggle-row"
+} from "../lib/notifications";
+import { SettingsHeader } from "./settings-header";
+import { SettingsRow } from "./settings-row";
+import { SettingsSection } from "./settings-section";
+import { SettingsToggleRow } from "./settings-toggle-row";
 
 export function SettingsScreen() {
-  useHydrateSettings()
-  const { data: session } = useSession()
-  const prayerReminders = useSettingsStore((s) => s.prayerReminders)
-  const setPrayerReminders = useSettingsStore((s) => s.setPrayerReminders)
+  useHydrateSettings();
+  const { data: session } = useSession();
+  const prayerReminders = useSettingsStore((s) => s.prayerReminders);
+  const setPrayerReminders = useSettingsStore((s) => s.setPrayerReminders);
 
-  const [locationStatus, setLocationStatus] = useState<"granted" | "denied" | "unknown">(
-    "unknown"
-  )
+  const [locationStatus, setLocationStatus] = useState<
+    "granted" | "denied" | "unknown"
+  >("unknown");
 
   useEffect(() => {
     Location.getForegroundPermissionsAsync()
       .then((res) =>
-        setLocationStatus(res.status === "granted" ? "granted" : "denied")
+        setLocationStatus(res.status === "granted" ? "granted" : "denied"),
       )
-      .catch(() => setLocationStatus("unknown"))
-  }, [])
+      .catch(() => setLocationStatus("unknown"));
+  }, []);
 
   const onTogglePrayerReminders = async (next: boolean) => {
     if (!next) {
-      setPrayerReminders(false)
-      await cancelPrayerReminders()
-      return
+      setPrayerReminders(false);
+      await cancelPrayerReminders();
+      return;
     }
-    const granted = await ensureNotificationPermission()
+    const granted = await ensureNotificationPermission();
     if (!granted) {
       Alert.alert(
         "Notifications disabled",
@@ -48,26 +51,26 @@ export function SettingsScreen() {
         [
           { text: "Not now", style: "cancel" },
           { text: "Open Settings", onPress: () => Linking.openSettings() },
-        ]
-      )
-      return
+        ],
+      );
+      return;
     }
-    setPrayerReminders(true)
-  }
+    setPrayerReminders(true);
+  };
 
   const onInvite = () => {
     Share.share({
       message: "Try Qibla — find nearby mosques and prayer times.",
-    }).catch(() => {})
-  }
+    }).catch(() => {});
+  };
 
   const onSignOut = async () => {
     try {
-      await signOut()
+      await signOut();
     } finally {
-      router.replace("/(auth)/sign-in")
+      router.replace("/(auth)/sign-in");
     }
-  }
+  };
 
   return (
     <View className="flex-1 bg-cream">
@@ -147,5 +150,5 @@ export function SettingsScreen() {
         </View>
       </ScrollView>
     </View>
-  )
+  );
 }

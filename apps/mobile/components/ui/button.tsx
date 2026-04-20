@@ -1,13 +1,13 @@
-import { cva, type VariantProps } from "class-variance-authority"
-import * as Haptics from "expo-haptics"
-import { forwardRef } from "react"
+import { cva, type VariantProps } from "class-variance-authority";
+import * as Haptics from "expo-haptics";
+import { forwardRef } from "react";
 import {
   ActivityIndicator,
   Pressable,
   type PressableProps,
   type View,
-} from "react-native"
-import { Text } from "./text"
+} from "react-native";
+import { Text } from "./text";
 
 const buttonVariants = cva(
   "flex-row items-center justify-center gap-s-2 rounded-md px-s-5",
@@ -32,8 +32,8 @@ const buttonVariants = cva(
       variant: "primary",
       size: "md",
     },
-  }
-)
+  },
+);
 
 const labelVariants = cva("font-sans-semibold", {
   variants: {
@@ -53,20 +53,20 @@ const labelVariants = cva("font-sans-semibold", {
     variant: "primary",
     size: "md",
   },
-})
+});
 
-export type ButtonVariant = VariantProps<typeof buttonVariants>["variant"]
-export type ButtonSize = VariantProps<typeof buttonVariants>["size"]
+export type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
+export type ButtonSize = VariantProps<typeof buttonVariants>["size"];
 
 type ButtonProps = Omit<PressableProps, "children"> & {
-  label: string
-  leading?: React.ReactNode
-  trailing?: React.ReactNode
-  variant?: ButtonVariant
-  size?: ButtonSize
-  loading?: boolean
-  className?: string
-}
+  label: string;
+  leading?: React.ReactNode;
+  trailing?: React.ReactNode;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  loading?: boolean;
+  className?: string;
+};
 
 export const Button = forwardRef<View, ButtonProps>(function Button(
   {
@@ -81,16 +81,16 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
     onPress,
     ...rest
   },
-  ref
+  ref,
 ) {
-  const isDisabled = disabled || loading
+  const isDisabled = disabled || loading;
   return (
     <Pressable
       ref={ref}
       disabled={isDisabled}
       onPress={(e) => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {})
-        onPress?.(e)
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+        onPress?.(e);
       }}
       className={buttonVariants({
         variant,
@@ -106,7 +106,9 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === "outline" || variant === "subtle" ? "#2e5d45" : "#fff"}
+          color={
+            variant === "outline" || variant === "subtle" ? "#2e5d45" : "#fff"
+          }
         />
       ) : (
         <>
@@ -116,5 +118,5 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
         </>
       )}
     </Pressable>
-  )
-})
+  );
+});

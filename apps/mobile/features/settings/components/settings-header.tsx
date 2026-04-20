@@ -1,8 +1,8 @@
-import { IconButton } from "@/components/ui/icon-button"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IconButton } from "@/components/ui/icon-button";
+import { Text } from "@/components/ui/text";
 
 export function SettingsHeader() {
   return (
@@ -19,5 +19,5 @@ export function SettingsHeader() {
         <View className="h-10 w-10" />
       </View>
     </SafeAreaView>
-  )
+  );
 }

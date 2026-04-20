@@ -1,31 +1,31 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { Screen } from "@/components/ui/screen"
-import { Text } from "@/components/ui/text"
-import * as Location from "expo-location"
-import { useRouter } from "expo-router"
-import { useState } from "react"
-import { Pressable, View } from "react-native"
-import { markOnboardingCompleted } from "../lib/storage"
-import { PermissionBenefits } from "./permission-benefits"
-import { PermissionPulse } from "./permission-pulse"
+import * as Location from "expo-location";
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { Pressable, View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Screen } from "@/components/ui/screen";
+import { Text } from "@/components/ui/text";
+import { markOnboardingCompleted } from "../lib/storage";
+import { PermissionBenefits } from "./permission-benefits";
+import { PermissionPulse } from "./permission-pulse";
 
 export function PermissionScreen() {
-  const router = useRouter()
-  const [asking, setAsking] = useState(false)
+  const router = useRouter();
+  const [asking, setAsking] = useState(false);
 
   const continueToAuth = async () => {
-    await markOnboardingCompleted()
-    router.replace("/(auth)/sign-in")
-  }
+    await markOnboardingCompleted();
+    router.replace("/(auth)/sign-in");
+  };
 
   const requestPermission = async () => {
-    setAsking(true)
+    setAsking(true);
     try {
-      await Location.requestForegroundPermissionsAsync()
+      await Location.requestForegroundPermissionsAsync();
     } catch {}
-    await continueToAuth()
-  }
+    await continueToAuth();
+  };
 
   return (
     <Screen bg="cream">
@@ -49,7 +49,9 @@ export function PermissionScreen() {
       <View className="gap-s-2 pb-s-8 pt-s-6">
         <Button
           label="Allow location"
-          leading={!asking ? <Icon name="pin" size={16} color="#fff" /> : undefined}
+          leading={
+            !asking ? <Icon name="pin" size={16} color="#fff" /> : undefined
+          }
           loading={asking}
           onPress={requestPermission}
         />
@@ -60,5 +62,5 @@ export function PermissionScreen() {
         </Pressable>
       </View>
     </Screen>
-  )
+  );
 }

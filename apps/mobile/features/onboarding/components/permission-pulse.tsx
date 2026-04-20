@@ -1,6 +1,6 @@
-import { Icon } from "@/components/ui/icon"
-import { useEffect, useRef } from "react"
-import { Animated, View } from "react-native"
+import { useEffect, useRef } from "react";
+import { Animated, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
 
 const ringStyle = (anim: Animated.Value) => ({
   transform: [
@@ -9,11 +9,11 @@ const ringStyle = (anim: Animated.Value) => ({
     },
   ],
   opacity: anim.interpolate({ inputRange: [0, 1], outputRange: [0.9, 0] }),
-})
+});
 
 export function PermissionPulse() {
-  const ring1 = useRef(new Animated.Value(0)).current
-  const ring2 = useRef(new Animated.Value(0)).current
+  const ring1 = useRef(new Animated.Value(0)).current;
+  const ring2 = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const loop1 = Animated.loop(
@@ -21,23 +21,23 @@ export function PermissionPulse() {
         toValue: 1,
         duration: 2400,
         useNativeDriver: true,
-      })
-    )
+      }),
+    );
     const loop2 = Animated.loop(
       Animated.timing(ring2, {
         toValue: 1,
         duration: 2400,
         useNativeDriver: true,
-      })
-    )
-    loop1.start()
-    const t = setTimeout(() => loop2.start(), 400)
+      }),
+    );
+    loop1.start();
+    const t = setTimeout(() => loop2.start(), 400);
     return () => {
-      loop1.stop()
-      loop2.stop()
-      clearTimeout(t)
-    }
-  }, [ring1, ring2])
+      loop1.stop();
+      loop2.stop();
+      clearTimeout(t);
+    };
+  }, [ring1, ring2]);
 
   return (
     <View
@@ -66,5 +66,5 @@ export function PermissionPulse() {
         <Icon name="pin" size={30} color="#fff" />
       </View>
     </View>
-  )
+  );
 }

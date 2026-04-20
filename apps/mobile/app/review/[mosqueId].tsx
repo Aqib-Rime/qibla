@@ -1,3 +1,3 @@
-import { ReviewFormScreen } from "@/features/reviews"
+import { ReviewFormScreen } from "@/features/reviews";
 
-export default ReviewFormScreen
+export default ReviewFormScreen;

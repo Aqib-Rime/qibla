@@ -1,16 +1,16 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { Pressable, View } from "react-native"
+import { router } from "expo-router";
+import { Pressable, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  id: string
-  name: string
-  subtitle: string | null
-  area: string | null
-  rating: number | null
-  reviewsCount: number
-}
+  id: string;
+  name: string;
+  subtitle: string | null;
+  area: string | null;
+  rating: number | null;
+  reviewsCount: number;
+};
 
 export function SavedMosqueCard({
   id,
@@ -44,10 +44,13 @@ export function SavedMosqueCard({
           <Icon name="star" size={12} color="#b68a3c" />
           <Text variant="caption">
             {rating.toFixed(1)}
-            <Text variant="caption" tone="muted"> · {reviewsCount}</Text>
+            <Text variant="caption" tone="muted">
+              {" "}
+              · {reviewsCount}
+            </Text>
           </Text>
         </View>
       ) : null}
     </Pressable>
-  )
+  );
 }

@@ -1,14 +1,14 @@
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
-import type { Imam, Mosque } from "../lib/types"
-import { MosqueAddressCard } from "./mosque-address-card"
-import { MosqueFacilities } from "./mosque-facilities"
-import { MosqueImamCard } from "./mosque-imam-card"
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
+import type { Imam, Mosque } from "../lib/types";
+import { MosqueAddressCard } from "./mosque-address-card";
+import { MosqueFacilities } from "./mosque-facilities";
+import { MosqueImamCard } from "./mosque-imam-card";
 
 type Props = {
-  mosque: Mosque
-  imam: Imam
-}
+  mosque: Mosque;
+  imam: Imam;
+};
 
 export function MosqueOverviewTab({ mosque, imam }: Props) {
   return (
@@ -28,5 +28,5 @@ export function MosqueOverviewTab({ mosque, imam }: Props) {
       <MosqueImamCard imam={imam} />
       <MosqueFacilities facilities={mosque.facilities} />
     </View>
-  )
+  );
 }

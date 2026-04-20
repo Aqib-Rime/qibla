@@ -1,10 +1,10 @@
-import { MosqueMark } from "@/components/ui/mosque-mark"
-import { useEffect, useRef } from "react"
-import { Animated, View } from "react-native"
+import { useEffect, useRef } from "react";
+import { Animated, View } from "react-native";
+import { MosqueMark } from "@/components/ui/mosque-mark";
 
 export function SplashPulseLogo() {
-  const scale = useRef(new Animated.Value(1)).current
-  const ring = useRef(new Animated.Value(0)).current
+  const scale = useRef(new Animated.Value(1)).current;
+  const ring = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.loop(
@@ -19,25 +19,25 @@ export function SplashPulseLogo() {
           duration: 1100,
           useNativeDriver: true,
         }),
-      ])
-    ).start()
+      ]),
+    ).start();
     Animated.loop(
       Animated.timing(ring, {
         toValue: 1,
         duration: 2200,
         useNativeDriver: true,
-      })
-    ).start()
-  }, [scale, ring])
+      }),
+    ).start();
+  }, [scale, ring]);
 
   const ringScale = ring.interpolate({
     inputRange: [0, 1],
     outputRange: [0.85, 1.3],
-  })
+  });
   const ringOpacity = ring.interpolate({
     inputRange: [0, 1],
     outputRange: [0.8, 0],
-  })
+  });
 
   return (
     <View className="relative">
@@ -54,5 +54,5 @@ export function SplashPulseLogo() {
         <MosqueMark size="xl" />
       </Animated.View>
     </View>
-  )
+  );
 }

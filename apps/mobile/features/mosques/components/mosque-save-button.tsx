@@ -1,13 +1,13 @@
-import { IconButton } from "@/components/ui/icon-button"
-import { useToggleSaved } from "../hooks/use-mosques"
+import { IconButton } from "@/components/ui/icon-button";
+import { useToggleSaved } from "../hooks/use-mosques";
 
 type Props = {
-  mosqueId: string
-  isSaved: boolean
-}
+  mosqueId: string;
+  isSaved: boolean;
+};
 
 export function MosqueSaveButton({ mosqueId, isSaved }: Props) {
-  const toggle = useToggleSaved()
+  const toggle = useToggleSaved();
 
   return (
     <IconButton
@@ -17,5 +17,5 @@ export function MosqueSaveButton({ mosqueId, isSaved }: Props) {
       disabled={toggle.isPending}
       accessibilityLabel={isSaved ? "Unsave mosque" : "Save mosque"}
     />
-  )
+  );
 }

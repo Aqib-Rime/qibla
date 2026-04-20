@@ -1,3 +1,3 @@
-import { OnboardSlideOne } from "@/features/onboarding"
+import { OnboardSlideOne } from "@/features/onboarding";
 
-export default OnboardSlideOne
+export default OnboardSlideOne;

@@ -1,13 +1,13 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  rating: number | null
-  reviewsCount: number
-  open: boolean
-  area: string | null
-}
+  rating: number | null;
+  reviewsCount: number;
+  open: boolean;
+  area: string | null;
+};
 
 export function MosqueMetaRow({ rating, reviewsCount, open, area }: Props) {
   return (
@@ -39,5 +39,5 @@ export function MosqueMetaRow({ rating, reviewsCount, open, area }: Props) {
         </View>
       ) : null}
     </View>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { ArtRoute } from "./art-route"
-import { OnboardLayout } from "./onboard-layout"
+import { ArtRoute } from "./art-route";
+import { OnboardLayout } from "./onboard-layout";
 
 export function OnboardSlideThree() {
   return (
@@ -9,5 +9,5 @@ export function OnboardSlideThree() {
       body="Turn-by-turn directions to the nearest Jummah, wudu facility, or women-friendly space."
       art={<ArtRoute />}
     />
-  )
+  );
 }

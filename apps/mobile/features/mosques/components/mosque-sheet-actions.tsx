@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { router } from "expo-router"
-import { View } from "react-native"
-import { openDirections } from "../lib/directions"
-import type { MosqueListItem } from "../lib/types"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { openDirections } from "../lib/directions";
+import type { MosqueListItem } from "../lib/types";
 
 export function MosqueSheetActions({ mosque }: { mosque: MosqueListItem }) {
   return (
@@ -30,5 +30,5 @@ export function MosqueSheetActions({ mosque }: { mosque: MosqueListItem }) {
         />
       </View>
     </View>
-  )
+  );
 }

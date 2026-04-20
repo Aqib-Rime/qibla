@@ -1,3 +1,3 @@
-import { SearchModalScreen } from "@/features/mosques"
+import { SearchModalScreen } from "@/features/mosques";
 
-export default SearchModalScreen
+export default SearchModalScreen;

@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 export function SignInOAuthRow() {
   return (
@@ -24,5 +24,5 @@ export function SignInOAuthRow() {
         <View className="h-px flex-1 bg-line" />
       </View>
     </>
-  )
+  );
 }

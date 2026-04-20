@@ -1,5 +1,5 @@
-import { ArtTimes } from "./art-times"
-import { OnboardLayout } from "./onboard-layout"
+import { ArtTimes } from "./art-times";
+import { OnboardLayout } from "./onboard-layout";
 
 export function OnboardSlideTwo() {
   return (
@@ -9,5 +9,5 @@ export function OnboardSlideTwo() {
       body="Tuned prayer times from your current location. Gentle reminders, silent by default."
       art={<ArtTimes />}
     />
-  )
+  );
 }

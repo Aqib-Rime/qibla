@@ -1,25 +1,25 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import * as Location from "expo-location"
-import { useState } from "react"
-import { View } from "react-native"
+import * as Location from "expo-location";
+import { useState } from "react";
+import { View } from "react-native";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  onGranted: () => void
-}
+  onGranted: () => void;
+};
 
 export function QiblaLocationGate({ onGranted }: Props) {
-  const [asking, setAsking] = useState(false)
+  const [asking, setAsking] = useState(false);
 
   const request = async () => {
-    setAsking(true)
+    setAsking(true);
     try {
-      const result = await Location.requestForegroundPermissionsAsync()
-      if (result.status === "granted") onGranted()
+      const result = await Location.requestForegroundPermissionsAsync();
+      if (result.status === "granted") onGranted();
     } catch {}
-    setAsking(false)
-  }
+    setAsking(false);
+  };
 
   return (
     <View className="flex-1 items-center justify-center gap-s-4 px-s-6">
@@ -40,5 +40,5 @@ export function QiblaLocationGate({ onGranted }: Props) {
         loading={asking}
       />
     </View>
-  )
+  );
 }

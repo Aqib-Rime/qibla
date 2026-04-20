@@ -1,16 +1,16 @@
-import { Text } from "@/components/ui/text"
-import { signOut } from "@/lib/auth"
-import { router } from "expo-router"
-import { Pressable, View } from "react-native"
+import { router } from "expo-router";
+import { Pressable, View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { signOut } from "@/lib/auth";
 
 export function ProfileSignOut() {
   const onPress = async () => {
     try {
-      await signOut()
+      await signOut();
     } finally {
-      router.replace("/(auth)/sign-in")
+      router.replace("/(auth)/sign-in");
     }
-  }
+  };
 
   return (
     <Pressable
@@ -22,7 +22,7 @@ export function ProfileSignOut() {
         Sign out
       </Text>
     </Pressable>
-  )
+  );
 }
 
 export function ProfileVersion() {
@@ -32,5 +32,5 @@ export function ProfileVersion() {
         Qibla v1.0 · Dhaka
       </Text>
     </View>
-  )
+  );
 }

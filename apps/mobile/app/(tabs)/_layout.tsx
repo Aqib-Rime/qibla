@@ -1,13 +1,13 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { usePrayerReminderSync } from "@/features/settings"
-import { Tabs } from "expo-router"
+import { Tabs } from "expo-router";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { usePrayerReminderSync } from "@/features/settings";
 
 function TabIcon({ name, color }: { name: IconName; color: string }) {
-  return <Icon name={name} size={22} color={color} />
+  return <Icon name={name} size={22} color={color} />;
 }
 
 export default function TabsLayout() {
-  usePrayerReminderSync()
+  usePrayerReminderSync();
 
   return (
     <Tabs
@@ -45,5 +45,5 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
-  )
+  );
 }

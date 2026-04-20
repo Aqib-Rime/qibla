@@ -1,12 +1,12 @@
-import { Icon, type IconName } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 const BENEFITS: { icon: IconName; label: string }[] = [
   { icon: "pin", label: "Nearby mosques on the map" },
   { icon: "clock", label: "Prayer times for your area" },
   { icon: "directions", label: "Walking and driving routes" },
-]
+];
 
 export function PermissionBenefits() {
   return (
@@ -25,5 +25,5 @@ export function PermissionBenefits() {
         </View>
       ))}
     </View>
-  )
+  );
 }

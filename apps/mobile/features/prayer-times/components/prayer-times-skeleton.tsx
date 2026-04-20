@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function PrayerTimesSkeleton() {
   return (
@@ -9,5 +9,5 @@ export function PrayerTimesSkeleton() {
         <Skeleton key={i} className="h-14 w-full rounded-md" />
       ))}
     </View>
-  )
+  );
 }

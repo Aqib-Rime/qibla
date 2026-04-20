@@ -10,12 +10,7 @@ type Props = {
   onStatusChange: (status: ReviewStatus | undefined) => void;
 };
 
-export function ReviewsPage({
-  status,
-  page,
-  pageSize,
-  onStatusChange,
-}: Props) {
+export function ReviewsPage({ status, page, pageSize, onStatusChange }: Props) {
   const counts = useReviewCounts();
 
   return (

@@ -1,12 +1,12 @@
-import { IconButton } from "@/components/ui/icon-button"
-import { Text } from "@/components/ui/text"
-import { router } from "expo-router"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { router } from "expo-router";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IconButton } from "@/components/ui/icon-button";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  activeCount: number
-}
+  activeCount: number;
+};
 
 export function FilterModalHeader({ activeCount }: Props) {
   return (
@@ -27,5 +27,5 @@ export function FilterModalHeader({ activeCount }: Props) {
         </View>
       </View>
     </SafeAreaView>
-  )
+  );
 }

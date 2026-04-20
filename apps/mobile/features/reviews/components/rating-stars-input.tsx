@@ -1,23 +1,23 @@
-import { Icon } from "@/components/ui/icon"
-import * as Haptics from "expo-haptics"
-import { Pressable, View } from "react-native"
+import * as Haptics from "expo-haptics";
+import { Pressable, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
 
 type Props = {
-  value: number
-  onChange: (value: number) => void
-}
+  value: number;
+  onChange: (value: number) => void;
+};
 
 export function RatingStarsInput({ value, onChange }: Props) {
   return (
     <View className="flex-row items-center gap-s-2">
       {[1, 2, 3, 4, 5].map((star) => {
-        const active = star <= value
+        const active = star <= value;
         return (
           <Pressable
             key={star}
             onPress={() => {
-              Haptics.selectionAsync().catch(() => {})
-              onChange(star)
+              Haptics.selectionAsync().catch(() => {});
+              onChange(star);
             }}
             hitSlop={8}
           >
@@ -28,8 +28,8 @@ export function RatingStarsInput({ value, onChange }: Props) {
               fill={active ? "#b68a3c" : "none"}
             />
           </Pressable>
-        )
+        );
       })}
     </View>
-  )
+  );
 }

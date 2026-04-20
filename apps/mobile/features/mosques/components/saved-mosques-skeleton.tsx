@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function SavedMosquesSkeleton() {
   return (
@@ -11,5 +11,5 @@ export function SavedMosquesSkeleton() {
         </View>
       ))}
     </View>
-  )
+  );
 }

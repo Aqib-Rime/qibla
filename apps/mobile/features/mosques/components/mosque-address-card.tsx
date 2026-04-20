@@ -1,14 +1,14 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
 
 type Props = {
-  address: string | null
-  street: string | null
-}
+  address: string | null;
+  street: string | null;
+};
 
 export function MosqueAddressCard({ address, street }: Props) {
-  if (!address) return null
+  if (!address) return null;
   return (
     <View className="flex-row items-start gap-s-3 rounded-md bg-white p-s-4">
       <Icon name="pin" size={18} color="#2e5d45" />
@@ -21,5 +21,5 @@ export function MosqueAddressCard({ address, street }: Props) {
         ) : null}
       </View>
     </View>
-  )
+  );
 }

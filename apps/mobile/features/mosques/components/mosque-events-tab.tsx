@@ -1,7 +1,7 @@
-import { Icon } from "@/components/ui/icon"
-import { Text } from "@/components/ui/text"
-import { View } from "react-native"
-import type { Event } from "../lib/types"
+import { View } from "react-native";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import type { Event } from "../lib/types";
 
 export function MosqueEventsTab({ events }: { events: readonly Event[] }) {
   if (!events.length) {
@@ -11,7 +11,7 @@ export function MosqueEventsTab({ events }: { events: readonly Event[] }) {
           No upcoming events
         </Text>
       </View>
-    )
+    );
   }
 
   return (
@@ -34,5 +34,5 @@ export function MosqueEventsTab({ events }: { events: readonly Event[] }) {
         </View>
       ))}
     </View>
-  )
+  );
 }

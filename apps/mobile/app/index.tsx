@@ -1,3 +1,3 @@
-import { SplashScreen } from "@/features/splash"
+import { SplashScreen } from "@/features/splash";
 
-export default SplashScreen
+export default SplashScreen;

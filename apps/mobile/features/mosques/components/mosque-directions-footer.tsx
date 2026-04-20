@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Icon } from "@/components/ui/icon"
-import { View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { openDirections } from "../lib/directions"
-import type { Mosque } from "../lib/types"
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
+import { openDirections } from "../lib/directions";
+import type { Mosque } from "../lib/types";
 
 export function MosqueDirectionsFooter({ mosque }: { mosque: Mosque }) {
   return (
@@ -26,5 +26,5 @@ export function MosqueDirectionsFooter({ mosque }: { mosque: Mosque }) {
         />
       </View>
     </SafeAreaView>
-  )
+  );
 }
