@@ -6,6 +6,7 @@ export function PrayerTimesSkeleton() {
     <View className="gap-s-3">
       <Skeleton className="h-[100px] w-full rounded-md" />
       {Array.from({ length: 6 }).map((_, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton, index is stable
         <Skeleton key={i} className="h-14 w-full rounded-md" />
       ))}
     </View>

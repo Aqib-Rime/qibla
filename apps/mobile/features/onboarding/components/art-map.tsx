@@ -15,6 +15,7 @@ export function ArtMap() {
       {Array.from({ length: 5 }).map((_, row) =>
         Array.from({ length: 4 }).map((__, col) => (
           <View
+            // biome-ignore lint/suspicious/noArrayIndexKey: static 5x4 grid, indices are the stable identity
             key={`${row}-${col}`}
             className="absolute bg-[#d9cfae]"
             style={{
@@ -27,9 +28,9 @@ export function ArtMap() {
           />
         )),
       )}
-      {pins.map((p, i) => (
+      {pins.map((p) => (
         <View
-          key={i}
+          key={`${p.x}-${p.y}`}
           className="absolute"
           style={{ left: `${p.x * 100}%`, top: `${p.y * 100}%` }}
         >

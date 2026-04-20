@@ -138,8 +138,10 @@ function MosquesPage() {
           <TableBody>
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton, row index is stable
                 <TableRow key={i}>
                   {Array.from({ length: 6 }).map((__, j) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton, cell index is stable
                     <TableCell key={j}>
                       <Skeleton className="h-4 w-full" />
                     </TableCell>

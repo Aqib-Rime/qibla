@@ -48,6 +48,7 @@ export function QiblaDialFace({ size }: Props) {
         const y2 = c + Math.sin(rad) * (outerR - length);
         return (
           <Line
+            // biome-ignore lint/suspicious/noArrayIndexKey: static compass dial, tick index is the stable identity
             key={i}
             x1={x1}
             y1={y1}

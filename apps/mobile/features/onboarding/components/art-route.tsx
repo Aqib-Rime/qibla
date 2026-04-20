@@ -22,9 +22,9 @@ export function ArtRoute() {
           [20, 220, 60, 70],
           [100, 220, 60, 70],
           [260, 220, 60, 70],
-        ].map(([x, y, w, h], i) => (
+        ].map(([x, y, w, h]) => (
           <Rect
-            key={i}
+            key={`${x}-${y}`}
             x={x}
             y={y}
             width={w}
