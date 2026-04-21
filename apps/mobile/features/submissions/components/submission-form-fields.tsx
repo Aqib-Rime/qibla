@@ -8,7 +8,7 @@ import {
   TAG_OPTIONS,
 } from "../lib/schemas";
 import { LocationPicker } from "./location-picker";
-import { PhotoGalleryEditor } from "./photo-gallery-editor";
+import { PhotosField } from "./photos-field";
 
 function fieldError(errors: unknown[]): string | undefined {
   if (!errors.length) return undefined;
@@ -200,7 +200,7 @@ export function SubmissionFormFields({ form, isSubmitting }: Props) {
 
       <form.Field name="photos">
         {(field) => (
-          <PhotoGalleryEditor
+          <PhotosField
             photos={field.state.value}
             onChange={(next) => field.handleChange(next)}
           />
