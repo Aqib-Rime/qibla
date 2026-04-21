@@ -11,6 +11,7 @@ import { SearchInputBar } from "./search-input-bar";
 import { SearchPlacesRow } from "./search-places-row";
 import { SearchPlacesSkeleton } from "./search-places-skeleton";
 import { SearchPopularSection } from "./search-popular-section";
+import { SearchRecentPlacesSection } from "./search-recent-places-section";
 import { SearchRecentSection } from "./search-recent-section";
 
 export function SearchModalScreen() {
@@ -100,6 +101,7 @@ export function SearchModalScreen() {
           </View>
         ) : (
           <View className="gap-s-7">
+            <SearchRecentPlacesSection />
             <SearchRecentSection mosques={mosques} />
             <SearchPopularSection mosques={mosques} userPos={userPos} />
           </View>

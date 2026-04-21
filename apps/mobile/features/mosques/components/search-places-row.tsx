@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { usePushRecentPlace } from "../hooks/use-recent-places";
 
 type Props = {
   place: {
@@ -20,9 +21,18 @@ function formatDistance(km: number) {
 }
 
 export function SearchPlacesRow({ place }: Props) {
+  const pushRecent = usePushRecentPlace();
+
   const onPick = () => {
-    // Recenter the map on this place; nearby mosques will refetch from the
-    // new center via map-screen's search-params handling.
+    // Record the pick before navigating so the recent-searches section is
+    // up to date the next time the user opens the search modal.
+    pushRecent.mutate({
+      placeId: place.placeId,
+      name: place.name,
+      address: place.address,
+      lat: place.lat,
+      lng: place.lng,
+    });
     router.replace({
       pathname: "/(tabs)/map",
       params: {
