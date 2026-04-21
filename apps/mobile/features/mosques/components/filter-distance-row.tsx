@@ -1,5 +1,6 @@
 import Slider from "@react-native-community/slider";
 import * as Haptics from "expo-haptics";
+import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
@@ -20,6 +21,14 @@ function formatKm(km: number) {
 
 export function FilterDistanceRow({ radiusKm, onChange }: Props) {
   const active = radiusKm != null;
+
+  // Local state while the thumb is dragged — gives smooth visual feedback
+  // without spamming the store (which would refetch the map on every tick).
+  const [liveValue, setLiveValue] = useState(radiusKm ?? DEFAULT_KM);
+
+  useEffect(() => {
+    if (radiusKm != null) setLiveValue(radiusKm);
+  }, [radiusKm]);
 
   const handleToggle = () => {
     Haptics.selectionAsync().catch(() => {});
@@ -52,7 +61,7 @@ export function FilterDistanceRow({ radiusKm, onChange }: Props) {
           <Text variant="label">Within distance</Text>
           <Text variant="caption" tone="muted" className="mt-s-1">
             {active
-              ? `Showing mosques within ${formatKm(radiusKm)}`
+              ? `Showing mosques within ${formatKm(liveValue)}`
               : "Limit results to a radius from your location"}
           </Text>
         </View>
@@ -71,8 +80,9 @@ export function FilterDistanceRow({ radiusKm, onChange }: Props) {
             minimumValue={MIN_KM}
             maximumValue={MAX_KM}
             step={0.5}
-            value={radiusKm ?? DEFAULT_KM}
-            onValueChange={(v) => onChange(v)}
+            value={liveValue}
+            onValueChange={setLiveValue}
+            onSlidingComplete={(v) => onChange(v)}
             minimumTrackTintColor="#2e5d45"
             maximumTrackTintColor="#dcd6bf"
             thumbTintColor="#2e5d45"
