@@ -7,8 +7,10 @@ import MapView, {
 } from "react-native-maps";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { useThemeColors } from "@/lib/theme";
 import { useUserLocation } from "@/lib/use-user-location";
+import { DARK_MAP_STYLE, LIGHT_MAP_STYLE } from "../../map/lib/map-styles";
 
 type Props = {
   lat: number;
@@ -28,6 +30,7 @@ export function LocationPicker({ lat, lng, onChange }: Props) {
   const userPos = useUserLocation();
   const [hasCentered, setHasCentered] = useState(false);
   const colors = useThemeColors();
+  const scheme = useThemeScheme();
 
   const hasCoords = lat !== 0 && lng !== 0;
 
@@ -71,6 +74,9 @@ export function LocationPicker({ lat, lng, onChange }: Props) {
 
       <View className="overflow-hidden rounded-md border border-line">
         <MapView
+          // Force remount on theme toggle — react-native-maps doesn't
+          // re-apply customMapStyle on prop change.
+          key={scheme}
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
           style={{ width: "100%", height: 260 }}
@@ -88,6 +94,7 @@ export function LocationPicker({ lat, lng, onChange }: Props) {
           showsCompass={false}
           showsMyLocationButton={false}
           toolbarEnabled={false}
+          customMapStyle={scheme === "dark" ? DARK_MAP_STYLE : LIGHT_MAP_STYLE}
           onPress={(e) => {
             onChange(
               e.nativeEvent.coordinate.latitude,
