@@ -36,7 +36,11 @@ export function FilterToggleRow({
           active ? "bg-green" : "bg-green-tint"
         }`}
       >
-        <Icon name={icon} size={18} color={active ? colors.white : colors.green} />
+        <Icon
+          name={icon}
+          size={18}
+          color={active ? colors.white : colors.green}
+        />
       </View>
       <View className="flex-1">
         <Text variant="label">{label}</Text>

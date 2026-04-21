@@ -14,8 +14,8 @@ import { useAppDialog } from "@/components/ui/dialog";
 import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
-import { useThemeColors } from "@/lib/theme";
 import { usePickAndUploadPhotos } from "@/features/uploads";
+import { useThemeColors } from "@/lib/theme";
 import { PhotoPreviewModal } from "./photo-preview-modal";
 
 const HORIZONTAL_PAD = 24;

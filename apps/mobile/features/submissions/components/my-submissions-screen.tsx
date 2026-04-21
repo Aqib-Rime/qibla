@@ -8,8 +8,8 @@ import { IconButton } from "@/components/ui/icon-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Text } from "@/components/ui/text";
 import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
-import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useThemeColors } from "@/lib/theme";
+import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useMySubmissions } from "../hooks/use-submissions";
 
 type SubmissionRow = NonNullable<

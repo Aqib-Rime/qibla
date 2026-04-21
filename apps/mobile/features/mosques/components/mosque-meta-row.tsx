@@ -39,7 +39,11 @@ export function MosqueMetaRow({
         </View>
       ) : null}
       <View className="flex-row items-center gap-s-1">
-        <Icon name="clock" size={14} color={open ? colors.green : colors.muted} />
+        <Icon
+          name="clock"
+          size={14}
+          color={open ? colors.green : colors.muted}
+        />
         <Text variant="label" tone={open ? "green" : "muted"}>
           {open ? "Open" : "Closed"}
         </Text>

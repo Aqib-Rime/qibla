@@ -52,7 +52,9 @@ export function PermissionScreen() {
         <Button
           label="Allow location"
           leading={
-            !asking ? <Icon name="pin" size={16} color={colors.white} /> : undefined
+            !asking ? (
+              <Icon name="pin" size={16} color={colors.white} />
+            ) : undefined
           }
           loading={asking}
           onPress={requestPermission}
