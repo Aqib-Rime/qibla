@@ -7,6 +7,7 @@ export {
   mosquesKeys,
   useMosque,
   useMosquesList,
+  useMosquesNearby,
   useSavedMosques,
   useToggleSaved,
 } from "./hooks/use-mosques";

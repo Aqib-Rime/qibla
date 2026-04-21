@@ -41,6 +41,7 @@ export function MosqueSheetContent({ mosque }: { mosque: MosqueListItem }) {
             reviewsCount={mosque.reviewsCount}
             open={mosque.open}
             area={mosque.area}
+            distanceKm={mosque.distanceKm}
           />
         </View>
 

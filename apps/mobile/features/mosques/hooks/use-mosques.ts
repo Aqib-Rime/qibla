@@ -19,6 +19,21 @@ export function useMosquesList(
   });
 }
 
+export function useMosquesNearby(
+  params: { lat: number; lng: number; radiusKm: number } | null,
+) {
+  return useQuery({
+    queryKey: [...mosquesKeys.all, "nearby", params] as const,
+    queryFn: () =>
+      api.mosques.nearby({
+        lat: params?.lat ?? 0,
+        lng: params?.lng ?? 0,
+        radiusKm: params?.radiusKm ?? 5,
+      }),
+    enabled: Boolean(params),
+  });
+}
+
 export function useMosque(id: string | undefined) {
   return useQuery({
     queryKey: mosquesKeys.detail(id ?? ""),

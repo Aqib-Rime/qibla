@@ -7,9 +7,21 @@ type Props = {
   reviewsCount: number;
   open: boolean;
   area: string | null;
+  distanceKm?: number;
 };
 
-export function MosqueMetaRow({ rating, reviewsCount, open, area }: Props) {
+function formatDistance(km: number) {
+  if (km < 1) return `${Math.round(km * 1000)} m`;
+  return km >= 10 ? `${km.toFixed(0)} km` : `${km.toFixed(1)} km`;
+}
+
+export function MosqueMetaRow({
+  rating,
+  reviewsCount,
+  open,
+  area,
+  distanceKm,
+}: Props) {
   return (
     <View className="flex-row items-center gap-s-4">
       {typeof rating === "number" ? (
@@ -30,7 +42,14 @@ export function MosqueMetaRow({ rating, reviewsCount, open, area }: Props) {
           {open ? "Open" : "Closed"}
         </Text>
       </View>
-      {area ? (
+      {typeof distanceKm === "number" ? (
+        <View className="flex-row items-center gap-s-1">
+          <Icon name="pin" size={14} color="#2e5d45" />
+          <Text variant="label" tone="green">
+            {formatDistance(distanceKm)}
+          </Text>
+        </View>
+      ) : area ? (
         <View className="flex-row items-center gap-s-1">
           <Icon name="pin" size={14} color="#6b7a70" />
           <Text variant="label" tone="muted">

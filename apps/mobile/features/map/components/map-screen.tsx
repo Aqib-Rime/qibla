@@ -9,6 +9,7 @@ import {
   type MosqueListItem,
   useMosqueFilters,
   useMosquesList,
+  useMosquesNearby,
 } from "@/features/mosques";
 import { usePrayerTimes } from "@/features/prayer-times";
 import { useUserLocation } from "@/lib/use-user-location";
@@ -18,20 +19,33 @@ import { MapMosqueSheet } from "./map-mosque-sheet";
 import { MapTopOverlay } from "./map-top-overlay";
 
 export function MapScreen() {
-  const { data, isLoading, error, refetch } = useMosquesList({ pageSize: 50 });
   const filters = useMosqueFilters();
   const activeFilters = countActive(filters);
-  const mosques = useMemo(
-    () => applyFilters(data?.data ?? [], filters),
-    [data, filters],
-  );
+  const userPos = useUserLocation();
+
+  // Use the server-side distance filter when the user has both a location and a radius.
+  // Otherwise fall back to the full list (we still apply toggles client-side).
+  const nearbyParams =
+    userPos && filters.radiusKm != null
+      ? { lat: userPos.lat, lng: userPos.lng, radiusKm: filters.radiusKm }
+      : null;
+
+  const list = useMosquesList({ pageSize: 50 });
+  const nearby = useMosquesNearby(nearbyParams);
+
+  // nearby omits some of list's fields that the map/sheet don't use;
+  // one cast here keeps both shapes feeding the same consumers.
+  const source = nearbyParams ? nearby : list;
+  const rows: MosqueListItem[] = (source.data?.data ?? []) as MosqueListItem[];
+  const { isLoading, error, refetch } = source;
+
+  const mosques = useMemo(() => applyFilters(rows, filters), [rows, filters]);
 
   const [selected, setSelected] = useState<MosqueListItem | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const sheetRef = useRef<BottomSheet>(null);
   const mapRef = useRef<MapView>(null);
 
-  const userPos = useUserLocation();
   const coords = userPos ?? {
     lat: DHAKA_REGION.latitude,
     lng: DHAKA_REGION.longitude,
