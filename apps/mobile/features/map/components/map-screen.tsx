@@ -1,8 +1,10 @@
 import type BottomSheet from "@gorhom/bottom-sheet";
+import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { Icon } from "@/components/ui/icon";
 import {
   applyFilters,
   countActive,
@@ -18,16 +20,44 @@ import { MapMarkers } from "./map-markers";
 import { MapMosqueSheet } from "./map-mosque-sheet";
 import { MapTopOverlay } from "./map-top-overlay";
 
+type PickedPlace = { lat: number; lng: number; name?: string };
+
+function parsePickedPlace(
+  params: Record<string, string | string[] | undefined>,
+): PickedPlace | null {
+  const lat = Array.isArray(params.lat) ? params.lat[0] : params.lat;
+  const lng = Array.isArray(params.lng) ? params.lng[0] : params.lng;
+  const name = Array.isArray(params.placeName)
+    ? params.placeName[0]
+    : params.placeName;
+  if (!lat || !lng) return null;
+  const latNum = Number(lat);
+  const lngNum = Number(lng);
+  if (!Number.isFinite(latNum) || !Number.isFinite(lngNum)) return null;
+  return { lat: latNum, lng: lngNum, name };
+}
+
 export function MapScreen() {
   const filters = useMosqueFilters();
   const activeFilters = countActive(filters);
   const userPos = useUserLocation();
 
-  // Use the server-side distance filter when the user has both a location and a radius.
+  const searchParams = useLocalSearchParams();
+  const pickedPlace = useMemo(
+    () => parsePickedPlace(searchParams),
+    [searchParams],
+  );
+
+  // The centre point used for nearby-mosque fetches. Picked place overrides
+  // the user's real location so "explore Gulshan" shows mosques near Gulshan,
+  // not near the user's actual GPS position.
+  const center = pickedPlace ?? userPos;
+
+  // Use the server-side distance filter when we have both a centre and a radius.
   // Otherwise fall back to the full list (we still apply toggles client-side).
   const nearbyParams =
-    userPos && filters.radiusKm != null
-      ? { lat: userPos.lat, lng: userPos.lng, radiusKm: filters.radiusKm }
+    center && filters.radiusKm != null
+      ? { lat: center.lat, lng: center.lng, radiusKm: filters.radiusKm }
       : null;
 
   const list = useMosquesList({ pageSize: 50 });
@@ -46,11 +76,25 @@ export function MapScreen() {
   const sheetRef = useRef<BottomSheet>(null);
   const mapRef = useRef<MapView>(null);
 
-  const coords = userPos ?? {
+  const coords = center ?? {
     lat: DHAKA_REGION.latitude,
     lng: DHAKA_REGION.longitude,
   };
   const { data: prayer } = usePrayerTimes(coords);
+
+  // Animate to the picked place when it changes.
+  useEffect(() => {
+    if (!pickedPlace) return;
+    mapRef.current?.animateToRegion(
+      {
+        latitude: pickedPlace.lat,
+        longitude: pickedPlace.lng,
+        latitudeDelta: 0.04,
+        longitudeDelta: 0.04,
+      },
+      600,
+    );
+  }, [pickedPlace]);
 
   const handleMarkerPress = useCallback((m: MosqueListItem) => {
     setSelected(m);
@@ -76,6 +120,15 @@ export function MapScreen() {
       lat: DHAKA_REGION.latitude,
       lng: DHAKA_REGION.longitude,
     };
+    // Pressing recenter drops any picked-place override and returns to the
+    // user's real location.
+    if (pickedPlace) {
+      router.setParams({
+        lat: undefined,
+        lng: undefined,
+        placeName: undefined,
+      });
+    }
     mapRef.current?.animateToRegion(
       {
         latitude: target.lat,
@@ -85,7 +138,7 @@ export function MapScreen() {
       },
       500,
     );
-  }, [userPos]);
+  }, [userPos, pickedPlace]);
 
   return (
     <View className="flex-1 bg-cream">
@@ -103,6 +156,20 @@ export function MapScreen() {
         onPoiClick={handleCloseSheet}
       >
         <MapMarkers mosques={mosques} onSelect={handleMarkerPress} />
+        {pickedPlace ? (
+          <Marker
+            coordinate={{
+              latitude: pickedPlace.lat,
+              longitude: pickedPlace.lng,
+            }}
+            title={pickedPlace.name ?? "Picked location"}
+            pinColor="#2e5d45"
+          >
+            <View className="h-7 w-7 items-center justify-center rounded-pill border-2 border-white bg-green shadow-sm">
+              <Icon name="pin" size={14} color="#ffffff" />
+            </View>
+          </Marker>
+        ) : null}
       </MapView>
 
       {menuOpen ? (
@@ -119,7 +186,7 @@ export function MapScreen() {
         timings={prayer?.timings ?? null}
         onRetry={() => refetch()}
         onRecenter={handleRecenter}
-        canRecenter={Boolean(userPos)}
+        canRecenter={Boolean(userPos) || Boolean(pickedPlace)}
         activeFilters={activeFilters}
         menuOpen={menuOpen}
         onOpenMenu={() => setMenuOpen(true)}

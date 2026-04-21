@@ -1,30 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { api } from "@/lib/api";
 import { useUserLocation } from "@/lib/use-user-location";
 import { useMosquesList } from "../hooks/use-mosques";
-import { applySearch } from "../lib/apply-filters";
 import { SearchInputBar } from "./search-input-bar";
 import { SearchPlacesRow } from "./search-places-row";
 import { SearchPopularSection } from "./search-popular-section";
 import { SearchRecentSection } from "./search-recent-section";
-import { SearchResultRow } from "./search-result-row";
-import { SearchResultsSkeleton } from "./search-results-skeleton";
 
 export function SearchModalScreen() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const { data, isLoading } = useMosquesList({ pageSize: 50 });
+  const { data } = useMosquesList({ pageSize: 50 });
   const mosques = data?.data ?? [];
   const userPos = useUserLocation();
 
-  const results = useMemo(() => applySearch(mosques, query), [mosques, query]);
-
-  // Debounce the query before hitting Google Places so slider-quick typing
+  // Debounce before hitting Google Places so slider-quick typing
   // doesn't burn quota. 400ms feels responsive without being chatty.
   useEffect(() => {
     const trimmed = query.trim();
@@ -46,7 +41,7 @@ export function SearchModalScreen() {
       userPos?.lng,
     ] as const,
     queryFn: () =>
-      api.places.searchMosques({
+      api.places.search({
         query: debouncedQuery,
         lat: userPos?.lat,
         lng: userPos?.lng,
@@ -56,6 +51,8 @@ export function SearchModalScreen() {
   });
 
   const placeResults = places.data?.data ?? [];
+  const searching = placesEnabled;
+  const isPlacesLoading = places.isFetching && placeResults.length === 0;
 
   return (
     <View className="flex-1 bg-cream">
@@ -71,37 +68,35 @@ export function SearchModalScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        {isLoading ? (
-          <SearchResultsSkeleton />
-        ) : query ? (
+        {searching ? (
           <View className="gap-s-6">
-            {results.length === 0 && placeResults.length === 0 ? (
+            <Text variant="eyebrow" tone="muted">
+              Places
+            </Text>
+
+            {isPlacesLoading ? (
+              <View className="items-center rounded-md bg-white py-s-6">
+                <Text variant="caption" tone="muted">
+                  Searching…
+                </Text>
+              </View>
+            ) : placeResults.length === 0 ? (
               <View className="items-center gap-s-2 rounded-md bg-white px-s-5 py-s-8">
                 <Icon name="search" size={28} color="#6b7a70" />
                 <Text variant="label" tone="muted">
-                  No matches for "{query.trim()}"
+                  No places found for "{query.trim()}"
+                </Text>
+                <Text variant="caption" tone="muted" className="text-center">
+                  Try a neighbourhood, landmark, or address.
                 </Text>
               </View>
-            ) : null}
-
-            {results.length > 0 ? (
+            ) : (
               <View className="gap-s-3">
-                {results.map((m) => (
-                  <SearchResultRow key={m.id} mosque={m} />
-                ))}
-              </View>
-            ) : null}
-
-            {placesEnabled && placeResults.length > 0 ? (
-              <View className="gap-s-3">
-                <Text variant="eyebrow" tone="muted">
-                  More nearby — via Google
-                </Text>
                 {placeResults.map((p) => (
                   <SearchPlacesRow key={p.placeId} place={p} />
                 ))}
               </View>
-            ) : null}
+            )}
           </View>
         ) : (
           <View className="gap-s-7">
