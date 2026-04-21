@@ -72,7 +72,6 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen name="qibla" />
-              <Stack.Screen name="settings" />
             </Stack>
           </Providers>
         </SafeAreaProvider>
