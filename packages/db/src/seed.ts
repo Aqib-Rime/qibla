@@ -23,6 +23,16 @@ type Fixture = {
   events?: { title: string; when: string; by?: string }[];
 };
 
+// Placeholder gallery via picsum.photos — deterministic seeds keep a mosque's
+// images consistent across seed runs. Swap for curated Wikimedia/R2 URLs
+// before launch.
+function placeholderPhotos(id: string, count = 3): string[] {
+  return Array.from(
+    { length: count },
+    (_, i) => `https://picsum.photos/seed/${id}-${i + 1}/1200/800`,
+  );
+}
+
 const DHAKA_FIXTURES: Fixture[] = [
   {
     id: "m1",
@@ -199,7 +209,7 @@ async function main() {
         open: fx.open,
         tags: fx.tags,
         facilities: fx.facilities,
-        photos: [],
+        photos: placeholderPhotos(fx.id),
         status: "approved",
       })
       .onConflictDoNothing();
