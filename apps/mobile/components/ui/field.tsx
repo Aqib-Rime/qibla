@@ -21,7 +21,7 @@ export const Field = forwardRef<TextInput, Props>(function Field(
         placeholderTextColor={colors.muted}
         multiline={multiline}
         className="flex-1 font-sans text-body text-ink"
-        style={[{ padding: 0, margin: 0, includeFontPadding: false }, style]}
+        style={[style]}
         {...props}
       />
       {trailing}
