@@ -8,7 +8,7 @@ import {
   review,
   savedMosque,
 } from "@qibla/db/schema/mosque";
-import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gte, ilike, lte, or, sql } from "drizzle-orm";
 import { z } from "zod";
 import { authedProcedure, publicProcedure } from "../router-base.ts";
 
@@ -19,6 +19,13 @@ const listInput = z.object({
 });
 
 const byIdInput = z.object({ id: z.string().min(1) });
+
+const nearbyInput = z.object({
+  lat: z.number().min(-90).max(90),
+  lng: z.number().min(-180).max(180),
+  radiusKm: z.number().positive().max(500).default(5),
+  limit: z.number().int().min(1).max(200).optional().default(100),
+});
 
 export const mosquesRouter = {
   list: publicProcedure.input(listInput).handler(async ({ input }) => {
@@ -113,6 +120,62 @@ export const mosquesRouter = {
       reviews: reviewRows,
       isSaved: savedRows.length > 0,
     };
+  }),
+
+  nearby: publicProcedure.input(nearbyInput).handler(async ({ input }) => {
+    const { lat, lng, radiusKm, limit } = input;
+
+    // Bounding box pre-filter — indexable, roughly right, trimmed by exact haversine below.
+    // 1 deg latitude ≈ 111.32 km. Longitude scales with cos(lat) to stay roughly square at any latitude.
+    const latDelta = radiusKm / 111.32;
+    const lngDelta = radiusKm / (111.32 * Math.cos((lat * Math.PI) / 180));
+
+    const minLat = lat - latDelta;
+    const maxLat = lat + latDelta;
+    const minLng = lng - lngDelta;
+    const maxLng = lng + lngDelta;
+
+    // Haversine distance in km: 2 * R * asin(sqrt(sin²(Δφ/2) + cos(φ1)·cos(φ2)·sin²(Δλ/2))), R = 6371.
+    const distanceKm = sql<number>`
+      2 * 6371 * asin(sqrt(
+        sin(radians(${mosque.lat} - ${lat}) / 2) * sin(radians(${mosque.lat} - ${lat}) / 2)
+        + cos(radians(${lat})) * cos(radians(${mosque.lat}))
+          * sin(radians(${mosque.lng} - ${lng}) / 2) * sin(radians(${mosque.lng} - ${lng}) / 2)
+      ))
+    `;
+
+    const rows = await db
+      .select({
+        id: mosque.id,
+        name: mosque.name,
+        subtitle: mosque.subtitle,
+        area: mosque.area,
+        address: mosque.address,
+        lat: mosque.lat,
+        lng: mosque.lng,
+        rating: mosque.rating,
+        reviewsCount: mosque.reviewsCount,
+        open: mosque.open,
+        tags: mosque.tags,
+        facilities: mosque.facilities,
+        photos: mosque.photos,
+        distanceKm,
+      })
+      .from(mosque)
+      .where(
+        and(
+          eq(mosque.status, "approved"),
+          gte(mosque.lat, minLat),
+          lte(mosque.lat, maxLat),
+          gte(mosque.lng, minLng),
+          lte(mosque.lng, maxLng),
+          sql`${distanceKm} <= ${radiusKm}`,
+        ),
+      )
+      .orderBy(asc(distanceKm))
+      .limit(limit);
+
+    return { data: rows, radiusKm, center: { lat, lng } };
   }),
 
   saved: authedProcedure.handler(async ({ context }) => {
