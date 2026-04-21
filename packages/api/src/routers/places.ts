@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { publicProcedure } from "../router-base.ts";
 
-const PLACES_ENDPOINT = "https://places.googleapis.com/v1/places:searchText";
+// Legacy Places API — kept until GOOGLE_PLACES_API_KEY has Places API (New) enabled.
+const PLACES_TEXTSEARCH =
+  "https://maps.googleapis.com/maps/api/place/textsearch/json";
 
 const searchInput = z.object({
   query: z.string().min(2).max(200),
@@ -11,12 +13,16 @@ const searchInput = z.object({
   limit: z.number().int().min(1).max(20).optional().default(10),
 });
 
-type PlacesApiResponse = {
-  places?: Array<{
-    id?: string;
-    displayName?: { text?: string };
-    formattedAddress?: string;
-    location?: { latitude?: number; longitude?: number };
+type LegacyPlacesResponse = {
+  status?: string;
+  error_message?: string;
+  results?: Array<{
+    place_id?: string;
+    name?: string;
+    formatted_address?: string;
+    geometry?: {
+      location?: { lat?: number; lng?: number };
+    };
   }>;
 };
 
@@ -50,34 +56,20 @@ export const placesRouter = {
       return { data: [] as PlaceResult[] };
     }
 
-    // No includedType filter — this is a general place picker so the map
-    // can recenter on neighbourhoods, landmarks, addresses, and POIs.
-    const body: Record<string, unknown> = {
-      textQuery: input.query,
-      maxResultCount: input.limit,
-    };
-
+    // Legacy Places API uses GET + query-string params. Location bias is
+    // expressed as `location=LAT,LNG&radius=METERS`.
+    const params = new URLSearchParams({
+      query: input.query,
+      key: apiKey,
+    });
     if (input.lat != null && input.lng != null) {
-      body.locationBias = {
-        circle: {
-          center: { latitude: input.lat, longitude: input.lng },
-          radius: input.radiusKm * 1000,
-        },
-      };
+      params.set("location", `${input.lat},${input.lng}`);
+      params.set("radius", String(Math.round(input.radiusKm * 1000)));
     }
 
     let response: Response;
     try {
-      response = await fetch(PLACES_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Goog-Api-Key": apiKey,
-          "X-Goog-FieldMask":
-            "places.id,places.displayName,places.formattedAddress,places.location",
-        },
-        body: JSON.stringify(body),
-      });
+      response = await fetch(`${PLACES_TEXTSEARCH}?${params.toString()}`);
     } catch {
       return { data: [] as PlaceResult[] };
     }
@@ -86,15 +78,26 @@ export const placesRouter = {
       return { data: [] as PlaceResult[] };
     }
 
-    const json = (await response.json()) as PlacesApiResponse;
-    const raw = json.places ?? [];
+    const json = (await response.json()) as LegacyPlacesResponse;
 
+    // ZERO_RESULTS is success with no hits; everything else we log and bail
+    // gracefully so a quota or auth issue doesn't break the mobile search UI.
+    if (json.status !== "OK" && json.status !== "ZERO_RESULTS") {
+      console.warn(
+        "[places.search] google status:",
+        json.status,
+        json.error_message,
+      );
+      return { data: [] as PlaceResult[] };
+    }
+
+    const raw = json.results ?? [];
     const results: PlaceResult[] = raw
-      .map((p) => {
-        const lat = p.location?.latitude;
-        const lng = p.location?.longitude;
-        const name = p.displayName?.text;
-        const placeId = p.id;
+      .map((r) => {
+        const lat = r.geometry?.location?.lat;
+        const lng = r.geometry?.location?.lng;
+        const name = r.name;
+        const placeId = r.place_id;
         if (
           typeof lat !== "number" ||
           typeof lng !== "number" ||
@@ -106,7 +109,7 @@ export const placesRouter = {
         const base: PlaceResult = {
           placeId,
           name,
-          address: p.formattedAddress ?? null,
+          address: r.formatted_address ?? null,
           lat,
           lng,
         };
@@ -118,7 +121,8 @@ export const placesRouter = {
         }
         return base;
       })
-      .filter((x): x is PlaceResult => x !== null);
+      .filter((x): x is PlaceResult => x !== null)
+      .slice(0, input.limit);
 
     return { data: results };
   }),
