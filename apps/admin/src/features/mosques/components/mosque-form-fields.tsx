@@ -13,6 +13,7 @@ import { Switch } from "@qibla/ui/components/switch";
 import { Textarea } from "@qibla/ui/components/textarea";
 import { IconAlertCircle } from "@tabler/icons-react";
 import type { useForm } from "@tanstack/react-form";
+import { MosquePhotosField } from "@/features/mosques/components/mosque-photos-field";
 import {
   FACILITY_OPTIONS,
   type MosqueInput,
@@ -256,6 +257,16 @@ export function MosqueFormFields({
               disabled={isSubmitting}
             />
           </div>
+        )}
+      </form.Field>
+
+      <form.Field name="photos" mode="array">
+        {(field) => (
+          <MosquePhotosField
+            value={field.state.value}
+            onChange={(next) => field.setValue(next)}
+            disabled={isSubmitting}
+          />
         )}
       </form.Field>
 

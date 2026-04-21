@@ -14,6 +14,7 @@ export const mosqueInputSchema = z.object({
   status: z.enum(["approved", "pending", "hidden"]),
   tags: z.array(z.string()),
   facilities: z.array(z.string()),
+  photos: z.array(z.string().url()),
 });
 
 export type MosqueInput = z.infer<typeof mosqueInputSchema>;

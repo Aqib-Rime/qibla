@@ -40,6 +40,7 @@ const placeholder: MosqueInput = {
   status: "approved",
   tags: [],
   facilities: [],
+  photos: [],
 };
 
 export function EditMosqueSheet({ mosqueId, onClose }: Props) {
@@ -85,6 +86,7 @@ export function EditMosqueSheet({ mosqueId, onClose }: Props) {
       status: mosque.status,
       tags: mosque.tags ?? [],
       facilities: mosque.facilities ?? [],
+      photos: mosque.photos ?? [],
     });
     setErrorMessage(null);
   }, [mosque]);

@@ -34,6 +34,7 @@ const defaultValues: MosqueInput = {
   status: "approved",
   tags: [],
   facilities: [],
+  photos: [],
 };
 
 export function CreateMosqueSheet() {
