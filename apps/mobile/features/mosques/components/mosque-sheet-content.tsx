@@ -1,6 +1,8 @@
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { Image } from "expo-image";
 import { useMemo } from "react";
 import { View } from "react-native";
+import { MosqueMark } from "@/components/ui/mosque-mark";
 import { Text } from "@/components/ui/text";
 import { useSavedMosques } from "../hooks/use-mosques";
 import type { MosqueListItem } from "../lib/types";
@@ -16,6 +18,7 @@ export function MosqueSheetContent({ mosque }: { mosque: MosqueListItem }) {
     () => Boolean(saved.data?.data.some((m) => m.id === mosque.id)),
     [saved.data, mosque.id],
   );
+  const thumb = mosque.photos?.[0];
 
   return (
     <BottomSheetScrollView
@@ -24,6 +27,16 @@ export function MosqueSheetContent({ mosque }: { mosque: MosqueListItem }) {
     >
       <View className="px-s-6 pt-s-2">
         <View className="flex-row items-start gap-s-3">
+          {thumb ? (
+            <Image
+              source={{ uri: thumb }}
+              contentFit="cover"
+              style={{ width: 56, height: 56, borderRadius: 8 }}
+              transition={200}
+            />
+          ) : (
+            <MosqueMark size="md" />
+          )}
           <View className="flex-1">
             <Text variant="display-md">{mosque.name}</Text>
             {mosque.subtitle ? (

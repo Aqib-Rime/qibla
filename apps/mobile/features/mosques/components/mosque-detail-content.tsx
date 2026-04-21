@@ -9,6 +9,7 @@ import { MosqueDetailTabs, type MosqueTab } from "./mosque-detail-tabs";
 import { MosqueEventsTab } from "./mosque-events-tab";
 import { MosqueMetaRow } from "./mosque-meta-row";
 import { MosqueOverviewTab } from "./mosque-overview-tab";
+import { MosquePhotoHero, MosquePhotoStrip } from "./mosque-photo-gallery";
 import { MosqueReviewsTab } from "./mosque-reviews-tab";
 
 export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
@@ -31,7 +32,9 @@ export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
         />
       }
     >
-      <View className="px-s-6 pt-s-2">
+      <MosquePhotoHero photos={mosque.photos} />
+
+      <View className="px-s-6 pt-s-5">
         <Text variant="display-lg">{mosque.name}</Text>
         {mosque.subtitle ? (
           <Text variant="body" tone="muted" className="mt-s-1">
@@ -47,6 +50,12 @@ export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
           />
         </View>
       </View>
+
+      {mosque.photos.length > 1 ? (
+        <View className="mt-s-5">
+          <MosquePhotoStrip photos={mosque.photos} />
+        </View>
+      ) : null}
 
       <View className="mt-s-5">
         <MosqueDetailTabs active={tab} onChange={setTab} />
