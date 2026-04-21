@@ -1,10 +1,40 @@
-// Dark Google Maps style that flips the usual pattern: the map is a
-// readable mid-dark gray (land #272b29, roads lifted) while the floating
-// UI (bg-surface = #181d1a) sits DARKER than the map. This mirrors the
-// Uber/Lyft dark treatment — chrome is the deepest tone, map is a tier
-// lighter with visible roads — so buttons pop without relying on hue
-// games. Parks keep a hint of brand green.
-// Passed to <MapView customMapStyle={...} /> when the theme is dark.
+// Shared minimal-map stylers — we want the map to feel like a quiet canvas
+// for mosque markers, not a cluttered atlas. Hides POIs, businesses,
+// transit, all road labels, and neighborhood/land-parcel boundaries.
+// Keeps only geometry + country/locality labels for coarse wayfinding.
+const MINIMAL_STYLERS = [
+  {
+    featureType: "poi",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "transit",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "administrative.land_parcel",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "administrative.neighborhood",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "administrative.province",
+    elementType: "labels",
+    stylers: [{ visibility: "off" }],
+  },
+];
+
+// Light-mode minimal map — uses Google's default light colors but strips
+// out the same clutter as the dark style, so toggling themes keeps the
+// same "quiet canvas" feel.
+export const LIGHT_MAP_STYLE = MINIMAL_STYLERS;
+
+// Dark-mode style: flipped tonal pattern — map ground is mid-dark gray
+// so the `bg-surface` chrome (#181d1a) sits DARKER than the map, like
+// the Uber/Lyft dark treatment. Parks keep a hint of brand green.
+// Also inherits the MINIMAL_STYLERS clutter removal.
 export const DARK_MAP_STYLE = [
   { elementType: "geometry", stylers: [{ color: "#272b29" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#8a908c" }] },
@@ -25,19 +55,9 @@ export const DARK_MAP_STYLE = [
     stylers: [{ color: "#cbd0cc" }],
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#8a908c" }],
-  },
-  {
     featureType: "poi.park",
     elementType: "geometry",
     stylers: [{ color: "#1f2a23" }],
-  },
-  {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#5ba17a" }],
   },
   {
     featureType: "road",
@@ -70,16 +90,6 @@ export const DARK_MAP_STYLE = [
     stylers: [{ color: "#d0d4d0" }],
   },
   {
-    featureType: "transit",
-    elementType: "geometry",
-    stylers: [{ color: "#2e3230" }],
-  },
-  {
-    featureType: "transit.station",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#8a908c" }],
-  },
-  {
     featureType: "water",
     elementType: "geometry",
     stylers: [{ color: "#14181a" }],
@@ -89,4 +99,5 @@ export const DARK_MAP_STYLE = [
     elementType: "labels.text.fill",
     stylers: [{ color: "#4a5450" }],
   },
+  ...MINIMAL_STYLERS,
 ];

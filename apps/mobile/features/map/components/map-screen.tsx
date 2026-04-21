@@ -21,7 +21,7 @@ import { usePrayerTimes } from "@/features/prayer-times";
 import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { useThemeColors } from "@/lib/theme";
 import { useUserLocation } from "@/lib/use-user-location";
-import { DARK_MAP_STYLE } from "../lib/map-styles";
+import { DARK_MAP_STYLE, LIGHT_MAP_STYLE } from "../lib/map-styles";
 import { DHAKA_REGION } from "../lib/region";
 import { MapAddFab } from "./map-add-fab";
 import { MapMarkers } from "./map-markers";
@@ -169,7 +169,7 @@ export function MapScreen() {
         showsCompass={false}
         showsMyLocationButton={false}
         toolbarEnabled={false}
-        customMapStyle={scheme === "dark" ? DARK_MAP_STYLE : undefined}
+        customMapStyle={scheme === "dark" ? DARK_MAP_STYLE : LIGHT_MAP_STYLE}
         onRegionChangeComplete={(r) => {
           lastRegionRef.current = r;
         }}
