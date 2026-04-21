@@ -50,15 +50,33 @@ async function uploadAsset(
     contentType,
   });
 
-  // Convert the local file URI into a Blob the upload expects.
+  // Read the picked file's raw bytes. Using arrayBuffer() instead of blob()
+  // avoids a React Native quirk where blob() can come back with size 0 on
+  // Android, which makes the PUT succeed but store an empty object.
   const fileResponse = await fetch(asset.uri);
-  const blob = await fileResponse.blob();
+  const arrayBuffer = await fileResponse.arrayBuffer();
+  const bytes = new Uint8Array(arrayBuffer);
+
+  console.log(
+    "[upload] asset.uri=",
+    asset.uri,
+    "size=",
+    bytes.byteLength,
+    "type=",
+    contentType,
+  );
+
+  if (bytes.byteLength === 0) {
+    throw new Error("Picked image came back empty; pick it again.");
+  }
 
   const putResponse = await fetch(uploadUrl, {
     method: "PUT",
     headers: { "Content-Type": contentType },
-    body: blob,
+    body: bytes,
   });
+
+  console.log("[upload] PUT status=", putResponse.status, "public=", publicUrl);
 
   if (!putResponse.ok) {
     throw new Error(
