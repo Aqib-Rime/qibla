@@ -9,7 +9,6 @@ const iconButtonVariants = cva("items-center justify-center", {
     size: {
       sm: "h-10 w-10",
       md: "h-14 w-14",
-      // 150% of md — used for the floating action button on the map.
       xl: "size-[60px]",
     },
     shape: {
