@@ -9,6 +9,7 @@ import { useUserLocation } from "@/lib/use-user-location";
 import { useMosquesList } from "../hooks/use-mosques";
 import { SearchInputBar } from "./search-input-bar";
 import { SearchPlacesRow } from "./search-places-row";
+import { SearchPlacesSkeleton } from "./search-places-skeleton";
 import { SearchPopularSection } from "./search-popular-section";
 import { SearchRecentSection } from "./search-recent-section";
 
@@ -52,7 +53,10 @@ export function SearchModalScreen() {
 
   const placeResults = places.data?.data ?? [];
   const searching = placesEnabled;
-  const isPlacesLoading = places.isFetching && placeResults.length === 0;
+  // Show the skeleton whenever the query is stale (user is typing a new term)
+  // or the very first fetch is in flight — covers both cold loads and refetches.
+  const showSkeleton =
+    placesEnabled && (places.isFetching || query.trim() !== debouncedQuery);
 
   return (
     <View className="flex-1 bg-cream">
@@ -74,12 +78,8 @@ export function SearchModalScreen() {
               Places
             </Text>
 
-            {isPlacesLoading ? (
-              <View className="items-center rounded-md bg-white py-s-6">
-                <Text variant="caption" tone="muted">
-                  Searching…
-                </Text>
-              </View>
+            {showSkeleton ? (
+              <SearchPlacesSkeleton />
             ) : placeResults.length === 0 ? (
               <View className="items-center gap-s-2 rounded-md bg-white px-s-5 py-s-8">
                 <Icon name="search" size={28} color="#6b7a70" />
