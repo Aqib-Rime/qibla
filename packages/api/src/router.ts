@@ -4,6 +4,7 @@ import { mosquesRouter } from "./routers/mosques.ts";
 import { placesRouter } from "./routers/places.ts";
 import { prayerTimesRouter } from "./routers/prayer-times.ts";
 import { reviewsRouter } from "./routers/reviews.ts";
+import { uploadsRouter } from "./routers/uploads.ts";
 
 export {
   adminProcedure,
@@ -21,6 +22,7 @@ export const appRouter = {
   prayerTimes: prayerTimesRouter,
   reviews: reviewsRouter,
   places: placesRouter,
+  uploads: uploadsRouter,
 };
 
 export type AppRouter = typeof appRouter;
