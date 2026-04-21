@@ -1,12 +1,13 @@
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Text } from "@/components/ui/text";
+import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useMySubmissions } from "../hooks/use-submissions";
 
 type SubmissionRow = NonNullable<
@@ -16,6 +17,7 @@ type SubmissionRow = NonNullable<
 export function MySubmissionsScreen() {
   const { data, isLoading } = useMySubmissions();
   const submissions = data?.data ?? [];
+  const { refreshing, onRefresh } = usePullToRefresh();
 
   return (
     <View className="flex-1 bg-cream">
@@ -41,6 +43,14 @@ export function MySubmissionsScreen() {
           paddingBottom: 48,
         }}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#2e5d45"
+            colors={["#2e5d45"]}
+          />
+        }
       >
         {isLoading ? (
           <View className="gap-s-3">

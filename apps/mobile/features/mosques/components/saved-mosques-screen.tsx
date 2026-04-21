@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { ScrollView, View } from "react-native";
+import { RefreshControl, ScrollView, View } from "react-native";
 import { Text } from "@/components/ui/text";
+import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useSavedMosques } from "../hooks/use-mosques";
 import { SavedMosqueCard } from "./saved-mosque-card";
 import { SavedMosquesEmpty } from "./saved-mosques-empty";
@@ -19,6 +20,7 @@ export function SavedMosquesScreen() {
   const { data, isLoading } = useSavedMosques();
   const rows = data?.data ?? [];
   const pairs = chunkPairs(rows);
+  const { refreshing, onRefresh } = usePullToRefresh();
 
   return (
     <View className="flex-1 bg-cream">
@@ -46,6 +48,14 @@ export function SavedMosquesScreen() {
             paddingBottom: 32,
           }}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor="#2e5d45"
+              colors={["#2e5d45"]}
+            />
+          }
         >
           <View className="gap-s-3">
             {pairs.map(([left, right]) => (

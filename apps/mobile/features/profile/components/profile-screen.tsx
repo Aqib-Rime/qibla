@@ -1,9 +1,10 @@
 import * as Linking from "expo-linking";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { ScrollView, Share, View } from "react-native";
+import { RefreshControl, ScrollView, Share, View } from "react-native";
 import { useHydrateSettings, useSettingsStore } from "@/features/settings";
 import { useSession } from "@/lib/auth";
+import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useProfileStats } from "../hooks/use-profile-stats";
 import { ProfileHeader } from "./profile-header";
 import { ProfileHeroCard } from "./profile-hero-card";
@@ -20,6 +21,7 @@ export function ProfileScreen() {
 
   const name = session?.user?.name ?? "Guest";
   const email = session?.user?.email ?? "";
+  const { refreshing, onRefresh } = usePullToRefresh();
 
   return (
     <View className="flex-1 bg-cream">
@@ -33,6 +35,14 @@ export function ProfileScreen() {
           paddingBottom: 48,
         }}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#2e5d45"
+            colors={["#2e5d45"]}
+          />
+        }
       >
         <ProfileHeroCard name={name} email={email} />
 
