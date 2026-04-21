@@ -3,7 +3,11 @@ import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, {
+  Marker,
+  PROVIDER_GOOGLE,
+  type Region,
+} from "react-native-maps";
 import { Icon } from "@/components/ui/icon";
 import {
   applyFilters,
@@ -14,7 +18,10 @@ import {
   useMosquesNearby,
 } from "@/features/mosques";
 import { usePrayerTimes } from "@/features/prayer-times";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
+import { useThemeColors } from "@/lib/theme";
 import { useUserLocation } from "@/lib/use-user-location";
+import { DARK_MAP_STYLE } from "../lib/map-styles";
 import { DHAKA_REGION } from "../lib/region";
 import { MapAddFab } from "./map-add-fab";
 import { MapMarkers } from "./map-markers";
@@ -39,6 +46,8 @@ function parsePickedPlace(
 }
 
 export function MapScreen() {
+  const colors = useThemeColors();
+  const scheme = useThemeScheme();
   const filters = useMosqueFilters();
   const activeFilters = countActive(filters);
   const userPos = useUserLocation();
@@ -76,6 +85,10 @@ export function MapScreen() {
   const [menuOpen, setMenuOpen] = useState(false);
   const sheetRef = useRef<BottomSheet>(null);
   const mapRef = useRef<MapView>(null);
+  // Tracked so the MapView remount on theme toggle (keyed by scheme)
+  // doesn't snap back to DHAKA_REGION — we feed the last pan/zoom
+  // back in as the new initialRegion.
+  const lastRegionRef = useRef<Region>(DHAKA_REGION);
 
   const coords = center ?? {
     lat: DHAKA_REGION.latitude,
@@ -143,16 +156,23 @@ export function MapScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <MapView
+        // Key forces a remount on theme toggle — react-native-maps does
+        // not reliably re-apply customMapStyle on prop change.
+        key={scheme}
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={{ flex: 1 }}
-        initialRegion={DHAKA_REGION}
+        initialRegion={lastRegionRef.current}
         showsUserLocation
         showsCompass={false}
         showsMyLocationButton={false}
         toolbarEnabled={false}
+        customMapStyle={scheme === "dark" ? DARK_MAP_STYLE : undefined}
+        onRegionChangeComplete={(r) => {
+          lastRegionRef.current = r;
+        }}
         onPress={handleCloseSheet}
         onPoiClick={handleCloseSheet}
       >
@@ -164,10 +184,10 @@ export function MapScreen() {
               longitude: pickedPlace.lng,
             }}
             title={pickedPlace.name ?? "Picked location"}
-            pinColor="#2e5d45"
+            pinColor={colors.green}
           >
             <View className="h-7 w-7 items-center justify-center rounded-pill border-2 border-white bg-green shadow-sm">
-              <Icon name="pin" size={14} color="#ffffff" />
+              <Icon name="pin" size={14} color={colors.white} />
             </View>
           </Marker>
         ) : null}
