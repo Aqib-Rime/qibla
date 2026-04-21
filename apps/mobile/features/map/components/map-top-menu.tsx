@@ -49,23 +49,33 @@ export function MapTopMenu({ onClose }: { onClose: () => void }) {
 
   return (
     <View
-      className="absolute right-0 top-full mt-s-2 min-w-[200px] rounded-md border border-line/80 bg-surface py-s-2"
+      className="absolute right-0 top-full mt-s-2 min-w-[240px] overflow-hidden rounded-lg border border-line/80 bg-surface"
       style={menuShadow}
     >
-      {items.map((it) => (
-        <Pressable
-          key={it.label}
-          onPress={() => {
-            Haptics.selectionAsync().catch(() => {});
-            it.onPress();
-          }}
-          className="flex-row items-center gap-s-3 px-s-4 py-s-3"
-          style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
-        >
-          <Icon name={it.icon} size={18} color={colors.ink} />
-          <Text variant="label">{it.label}</Text>
-        </Pressable>
-      ))}
+      {items.map((it, i) => {
+        const isLast = i === items.length - 1;
+        return (
+          <Pressable
+            key={it.label}
+            onPress={() => {
+              Haptics.selectionAsync().catch(() => {});
+              it.onPress();
+            }}
+            className={`flex-row items-center gap-s-3 px-s-4 py-s-3 ${
+              isLast ? "" : "border-b border-line"
+            }`}
+            style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
+          >
+            <View className="h-8 w-8 items-center justify-center rounded-sm bg-green-tint">
+              <Icon name={it.icon} size={15} color={colors.green} />
+            </View>
+            <Text variant="body" className="flex-1">
+              {it.label}
+            </Text>
+            <Icon name="chevron" size={14} color={colors.muted} />
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
