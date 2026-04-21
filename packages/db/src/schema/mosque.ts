@@ -62,6 +62,7 @@ export const event = pgTable("event", {
   title: text("title").notNull(),
   when: text("when").notNull(),
   by: text("by"),
+  description: text("description"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
