@@ -12,6 +12,30 @@ import { and, asc, desc, eq, gte, ilike, lte, or, sql } from "drizzle-orm";
 import { z } from "zod";
 import { authedProcedure, publicProcedure } from "../router-base.ts";
 
+function mosqueId() {
+  return `m_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
+}
+
+const submitInput = z.object({
+  name: z.string().min(1, "Name is required").max(200),
+  subtitle: z.string().max(200).nullish(),
+  about: z.string().max(2000).nullish(),
+  address: z.string().max(300).nullish(),
+  street: z.string().max(200).nullish(),
+  area: z.string().max(100).nullish(),
+  city: z.string().min(1).max(100).default("Dhaka"),
+  lat: z.number().min(-90).max(90),
+  lng: z.number().min(-180).max(180),
+  open: z.boolean().default(true),
+  tags: z.array(z.string().min(1).max(50)).max(20).default([]),
+  facilities: z.array(z.string().min(1).max(50)).max(20).default([]),
+  photos: z.array(z.string().url().max(500)).max(12).default([]),
+});
+
+const updateMineInput = submitInput.extend({
+  id: z.string().min(1),
+});
+
 const listInput = z.object({
   page: z.number().int().min(1).optional().default(1),
   pageSize: z.number().int().min(1).max(100).optional().default(20),
@@ -225,6 +249,125 @@ export const mosquesRouter = {
             eq(savedMosque.mosqueId, input.mosqueId),
           ),
         );
+      return { ok: true };
+    }),
+
+  // User-submitted mosque. Lands as status=pending; admin approves via the
+  // existing mosques moderation flow. The createdBy column scopes later
+  // edit/delete access back to the original submitter.
+  submit: authedProcedure
+    .input(submitInput)
+    .handler(async ({ input, context }) => {
+      const [row] = await db
+        .insert(mosque)
+        .values({
+          id: mosqueId(),
+          ...input,
+          status: "pending",
+          createdBy: context.user.id,
+        })
+        .returning();
+      return row;
+    }),
+
+  // User's own submissions — any status. Paginated.
+  mine: authedProcedure
+    .input(
+      z
+        .object({
+          page: z.number().int().min(1).optional().default(1),
+          pageSize: z.number().int().min(1).max(100).optional().default(50),
+        })
+        .optional()
+        .default({}),
+    )
+    .handler(async ({ input, context }) => {
+      const page = input?.page ?? 1;
+      const pageSize = input?.pageSize ?? 50;
+      const offset = (page - 1) * pageSize;
+
+      const rows = await db
+        .select()
+        .from(mosque)
+        .where(eq(mosque.createdBy, context.user.id))
+        .orderBy(desc(mosque.createdAt))
+        .limit(pageSize)
+        .offset(offset);
+
+      const [totalRow] = await db
+        .select({ value: sql<number>`count(*)::int` })
+        .from(mosque)
+        .where(eq(mosque.createdBy, context.user.id));
+
+      return {
+        data: rows,
+        total: totalRow?.value ?? 0,
+        page,
+        pageSize,
+      };
+    }),
+
+  // Edit a submission the user owns. Only allowed while the row is still
+  // pending — once an admin approves it, the admin-only update path takes over.
+  updateMine: authedProcedure
+    .input(updateMineInput)
+    .handler(async ({ input, context }) => {
+      const { id, ...fields } = input;
+
+      const [existing] = await db
+        .select({ createdBy: mosque.createdBy, status: mosque.status })
+        .from(mosque)
+        .where(eq(mosque.id, id))
+        .limit(1);
+
+      if (!existing) {
+        throw new ORPCError("NOT_FOUND", { message: "Mosque not found" });
+      }
+      if (existing.createdBy !== context.user.id) {
+        throw new ORPCError("FORBIDDEN", {
+          message: "You can only edit your own submissions",
+        });
+      }
+      if (existing.status !== "pending") {
+        throw new ORPCError("FORBIDDEN", {
+          message: "Approved mosques can only be edited by an admin",
+        });
+      }
+
+      const [row] = await db
+        .update(mosque)
+        .set({ ...fields, updatedAt: new Date() })
+        .where(eq(mosque.id, id))
+        .returning();
+
+      return row;
+    }),
+
+  // Withdraw your own pending submission.
+  deleteMine: authedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .handler(async ({ input, context }) => {
+      const [existing] = await db
+        .select({ createdBy: mosque.createdBy, status: mosque.status })
+        .from(mosque)
+        .where(eq(mosque.id, input.id))
+        .limit(1);
+
+      if (!existing) {
+        throw new ORPCError("NOT_FOUND", { message: "Mosque not found" });
+      }
+      if (existing.createdBy !== context.user.id) {
+        throw new ORPCError("FORBIDDEN", {
+          message: "You can only withdraw your own submissions",
+        });
+      }
+      if (existing.status !== "pending") {
+        throw new ORPCError("FORBIDDEN", {
+          message: "Approved mosques can only be removed by an admin",
+        });
+      }
+
+      await db.delete(mosque).where(eq(mosque.id, input.id));
       return { ok: true };
     }),
 };
