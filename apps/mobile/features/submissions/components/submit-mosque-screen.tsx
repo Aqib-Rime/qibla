@@ -1,4 +1,4 @@
-import { useForm, useStore } from "@tanstack/react-form";
+import { revalidateLogic, useForm, useStore } from "@tanstack/react-form";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { useAppDialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
+import { useAppToast } from "@/components/ui/toast";
 import { useSubmitMosque } from "../hooks/use-submissions";
+import { collectInvalidLabels } from "../lib/collect-invalid-labels";
 import {
   EMPTY_SUBMISSION,
   type MosqueSubmissionInput,
@@ -20,10 +22,28 @@ export function SubmitMosqueScreen() {
   const submit = useSubmitMosque();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dialog = useAppDialog();
+  const toast = useAppToast();
 
   const form = useForm({
     defaultValues: EMPTY_SUBMISSION,
-    validators: { onChange: mosqueSubmissionSchema },
+    // Don't run validation until the user taps Submit; once they have,
+    // validate on every change so errors clear as they fix each field.
+    validationLogic: revalidateLogic({
+      mode: "submit",
+      modeAfterSubmission: "change",
+    }),
+    validators: { onDynamic: mosqueSubmissionSchema },
+    onSubmitInvalid: ({ formApi }) => {
+      const missing = collectInvalidLabels(formApi.state.fieldMeta);
+      toast.show({
+        title: "Missing info",
+        body:
+          missing.length > 0
+            ? `Please fix: ${missing.join(", ")}`
+            : "Please fix the highlighted fields.",
+        tone: "warning",
+      });
+    },
     onSubmit: async ({ value }) => {
       try {
         await submit.mutateAsync(value as MosqueSubmissionInput);
@@ -46,7 +66,6 @@ export function SubmitMosqueScreen() {
   });
 
   const isSubmitting = useStore(form.store, (s) => s.isSubmitting);
-  const canSubmit = useStore(form.store, (s) => s.canSubmit);
 
   return (
     <View className="flex-1 bg-cream">
@@ -76,7 +95,8 @@ export function SubmitMosqueScreen() {
       >
         <Text variant="body" tone="muted" className="mb-s-4">
           Fill in what you know — the admin team reviews every submission before
-          it goes live on the map. You can edit anything until it's approved.
+          it goes live on the map. You can edit anything until it&apos;s
+          approved.
         </Text>
 
         {errorMessage ? (
@@ -93,12 +113,13 @@ export function SubmitMosqueScreen() {
           <Button
             label={isSubmitting ? "Submitting…" : "Submit for review"}
             onPress={() => form.handleSubmit()}
-            disabled={!canSubmit || isSubmitting}
+            disabled={isSubmitting}
           />
         </View>
       </ScrollView>
 
       {dialog.element}
+      {toast.element}
     </View>
   );
 }

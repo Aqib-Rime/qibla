@@ -1,4 +1,4 @@
-import { useForm, useStore } from "@tanstack/react-form";
+import { revalidateLogic, useForm, useStore } from "@tanstack/react-form";
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button";
 import { useAppDialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
+import { useAppToast } from "@/components/ui/toast";
 import {
   useDeleteMySubmission,
   useMySubmission,
   useUpdateMySubmission,
 } from "../hooks/use-submissions";
+import { collectInvalidLabels } from "../lib/collect-invalid-labels";
 import {
   EMPTY_SUBMISSION,
   type MosqueSubmissionInput,
@@ -27,10 +29,26 @@ export function SubmissionEditScreen() {
   const del = useDeleteMySubmission();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dialog = useAppDialog();
+  const toast = useAppToast();
 
   const form = useForm({
     defaultValues: EMPTY_SUBMISSION,
-    validators: { onChange: mosqueSubmissionSchema },
+    validationLogic: revalidateLogic({
+      mode: "submit",
+      modeAfterSubmission: "change",
+    }),
+    validators: { onDynamic: mosqueSubmissionSchema },
+    onSubmitInvalid: ({ formApi }) => {
+      const missing = collectInvalidLabels(formApi.state.fieldMeta);
+      toast.show({
+        title: "Missing info",
+        body:
+          missing.length > 0
+            ? `Please fix: ${missing.join(", ")}`
+            : "Please fix the highlighted fields.",
+        tone: "warning",
+      });
+    },
     onSubmit: async ({ value }) => {
       if (!id) return;
       try {
@@ -73,7 +91,6 @@ export function SubmissionEditScreen() {
   }, [submission]);
 
   const isSubmitting = useStore(form.store, (s) => s.isSubmitting);
-  const canSubmit = useStore(form.store, (s) => s.canSubmit);
 
   const readOnly = submission && submission.status !== "pending";
 
@@ -167,7 +184,7 @@ export function SubmissionEditScreen() {
               <Button
                 label={isSubmitting ? "Saving…" : "Save changes"}
                 onPress={() => form.handleSubmit()}
-                disabled={!canSubmit || isSubmitting}
+                disabled={isSubmitting}
               />
               <Button
                 label="Withdraw submission"
@@ -181,6 +198,7 @@ export function SubmissionEditScreen() {
       )}
 
       {dialog.element}
+      {toast.element}
     </View>
   );
 }

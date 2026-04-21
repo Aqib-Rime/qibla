@@ -57,7 +57,7 @@ export function SubmissionFormFields({ form, isSubmitting }: Props) {
               editable={!isSubmitting}
             />
             {fieldError(field.state.meta.errors) ? (
-              <Text variant="caption" className="text-[#b04a3a]">
+              <Text variant="caption" tone="danger">
                 {fieldError(field.state.meta.errors)}
               </Text>
             ) : null}
@@ -80,20 +80,31 @@ export function SubmissionFormFields({ form, isSubmitting }: Props) {
         )}
       </form.Field>
 
-      <View className="gap-s-2">
-        <form.Subscribe selector={(s) => [s.values.lat, s.values.lng] as const}>
-          {([lat, lng]) => (
-            <LocationPicker
-              lat={lat}
-              lng={lng}
-              onChange={(newLat, newLng) => {
-                form.setFieldValue("lat", newLat);
-                form.setFieldValue("lng", newLng);
-              }}
-            />
-          )}
-        </form.Subscribe>
-      </View>
+      <form.Field name="lat">
+        {(latField) => (
+          <View className="gap-s-2">
+            <form.Subscribe
+              selector={(s) => [s.values.lat, s.values.lng] as const}
+            >
+              {([lat, lng]) => (
+                <LocationPicker
+                  lat={lat}
+                  lng={lng}
+                  onChange={(newLat, newLng) => {
+                    form.setFieldValue("lat", newLat);
+                    form.setFieldValue("lng", newLng);
+                  }}
+                />
+              )}
+            </form.Subscribe>
+            {fieldError(latField.state.meta.errors) ? (
+              <Text variant="caption" tone="danger">
+                {fieldError(latField.state.meta.errors)}
+              </Text>
+            ) : null}
+          </View>
+        )}
+      </form.Field>
 
       <form.Field name="area">
         {(field) => (

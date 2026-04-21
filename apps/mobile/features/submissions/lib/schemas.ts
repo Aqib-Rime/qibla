@@ -19,21 +19,28 @@ export const TAG_OPTIONS = [
   "Madrasa",
 ] as const;
 
-export const mosqueSubmissionSchema = z.object({
-  name: z.string().min(1, "Name is required").max(200),
-  subtitle: z.string().max(200).nullable(),
-  about: z.string().max(2000).nullable(),
-  address: z.string().max(300).nullable(),
-  street: z.string().max(200).nullable(),
-  area: z.string().max(100).nullable(),
-  city: z.string().min(1).max(100),
-  lat: z.number().min(-90).max(90),
-  lng: z.number().min(-180).max(180),
-  open: z.boolean(),
-  tags: z.array(z.string()),
-  facilities: z.array(z.string()),
-  photos: z.array(z.string().url()),
-});
+export const mosqueSubmissionSchema = z
+  .object({
+    name: z.string().min(1, "Name is required").max(200),
+    subtitle: z.string().max(200).nullable(),
+    about: z.string().max(2000).nullable(),
+    address: z.string().max(300).nullable(),
+    street: z.string().max(200).nullable(),
+    area: z.string().max(100).nullable(),
+    city: z.string().min(1).max(100),
+    lat: z.number().min(-90).max(90),
+    lng: z.number().min(-180).max(180),
+    open: z.boolean(),
+    tags: z.array(z.string()),
+    facilities: z.array(z.string()),
+    photos: z.array(z.string().url()),
+  })
+  // The empty form starts at (0,0) — a valid coordinate in the ocean but
+  // never a valid mosque. Require the user to pick a real location.
+  .refine((v) => !(v.lat === 0 && v.lng === 0), {
+    message: "Pick the mosque's location on the map",
+    path: ["lat"],
+  });
 
 export type MosqueSubmissionInput = z.infer<typeof mosqueSubmissionSchema>;
 
