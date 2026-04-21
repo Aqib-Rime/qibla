@@ -12,7 +12,7 @@ export function PrayerTimesRow({ name, time, active }: Props) {
   return (
     <View
       className={`flex-row items-center justify-between rounded-md px-s-4 py-s-4 ${
-        active ? "bg-green-tint" : "bg-white"
+        active ? "bg-green-tint" : "bg-surface"
       }`}
     >
       <Text variant="label" tone={active ? "green" : "ink"}>

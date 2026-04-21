@@ -8,6 +8,7 @@ import {
   PRAYER_LABEL,
   type Timings,
 } from "@/features/prayer-times";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   mosqueCount: number;
@@ -19,14 +20,6 @@ type Props = {
   onOpenMenu: () => void;
 };
 
-const PILL_SHADOW = {
-  shadowColor: "#1a2a22",
-  shadowOffset: { width: 0, height: 6 },
-  shadowOpacity: 0.14,
-  shadowRadius: 18,
-  elevation: 6,
-};
-
 function PillIconButton({
   icon,
   onPress,
@@ -36,6 +29,7 @@ function PillIconButton({
   onPress: () => void;
   accessibilityLabel: string;
 }) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={onPress}
@@ -43,7 +37,7 @@ function PillIconButton({
       hitSlop={14}
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
     >
-      <Icon name={icon} size={22} color="#1a2a22" />
+      <Icon name={icon} size={22} color={colors.ink} />
     </Pressable>
   );
 }
@@ -57,6 +51,14 @@ export function MapTopPill({
   onSearch,
   onOpenMenu,
 }: Props) {
+  const colors = useThemeColors();
+  const pillShadow = {
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.14,
+    shadowRadius: 18,
+    elevation: 6,
+  };
   const next = timings ? nextPrayer(timings) : null;
 
   const title = next
@@ -69,8 +71,8 @@ export function MapTopPill({
 
   return (
     <View
-      className="flex-row items-center gap-s-4 rounded-md border border-line/80 bg-white px-s-5 py-s-3"
-      style={PILL_SHADOW}
+      className="flex-row items-center gap-s-4 rounded-md border border-line/80 bg-surface px-s-5 py-s-3"
+      style={pillShadow}
     >
       <PillIconButton
         icon="search"

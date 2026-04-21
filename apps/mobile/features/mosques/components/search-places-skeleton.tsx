@@ -8,7 +8,7 @@ export function SearchPlacesSkeleton() {
         <View
           // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton, row index is stable
           key={i}
-          className="flex-row items-center gap-s-3 rounded-md bg-white p-s-4"
+          className="flex-row items-center gap-s-3 rounded-md bg-surface p-s-4"
         >
           <Skeleton className="h-10 w-10 rounded-sm" />
           <View className="flex-1 gap-s-2">

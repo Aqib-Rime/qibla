@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Screen } from "@/components/ui/screen";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   step: 1 | 2 | 3;
@@ -20,6 +21,7 @@ const NEXT = {
 
 export function OnboardLayout({ step, title, body, art }: Props) {
   const router = useRouter();
+  const colors = useThemeColors();
   const next = NEXT[step];
 
   return (
@@ -42,7 +44,7 @@ export function OnboardLayout({ step, title, body, art }: Props) {
         </Link>
       </View>
 
-      <View className="mt-s-5 h-[340px] rounded-xl overflow-hidden border border-line bg-white">
+      <View className="mt-s-5 h-[340px] rounded-xl overflow-hidden border border-line bg-surface">
         {art}
       </View>
 
@@ -60,7 +62,7 @@ export function OnboardLayout({ step, title, body, art }: Props) {
         <Button
           variant="dark"
           label={step < 3 ? "Continue" : "Get started"}
-          trailing={<Icon name="arrow" size={16} color="#fff" />}
+          trailing={<Icon name="arrow" size={16} color={colors.white} />}
           onPress={() => router.push(next)}
         />
       </View>

@@ -2,9 +2,11 @@ import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 export function QiblaCalibrationOverlay() {
   const progress = useRef(new Animated.Value(0)).current;
+  const colors = useThemeColors();
 
   useEffect(() => {
     const loop = Animated.loop(
@@ -34,7 +36,7 @@ export function QiblaCalibrationOverlay() {
           style={{ transform: [{ translateX }, { translateY }] }}
           className="h-16 w-16 items-center justify-center rounded-pill bg-green"
         >
-          <Icon name="compass" size={28} color="#ffffff" />
+          <Icon name="compass" size={28} color={colors.white} />
         </Animated.View>
         <Text variant="display-sm" className="mt-s-5 text-center">
           Calibrate your compass

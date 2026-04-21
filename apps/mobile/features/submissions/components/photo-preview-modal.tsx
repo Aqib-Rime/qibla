@@ -2,6 +2,7 @@ import { Image } from "expo-image";
 import { Modal, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/icon";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   url: string | null;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function PhotoPreviewModal({ url, onClose }: Props) {
+  const colors = useThemeColors();
   return (
     <Modal
       visible={url !== null}
@@ -28,7 +30,7 @@ export function PhotoPreviewModal({ url, onClose }: Props) {
             style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
             accessibilityLabel="Close preview"
           >
-            <Icon name="x" size={18} color="#ffffff" />
+            <Icon name="x" size={18} color={colors.white} />
           </Pressable>
         </SafeAreaView>
         {url ? (

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Pressable } from "react-native";
 import Animated, { FadeInDown, FadeOutUp } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useThemeColors } from "@/lib/theme";
 import { Text } from "./text";
 
 export type ToastTone = "error" | "warning" | "success" | "info";
@@ -29,6 +30,7 @@ type CardProps = {
 };
 
 function ToastCard({ config, onDismiss }: CardProps) {
+  const colors = useThemeColors();
   useEffect(() => {
     const timer = setTimeout(onDismiss, config.duration ?? 4000);
     return () => clearTimeout(timer);
@@ -47,7 +49,7 @@ function ToastCard({ config, onDismiss }: CardProps) {
           onPress={onDismiss}
           className={`mx-s-4 mt-s-2 rounded-md px-s-4 py-s-3 ${bgClass}`}
           style={{
-            shadowColor: "#1a2a22",
+            shadowColor: colors.ink,
             shadowOffset: { width: 0, height: 6 },
             shadowOpacity: 0.2,
             shadowRadius: 12,

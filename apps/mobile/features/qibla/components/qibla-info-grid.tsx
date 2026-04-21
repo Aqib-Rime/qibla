@@ -32,7 +32,7 @@ export function QiblaInfoGrid({ bearing, distanceKm, accuracy }: Props) {
     <View className="flex-row gap-s-3">
       <InfoCell label="Qibla" value={`${Math.round(bearing)}°`} />
       <InfoCell label="Mecca" value={formatDistance(distanceKm)} />
-      <View className="flex-1 rounded-md border border-line/80 bg-white p-s-4">
+      <View className="flex-1 rounded-md border border-line/80 bg-surface p-s-4">
         <Text variant="caption" tone="muted">
           Accuracy
         </Text>
@@ -61,7 +61,7 @@ export function QiblaInfoGrid({ bearing, distanceKm, accuracy }: Props) {
 
 function InfoCell({ label, value }: { label: string; value: string }) {
   return (
-    <View className="flex-1 rounded-md border border-line/80 bg-white p-s-4">
+    <View className="flex-1 rounded-md border border-line/80 bg-surface p-s-4">
       <Text variant="caption" tone="muted">
         {label}
       </Text>

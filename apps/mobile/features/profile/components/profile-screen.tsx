@@ -3,7 +3,9 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { RefreshControl, ScrollView, Share, View } from "react-native";
 import { useHydrateSettings, useSettingsStore } from "@/features/settings";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { useSession } from "@/lib/auth";
+import { useThemeColors } from "@/lib/theme";
 import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useProfileStats } from "../hooks/use-profile-stats";
 import { ProfileHeader } from "./profile-header";
@@ -22,10 +24,12 @@ export function ProfileScreen() {
   const name = session?.user?.name ?? "Guest";
   const email = session?.user?.email ?? "";
   const { refreshing, onRefresh } = usePullToRefresh();
+  const scheme = useThemeScheme();
+  const colors = useThemeColors();
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <ProfileHeader />
 
       <ScrollView
@@ -39,8 +43,8 @@ export function ProfileScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor="#2e5d45"
-            colors={["#2e5d45"]}
+            tintColor={colors.green}
+            colors={[colors.green]}
           />
         }
       >

@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Screen } from "@/components/ui/screen";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { markOnboardingCompleted } from "../lib/storage";
 import { PermissionBenefits } from "./permission-benefits";
 import { PermissionPulse } from "./permission-pulse";
 
 export function PermissionScreen() {
   const router = useRouter();
+  const colors = useThemeColors();
   const [asking, setAsking] = useState(false);
 
   const continueToAuth = async () => {
@@ -50,7 +52,7 @@ export function PermissionScreen() {
         <Button
           label="Allow location"
           leading={
-            !asking ? <Icon name="pin" size={16} color="#fff" /> : undefined
+            !asking ? <Icon name="pin" size={16} color={colors.white} /> : undefined
           }
           loading={asking}
           onPress={requestPermission}

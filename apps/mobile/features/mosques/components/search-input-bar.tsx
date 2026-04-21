@@ -3,21 +3,22 @@ import { Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   value: string;
   onChange: (v: string) => void;
 };
 
-const FIELD_SHADOW = {
-  shadowColor: "#1a2a22",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.06,
-  shadowRadius: 6,
-  elevation: 2,
-};
-
 export function SearchInputBar({ value, onChange }: Props) {
+  const colors = useThemeColors();
+  const fieldShadow = {
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
+  };
   return (
     <SafeAreaView edges={["top"]} className="bg-cream">
       <View className="flex-row items-center gap-s-3 px-s-5 py-s-3">
@@ -29,15 +30,15 @@ export function SearchInputBar({ value, onChange }: Props) {
           accessibilityLabel="Close search"
         />
         <View
-          className="h-14 flex-1 flex-row items-center gap-s-3 rounded-lg border border-line/80 bg-white px-s-4"
-          style={FIELD_SHADOW}
+          className="h-14 flex-1 flex-row items-center gap-s-3 rounded-lg border border-line/80 bg-surface px-s-4"
+          style={fieldShadow}
         >
-          <Icon name="search" size={20} color="#6b7a70" />
+          <Icon name="search" size={20} color={colors.muted} />
           <TextInput
             value={value}
             onChangeText={onChange}
             placeholder="Search mosques, areas…"
-            placeholderTextColor="#6b7a70"
+            placeholderTextColor={colors.muted}
             autoFocus
             autoCorrect={false}
             returnKeyType="search"
@@ -45,12 +46,12 @@ export function SearchInputBar({ value, onChange }: Props) {
               flex: 1,
               fontFamily: "Geist_400Regular",
               fontSize: 16,
-              color: "#1a2a22",
+              color: colors.ink,
             }}
           />
           {value ? (
             <Pressable onPress={() => onChange("")} hitSlop={10}>
-              <Icon name="x" size={18} color="#6b7a70" />
+              <Icon name="x" size={18} color={colors.muted} />
             </Pressable>
           ) : null}
         </View>

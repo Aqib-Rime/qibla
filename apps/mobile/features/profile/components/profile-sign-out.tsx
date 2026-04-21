@@ -18,7 +18,7 @@ export function ProfileSignOut() {
       className="mt-s-6 items-center py-s-4"
       style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
     >
-      <Text variant="label" className="text-[#b04a3a]">
+      <Text variant="label" className="text-danger">
         Sign out
       </Text>
     </Pressable>

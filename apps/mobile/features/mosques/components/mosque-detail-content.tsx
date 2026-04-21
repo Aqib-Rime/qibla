@@ -2,6 +2,7 @@ import { useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { PrayerTimesTab } from "@/features/prayer-times";
+import { useThemeColors } from "@/lib/theme";
 import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import type { MosqueDetail } from "../lib/types";
 import { MosqueDetailTabs, type MosqueTab } from "./mosque-detail-tabs";
@@ -14,6 +15,7 @@ export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
   const [tab, setTab] = useState<MosqueTab>("overview");
   const { mosque, imam, events, reviews } = data;
   const { refreshing, onRefresh } = usePullToRefresh();
+  const colors = useThemeColors();
 
   return (
     <ScrollView
@@ -24,8 +26,8 @@ export function MosqueDetailContent({ data }: { data: MosqueDetail }) {
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          tintColor="#2e5d45"
-          colors={["#2e5d45"]}
+          tintColor={colors.green}
+          colors={[colors.green]}
         />
       }
     >

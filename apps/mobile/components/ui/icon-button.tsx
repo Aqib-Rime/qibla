@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as Haptics from "expo-haptics";
 import type { LucideProps } from "lucide-react-native";
 import { Pressable, type PressableProps } from "react-native";
+import { useThemeColors } from "@/lib/theme";
 import { Icon, type IconName } from "./icon";
 
 const iconButtonVariants = cva("items-center justify-center", {
@@ -16,7 +17,7 @@ const iconButtonVariants = cva("items-center justify-center", {
       square: "rounded-lg",
     },
     variant: {
-      default: "border border-line/80 bg-white",
+      default: "border border-line/80 bg-surface",
       filled: "bg-green",
       ghost: "bg-transparent",
     },
@@ -34,31 +35,7 @@ const ICON_SIZE: Record<"sm" | "md" | "xl", number> = {
   xl: 33,
 };
 
-const SHADOW_SM = {
-  shadowColor: "#1a2a22",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.08,
-  shadowRadius: 6,
-  elevation: 2,
-};
-
-const SHADOW_MD = {
-  shadowColor: "#1a2a22",
-  shadowOffset: { width: 0, height: 6 },
-  shadowOpacity: 0.14,
-  shadowRadius: 16,
-  elevation: 6,
-};
-
-const TONE_COLORS = {
-  ink: "#1a2a22",
-  green: "#2e5d45",
-  muted: "#6b7a70",
-  danger: "#b42318",
-  white: "#ffffff",
-} as const;
-
-type Tone = keyof typeof TONE_COLORS;
+type Tone = "ink" | "green" | "muted" | "danger" | "white";
 
 type Props = VariantProps<typeof iconButtonVariants> &
   Omit<PressableProps, "children"> & {
@@ -83,12 +60,32 @@ export function IconButton({
   hitSlop = 6,
   ...rest
 }: Props) {
+  const colors = useThemeColors();
   const sizeKey = size ?? "md";
   const variantKey = variant ?? "default";
   const resolvedTone: Tone =
     tone ?? (variantKey === "filled" ? "white" : "ink");
+  const toneColors: Record<Tone, string> = {
+    ink: colors.ink,
+    green: colors.green,
+    muted: colors.muted,
+    danger: colors.danger,
+    white: colors.white,
+  };
+  const shadowBase =
+    sizeKey === "sm"
+      ? { height: 2, opacity: 0.08, radius: 6, elevation: 2 }
+      : { height: 6, opacity: 0.14, radius: 16, elevation: 6 };
   const shadow =
-    variantKey === "ghost" ? null : sizeKey === "sm" ? SHADOW_SM : SHADOW_MD;
+    variantKey === "ghost"
+      ? null
+      : {
+          shadowColor: colors.ink,
+          shadowOffset: { width: 0, height: shadowBase.height },
+          shadowOpacity: shadowBase.opacity,
+          shadowRadius: shadowBase.radius,
+          elevation: shadowBase.elevation,
+        };
 
   return (
     <Pressable
@@ -114,7 +111,7 @@ export function IconButton({
       <Icon
         name={icon}
         size={ICON_SIZE[sizeKey]}
-        color={TONE_COLORS[resolvedTone]}
+        color={toneColors[resolvedTone]}
         {...iconProps}
       />
     </Pressable>

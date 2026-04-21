@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { RefreshControl, ScrollView, View } from "react-native";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
+import { useThemeColors } from "@/lib/theme";
 import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import { useSavedMosques } from "../hooks/use-mosques";
 import { SavedMosqueCard } from "./saved-mosque-card";
@@ -21,10 +23,12 @@ export function SavedMosquesScreen() {
   const rows = data?.data ?? [];
   const pairs = chunkPairs(rows);
   const { refreshing, onRefresh } = usePullToRefresh();
+  const scheme = useThemeScheme();
+  const colors = useThemeColors();
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SavedMosquesHeader />
       <View className="px-s-6 pt-s-2">
         <Text variant="body" tone="muted">
@@ -52,8 +56,8 @@ export function SavedMosquesScreen() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              tintColor="#2e5d45"
-              colors={["#2e5d45"]}
+              tintColor={colors.green}
+              colors={[colors.green]}
             />
           }
         >

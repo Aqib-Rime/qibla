@@ -7,6 +7,7 @@ import MapView, {
 } from "react-native-maps";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { useUserLocation } from "@/lib/use-user-location";
 
 type Props = {
@@ -26,6 +27,7 @@ export function LocationPicker({ lat, lng, onChange }: Props) {
   const mapRef = useRef<MapView>(null);
   const userPos = useUserLocation();
   const [hasCentered, setHasCentered] = useState(false);
+  const colors = useThemeColors();
 
   const hasCoords = lat !== 0 && lng !== 0;
 
@@ -105,7 +107,7 @@ export function LocationPicker({ lat, lng, onChange }: Props) {
               }}
             >
               <View className="h-8 w-8 items-center justify-center rounded-pill border-2 border-white bg-green shadow-sm">
-                <Icon name="pin" size={16} color="#ffffff" />
+                <Icon name="pin" size={16} color={colors.white} />
               </View>
             </Marker>
           ) : null}

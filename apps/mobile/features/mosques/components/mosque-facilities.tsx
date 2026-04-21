@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { resolveFacilities } from "../lib/facilities";
 
 export function MosqueFacilities({
@@ -10,6 +11,7 @@ export function MosqueFacilities({
   facilities: readonly string[];
 }) {
   const resolved = useMemo(() => resolveFacilities(facilities), [facilities]);
+  const colors = useThemeColors();
   if (!resolved.length) return null;
 
   return (
@@ -21,9 +23,9 @@ export function MosqueFacilities({
         {resolved.map((f) => (
           <View
             key={f.key}
-            className="flex-row items-center gap-s-2 rounded-pill bg-white px-s-4 py-s-2"
+            className="flex-row items-center gap-s-2 rounded-pill bg-surface px-s-4 py-s-2"
           >
-            <Icon name={f.meta.icon} size={14} color="#2e5d45" />
+            <Icon name={f.meta.icon} size={14} color={colors.green} />
             <Text variant="caption">{f.meta.label}</Text>
           </View>
         ))}

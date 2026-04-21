@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   onGranted: () => void;
@@ -11,6 +12,7 @@ type Props = {
 
 export function QiblaLocationGate({ onGranted }: Props) {
   const [asking, setAsking] = useState(false);
+  const colors = useThemeColors();
 
   const request = async () => {
     setAsking(true);
@@ -24,7 +26,7 @@ export function QiblaLocationGate({ onGranted }: Props) {
   return (
     <View className="flex-1 items-center justify-center gap-s-4 px-s-6">
       <View className="h-16 w-16 items-center justify-center rounded-pill bg-green-tint">
-        <Icon name="recenter" size={28} color="#2e5d45" />
+        <Icon name="recenter" size={28} color={colors.green} />
       </View>
       <Text variant="display-sm" className="text-center">
         Enable location for Qibla
@@ -35,7 +37,7 @@ export function QiblaLocationGate({ onGranted }: Props) {
       </Text>
       <Button
         label="Allow location"
-        leading={<Icon name="pin" size={16} color="#ffffff" />}
+        leading={<Icon name="pin" size={16} color={colors.white} />}
         onPress={request}
         loading={asking}
       />

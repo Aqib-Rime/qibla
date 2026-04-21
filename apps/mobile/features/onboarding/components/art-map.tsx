@@ -10,14 +10,14 @@ export function ArtMap() {
     { x: 0.78, y: 0.66 },
   ];
   return (
-    <View className="flex-1 bg-[#ede5c8]">
+    <View className="flex-1 bg-cream">
       {/* soft block grid */}
       {Array.from({ length: 5 }).map((_, row) =>
         Array.from({ length: 4 }).map((__, col) => (
           <View
             // biome-ignore lint/suspicious/noArrayIndexKey: static 5x4 grid, indices are the stable identity
             key={`${row}-${col}`}
-            className="absolute bg-[#d9cfae]"
+            className="absolute bg-line"
             style={{
               left: `${col * 25 + 3}%`,
               top: `${row * 20 + 5}%`,

@@ -3,12 +3,14 @@ import { View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 export function SavedMosquesEmpty() {
+  const colors = useThemeColors();
   return (
     <View className="flex-1 items-center justify-center gap-s-3 px-s-5">
       <View className="h-16 w-16 items-center justify-center rounded-pill bg-green-tint">
-        <Icon name="heart" size={28} color="#2e5d45" />
+        <Icon name="heart" size={28} color={colors.green} />
       </View>
       <Text variant="display-sm" className="text-center">
         No saved mosques yet

@@ -14,6 +14,7 @@ import { useAppDialog } from "@/components/ui/dialog";
 import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { usePickAndUploadPhotos } from "@/features/uploads";
 import { PhotoPreviewModal } from "./photo-preview-modal";
 
@@ -40,6 +41,7 @@ export function PhotoManagerModal({
   const upload = usePickAndUploadPhotos();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const dialog = useAppDialog();
+  const colors = useThemeColors();
   const remaining = maxPhotos - photos.length;
   const addDisabled = remaining <= 0 || upload.isPending;
 
@@ -103,20 +105,20 @@ export function PhotoManagerModal({
               label={upload.isPending ? "Uploading…" : "Add from library"}
               onPress={() => handleAdd("library")}
               disabled={addDisabled}
-              leading={<Icon name="pin" size={16} color="#ffffff" />}
+              leading={<Icon name="pin" size={16} color={colors.white} />}
             />
             <Button
               label="Take a photo"
               variant="outline"
               onPress={() => handleAdd("camera")}
               disabled={addDisabled}
-              leading={<Icon name="pencil" size={16} color="#2e5d45" />}
+              leading={<Icon name="pencil" size={16} color={colors.green} />}
             />
           </View>
 
           {upload.isPending ? (
             <View className="mt-s-4 flex-row items-center justify-center gap-s-2">
-              <ActivityIndicator color="#2e5d45" />
+              <ActivityIndicator color={colors.green} />
               <Text variant="caption" tone="muted">
                 Uploading photos…
               </Text>
@@ -125,8 +127,8 @@ export function PhotoManagerModal({
 
           <View className="mt-s-6">
             {photos.length === 0 ? (
-              <View className="items-center gap-s-2 rounded-md border border-dashed border-line bg-white px-s-5 py-s-8">
-                <Icon name="pin" size={28} color="#6b7a70" />
+              <View className="items-center gap-s-2 rounded-md border border-dashed border-line bg-surface px-s-5 py-s-8">
+                <Icon name="pin" size={28} color={colors.muted} />
                 <Text variant="label" tone="muted">
                   No photos yet
                 </Text>
@@ -181,11 +183,12 @@ function PhotoTile({
   onPreview: () => void;
   onRemove: () => void;
 }) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={onPreview}
       style={{ width: size, height: size }}
-      className="overflow-hidden rounded-md bg-white"
+      className="overflow-hidden rounded-md bg-surface"
     >
       <Image
         source={{ uri: url }}
@@ -199,7 +202,7 @@ function PhotoTile({
         style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
         accessibilityLabel="Remove photo"
       >
-        <Icon name="x" size={14} color="#ffffff" />
+        <Icon name="x" size={14} color={colors.white} />
       </Pressable>
     </Pressable>
   );

@@ -7,6 +7,7 @@ import {
   type PressableProps,
   type View,
 } from "react-native";
+import { useThemeColors } from "@/lib/theme";
 import { Text } from "./text";
 
 const buttonVariants = cva(
@@ -16,10 +17,10 @@ const buttonVariants = cva(
       variant: {
         primary: "bg-green",
         dark: "bg-ink",
-        outline: "border border-line bg-white",
+        outline: "border border-line bg-surface",
         ghost: "bg-white/10",
         subtle: "bg-green-tint",
-        destructive: "bg-[#b04a3a]",
+        destructive: "bg-danger",
       },
       size: {
         md: "py-s-4",
@@ -85,6 +86,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   },
   ref,
 ) {
+  const colors = useThemeColors();
   const isDisabled = disabled || loading;
   return (
     <Pressable
@@ -109,7 +111,9 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
         <ActivityIndicator
           size="small"
           color={
-            variant === "outline" || variant === "subtle" ? "#2e5d45" : "#fff"
+            variant === "outline" || variant === "subtle"
+              ? colors.green
+              : colors.white
           }
         />
       ) : (

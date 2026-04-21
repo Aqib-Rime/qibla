@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   radiusKm: number | null;
@@ -21,6 +22,7 @@ function formatKm(km: number) {
 
 export function FilterDistanceRow({ radiusKm, onChange }: Props) {
   const active = radiusKm != null;
+  const colors = useThemeColors();
 
   // Local state while the thumb is dragged — gives smooth visual feedback
   // without spamming the store (which would refetch the map on every tick).
@@ -37,7 +39,7 @@ export function FilterDistanceRow({ radiusKm, onChange }: Props) {
 
   return (
     <View
-      className={`gap-s-3 rounded-md border bg-white px-s-4 py-s-4 ${
+      className={`gap-s-3 rounded-md border bg-surface px-s-4 py-s-4 ${
         active ? "border-green" : "border-line"
       }`}
     >
@@ -54,7 +56,7 @@ export function FilterDistanceRow({ radiusKm, onChange }: Props) {
           <Icon
             name="recenter"
             size={18}
-            color={active ? "#ffffff" : "#2e5d45"}
+            color={active ? colors.white : colors.green}
           />
         </View>
         <View className="flex-1">
@@ -67,10 +69,10 @@ export function FilterDistanceRow({ radiusKm, onChange }: Props) {
         </View>
         <View
           className={`h-6 w-6 items-center justify-center rounded-sm border ${
-            active ? "border-green bg-green" : "border-line bg-white"
+            active ? "border-green bg-green" : "border-line bg-surface"
           }`}
         >
-          {active ? <Icon name="arrow" size={14} color="#ffffff" /> : null}
+          {active ? <Icon name="arrow" size={14} color={colors.white} /> : null}
         </View>
       </Pressable>
 
@@ -83,9 +85,9 @@ export function FilterDistanceRow({ radiusKm, onChange }: Props) {
             value={liveValue}
             onValueChange={setLiveValue}
             onSlidingComplete={(v) => onChange(v)}
-            minimumTrackTintColor="#2e5d45"
-            maximumTrackTintColor="#dcd6bf"
-            thumbTintColor="#2e5d45"
+            minimumTrackTintColor={colors.green}
+            maximumTrackTintColor={colors.line}
+            thumbTintColor={colors.green}
           />
           <View className="flex-row justify-between">
             <Text variant="caption" tone="muted">

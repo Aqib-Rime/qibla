@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { ScrollView, View } from "react-native";
 import { useAppDialog } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import {
   useHydrateSettings,
   useSettingsStore,
@@ -19,6 +20,7 @@ export function EmailPreferencesScreen() {
   useHydrateSettings();
   const prayerReminders = useSettingsStore((s) => s.prayerReminders);
   const setPrayerReminders = useSettingsStore((s) => s.setPrayerReminders);
+  const scheme = useThemeScheme();
   const dialog = useAppDialog();
 
   const onTogglePrayerReminders = async (next: boolean) => {
@@ -44,7 +46,7 @@ export function EmailPreferencesScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SettingsHeader title="Email & notifications" />
 
       <ScrollView

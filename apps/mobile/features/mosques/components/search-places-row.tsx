@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { usePushRecentPlace } from "../hooks/use-recent-places";
 
 type Props = {
@@ -22,6 +23,7 @@ function formatDistance(km: number) {
 
 export function SearchPlacesRow({ place }: Props) {
   const pushRecent = usePushRecentPlace();
+  const colors = useThemeColors();
 
   const onPick = () => {
     // Record the pick before navigating so the recent-searches section is
@@ -46,11 +48,11 @@ export function SearchPlacesRow({ place }: Props) {
   return (
     <Pressable
       onPress={onPick}
-      className="flex-row items-center gap-s-3 rounded-md bg-white p-s-4"
+      className="flex-row items-center gap-s-3 rounded-md bg-surface p-s-4"
       style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}
     >
       <View className="h-10 w-10 items-center justify-center rounded-sm bg-green-tint">
-        <Icon name="pin" size={16} color="#2e5d45" />
+        <Icon name="pin" size={16} color={colors.green} />
       </View>
       <View className="flex-1">
         <Text variant="label" numberOfLines={1}>

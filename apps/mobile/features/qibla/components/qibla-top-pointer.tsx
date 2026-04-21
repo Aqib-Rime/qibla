@@ -1,10 +1,12 @@
 import { View } from "react-native";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   aligned: boolean;
 };
 
 export function QiblaTopPointer({ aligned }: Props) {
+  const colors = useThemeColors();
   return (
     <View
       pointerEvents="none"
@@ -20,7 +22,7 @@ export function QiblaTopPointer({ aligned }: Props) {
           borderTopWidth: 14,
           borderLeftColor: "transparent",
           borderRightColor: "transparent",
-          borderTopColor: aligned ? "#2e5d45" : "#1a2a22",
+          borderTopColor: aligned ? colors.green : colors.ink,
         }}
       />
     </View>

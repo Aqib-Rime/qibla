@@ -2,17 +2,19 @@ import { router } from "expo-router";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import type { MosqueListItem } from "../lib/types";
 
 export function SearchResultRow({ mosque }: { mosque: MosqueListItem }) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={() => router.replace(`/mosque/${mosque.id}`)}
-      className="flex-row items-center gap-s-3 rounded-md bg-white p-s-4"
+      className="flex-row items-center gap-s-3 rounded-md bg-surface p-s-4"
       style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}
     >
       <View className="h-10 w-10 items-center justify-center rounded-sm bg-green-tint">
-        <Icon name="pin" size={16} color="#2e5d45" />
+        <Icon name="pin" size={16} color={colors.green} />
       </View>
       <View className="flex-1">
         <Text variant="label" numberOfLines={1}>
@@ -31,7 +33,7 @@ export function SearchResultRow({ mosque }: { mosque: MosqueListItem }) {
       </View>
       {typeof mosque.rating === "number" ? (
         <View className="flex-row items-center gap-s-1">
-          <Icon name="star" size={12} color="#b68a3c" />
+          <Icon name="star" size={12} color={colors.gold} />
           <Text variant="caption">{mosque.rating.toFixed(1)}</Text>
         </View>
       ) : null}

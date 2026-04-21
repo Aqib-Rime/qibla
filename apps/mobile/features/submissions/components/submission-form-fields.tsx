@@ -237,7 +237,7 @@ function Chip({
       onPress={onPress}
       disabled={disabled}
       className={`rounded-pill border px-s-4 py-s-2 ${
-        active ? "border-green bg-green" : "border-line bg-white"
+        active ? "border-green bg-green" : "border-line bg-surface"
       }`}
       style={({ pressed }) => ({ opacity: pressed || disabled ? 0.7 : 1 })}
     >

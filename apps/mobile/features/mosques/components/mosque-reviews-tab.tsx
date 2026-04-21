@@ -5,6 +5,7 @@ import { PendingReviewBanner } from "@/features/reviews/components/pending-revie
 import { WriteReviewButton } from "@/features/reviews/components/write-review-button";
 import { useMyReviewsForMosque } from "@/features/reviews/hooks/use-reviews";
 import { useSession } from "@/lib/auth";
+import { useThemeColors } from "@/lib/theme";
 import type { Review } from "../lib/types";
 
 type Props = {
@@ -16,6 +17,7 @@ export function MosqueReviewsTab({ mosqueId, reviews }: Props) {
   const { data: session } = useSession();
   const isAuthed = Boolean(session?.user);
   const mine = useMyReviewsForMosque(mosqueId);
+  const colors = useThemeColors();
 
   const hasPending = Boolean(
     mine.data?.data.some((r) => r.status === "pending"),
@@ -27,18 +29,18 @@ export function MosqueReviewsTab({ mosqueId, reviews }: Props) {
       {isAuthed ? <WriteReviewButton mosqueId={mosqueId} /> : null}
 
       {reviews.length === 0 ? (
-        <View className="items-center gap-s-2 rounded-md bg-white px-s-5 py-s-8">
+        <View className="items-center gap-s-2 rounded-md bg-surface px-s-5 py-s-8">
           <Text variant="label" tone="muted">
             No reviews yet
           </Text>
         </View>
       ) : (
         reviews.map((r) => (
-          <View key={r.id} className="rounded-md bg-white p-s-4">
+          <View key={r.id} className="rounded-md bg-surface p-s-4">
             <View className="flex-row items-center justify-between">
               <Text variant="label">{r.userName}</Text>
               <View className="flex-row items-center gap-s-1">
-                <Icon name="star" size={12} color="#b68a3c" />
+                <Icon name="star" size={12} color={colors.gold} />
                 <Text variant="caption">{r.rating}</Text>
               </View>
             </View>

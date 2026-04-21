@@ -11,7 +11,7 @@ const ROWS = [
 
 export function ArtTimes() {
   return (
-    <View className="flex-1 bg-[#f5efd9] p-s-4">
+    <View className="flex-1 bg-cream p-s-4">
       <View className="gap-s-2 mt-s-3">
         {ROWS.map((r) => {
           const isNext = r.state === "next";
@@ -20,7 +20,7 @@ export function ArtTimes() {
             <View
               key={r.name}
               className={`flex-row items-center justify-between rounded-md px-s-4 py-s-3 ${
-                isNext ? "bg-green" : "bg-white border border-line"
+                isNext ? "bg-green" : "bg-surface border border-line"
               }`}
             >
               <Text

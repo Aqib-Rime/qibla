@@ -7,7 +7,9 @@ import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { usePullToRefresh } from "@/lib/use-pull-to-refresh";
+import { useThemeColors } from "@/lib/theme";
 import { useMySubmissions } from "../hooks/use-submissions";
 
 type SubmissionRow = NonNullable<
@@ -18,10 +20,12 @@ export function MySubmissionsScreen() {
   const { data, isLoading } = useMySubmissions();
   const submissions = data?.data ?? [];
   const { refreshing, onRefresh } = usePullToRefresh();
+  const scheme = useThemeScheme();
+  const colors = useThemeColors();
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SafeAreaView edges={["top"]} className="bg-cream">
         <View className="flex-row items-center justify-between px-s-5 py-s-2">
           <IconButton
@@ -47,8 +51,8 @@ export function MySubmissionsScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor="#2e5d45"
-            colors={["#2e5d45"]}
+            tintColor={colors.green}
+            colors={[colors.green]}
           />
         }
       >
@@ -60,8 +64,8 @@ export function MySubmissionsScreen() {
             ))}
           </View>
         ) : submissions.length === 0 ? (
-          <View className="mt-s-8 items-center gap-s-3 rounded-md bg-white px-s-5 py-s-8">
-            <Icon name="pin" size={32} color="#6b7a70" />
+          <View className="mt-s-8 items-center gap-s-3 rounded-md bg-surface px-s-5 py-s-8">
+            <Icon name="pin" size={32} color={colors.muted} />
             <Text variant="label" tone="muted">
               You haven't submitted any mosques yet.
             </Text>
@@ -95,14 +99,15 @@ export function MySubmissionsScreen() {
 }
 
 function SubmissionRowCard({ submission }: { submission: SubmissionRow }) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={() => router.push(`/submissions/${submission.id}`)}
-      className="flex-row items-center gap-s-3 rounded-md bg-white p-s-4"
+      className="flex-row items-center gap-s-3 rounded-md bg-surface p-s-4"
       style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}
     >
       <View className="h-10 w-10 items-center justify-center rounded-sm bg-green-tint">
-        <Icon name="pin" size={16} color="#2e5d45" />
+        <Icon name="pin" size={16} color={colors.green} />
       </View>
       <View className="flex-1">
         <Text variant="label" numberOfLines={1}>
@@ -115,7 +120,7 @@ function SubmissionRowCard({ submission }: { submission: SubmissionRow }) {
         ) : null}
       </View>
       <StatusPill status={submission.status} />
-      <Icon name="chevron" size={14} color="#6b7a70" />
+      <Icon name="chevron" size={14} color={colors.muted} />
     </Pressable>
   );
 }
@@ -126,10 +131,10 @@ function StatusPill({ status }: { status: string }) {
       case "approved":
         return { bg: "bg-green-tint", fg: "green" as const, label: "Approved" };
       case "hidden":
-        return { bg: "bg-[#f8e4df]", fg: "muted" as const, label: "Hidden" };
+        return { bg: "bg-danger-tint", fg: "muted" as const, label: "Hidden" };
       default:
         return {
-          bg: "bg-[#f4ead0]",
+          bg: "bg-gold-tint",
           fg: "muted" as const,
           label: "Pending",
         };

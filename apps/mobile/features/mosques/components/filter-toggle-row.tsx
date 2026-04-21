@@ -2,6 +2,7 @@ import * as Haptics from "expo-haptics";
 import { Pressable, View } from "react-native";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   icon: IconName;
@@ -18,13 +19,14 @@ export function FilterToggleRow({
   active,
   onToggle,
 }: Props) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={() => {
         Haptics.selectionAsync().catch(() => {});
         onToggle();
       }}
-      className={`flex-row items-center gap-s-4 rounded-md border bg-white px-s-4 py-s-4 ${
+      className={`flex-row items-center gap-s-4 rounded-md border bg-surface px-s-4 py-s-4 ${
         active ? "border-green" : "border-line"
       }`}
       style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}
@@ -34,7 +36,7 @@ export function FilterToggleRow({
           active ? "bg-green" : "bg-green-tint"
         }`}
       >
-        <Icon name={icon} size={18} color={active ? "#ffffff" : "#2e5d45"} />
+        <Icon name={icon} size={18} color={active ? colors.white : colors.green} />
       </View>
       <View className="flex-1">
         <Text variant="label">{label}</Text>
@@ -46,10 +48,10 @@ export function FilterToggleRow({
       </View>
       <View
         className={`h-6 w-6 items-center justify-center rounded-sm border ${
-          active ? "border-green bg-green" : "border-line bg-white"
+          active ? "border-green bg-green" : "border-line bg-surface"
         }`}
       >
-        {active ? <Icon name="arrow" size={14} color="#ffffff" /> : null}
+        {active ? <Icon name="arrow" size={14} color={colors.white} /> : null}
       </View>
     </Pressable>
   );

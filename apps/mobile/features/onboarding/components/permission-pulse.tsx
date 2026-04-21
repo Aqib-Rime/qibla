@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
+import { useThemeColors } from "@/lib/theme";
 
 const ringStyle = (anim: Animated.Value) => ({
   transform: [
@@ -14,6 +15,7 @@ const ringStyle = (anim: Animated.Value) => ({
 export function PermissionPulse() {
   const ring1 = useRef(new Animated.Value(0)).current;
   const ring2 = useRef(new Animated.Value(0)).current;
+  const colors = useThemeColors();
 
   useEffect(() => {
     const loop1 = Animated.loop(
@@ -56,14 +58,14 @@ export function PermissionPulse() {
       <View
         className="h-16 w-16 items-center justify-center rounded-lg bg-green"
         style={{
-          shadowColor: "#2e5d45",
+          shadowColor: colors.green,
           shadowOffset: { width: 0, height: 12 },
           shadowOpacity: 0.28,
           shadowRadius: 28,
           elevation: 12,
         }}
       >
-        <Icon name="pin" size={30} color="#fff" />
+        <Icon name="pin" size={30} color={colors.white} />
       </View>
     </View>
   );

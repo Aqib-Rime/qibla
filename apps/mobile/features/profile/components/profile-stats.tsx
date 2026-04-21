@@ -9,7 +9,7 @@ export function ProfileStats({ stats }: { stats: Stat[] }) {
       {stats.map((s) => (
         <View
           key={s.label}
-          className="flex-1 items-center rounded-md border border-line/80 bg-white py-s-3"
+          className="flex-1 items-center rounded-md border border-line/80 bg-surface py-s-3"
         >
           <Text variant="display-md" className="font-mono">
             {s.value}

@@ -1,10 +1,12 @@
 import { View } from "react-native";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
 import { MosqueMark } from "@/components/ui/mosque-mark";
+import { useThemeColors } from "@/lib/theme";
 
 export function ArtRoute() {
+  const colors = useThemeColors();
   return (
-    <View className="flex-1 bg-[#eae2c8]">
+    <View className="flex-1 bg-cream">
       <Svg
         width="100%"
         height="100%"
@@ -29,21 +31,21 @@ export function ArtRoute() {
             y={y}
             width={w}
             height={h}
-            fill="#d9cfae"
-            stroke="#c4b894"
+            fill={colors.line}
+            stroke={colors.muted}
             strokeWidth="0.8"
             rx="1"
           />
         ))}
-        <Path d="M 0 100 L 320 110" stroke="#c9bc96" strokeWidth="14" />
-        <Path d="M 0 100 L 320 110" stroke="#fffbf1" strokeWidth="11" />
-        <Path d="M 0 200 L 320 210" stroke="#c9bc96" strokeWidth="14" />
-        <Path d="M 0 200 L 320 210" stroke="#fffbf1" strokeWidth="11" />
-        <Path d="M 160 0 L 170 340" stroke="#c9bc96" strokeWidth="12" />
-        <Path d="M 160 0 L 170 340" stroke="#fffbf1" strokeWidth="9" />
+        <Path d="M 0 100 L 320 110" stroke={colors.line} strokeWidth="14" />
+        <Path d="M 0 100 L 320 110" stroke={colors.surface} strokeWidth="11" />
+        <Path d="M 0 200 L 320 210" stroke={colors.line} strokeWidth="14" />
+        <Path d="M 0 200 L 320 210" stroke={colors.surface} strokeWidth="11" />
+        <Path d="M 160 0 L 170 340" stroke={colors.line} strokeWidth="12" />
+        <Path d="M 160 0 L 170 340" stroke={colors.surface} strokeWidth="9" />
         <Path
           d="M 60 280 Q 80 200 160 180 T 250 80"
-          stroke="#2e5d45"
+          stroke={colors.green}
           strokeWidth="5"
           fill="none"
           strokeLinecap="round"
@@ -52,11 +54,11 @@ export function ArtRoute() {
           cx="60"
           cy="280"
           r="9"
-          fill="#fff"
-          stroke="#2e5d45"
+          fill={colors.white}
+          stroke={colors.green}
           strokeWidth="3"
         />
-        <Circle cx="60" cy="280" r="3" fill="#2e5d45" />
+        <Circle cx="60" cy="280" r="3" fill={colors.green} />
       </Svg>
       <View
         className="absolute"

@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import {
   useClearRecentPlaces,
   useRecentPlaces,
@@ -44,6 +45,7 @@ export function SearchRecentPlacesSection() {
 }
 
 function RecentPlaceRow({ place }: { place: RecentPlace }) {
+  const colors = useThemeColors();
   const onPick = () => {
     router.replace({
       pathname: "/(tabs)/map",
@@ -58,11 +60,11 @@ function RecentPlaceRow({ place }: { place: RecentPlace }) {
   return (
     <Pressable
       onPress={onPick}
-      className="flex-row items-center gap-s-3 rounded-md bg-white p-s-4"
+      className="flex-row items-center gap-s-3 rounded-md bg-surface p-s-4"
       style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}
     >
       <View className="h-9 w-9 items-center justify-center rounded-sm bg-cream">
-        <Icon name="clock" size={14} color="#6b7a70" />
+        <Icon name="clock" size={14} color={colors.muted} />
       </View>
       <View className="flex-1">
         <Text variant="label" numberOfLines={1}>
@@ -79,7 +81,7 @@ function RecentPlaceRow({ place }: { place: RecentPlace }) {
           </Text>
         ) : null}
       </View>
-      <Icon name="chevron" size={14} color="#6b7a70" />
+      <Icon name="chevron" size={14} color={colors.muted} />
     </Pressable>
   );
 }

@@ -2,8 +2,10 @@ import { View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 export function SignInOAuthRow() {
+  const colors = useThemeColors();
   return (
     <>
       <View className="gap-s-2">
@@ -12,7 +14,7 @@ export function SignInOAuthRow() {
           variant="outline"
           label="Continue with phone"
           disabled
-          leading={<Icon name="phone" size={16} color="#1a2a22" />}
+          leading={<Icon name="phone" size={16} color={colors.ink} />}
         />
       </View>
 

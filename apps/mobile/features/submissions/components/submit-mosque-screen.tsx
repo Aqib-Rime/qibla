@@ -9,6 +9,7 @@ import { useAppDialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
 import { useAppToast } from "@/components/ui/toast";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { useSubmitMosque } from "../hooks/use-submissions";
 import { collectInvalidLabels } from "../lib/collect-invalid-labels";
 import {
@@ -23,6 +24,7 @@ export function SubmitMosqueScreen() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dialog = useAppDialog();
   const toast = useAppToast();
+  const scheme = useThemeScheme();
 
   const form = useForm({
     defaultValues: EMPTY_SUBMISSION,
@@ -69,7 +71,7 @@ export function SubmitMosqueScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SafeAreaView edges={["top"]} className="bg-cream">
         <View className="flex-row items-center justify-between px-s-5 py-s-2">
           <IconButton
@@ -100,8 +102,8 @@ export function SubmitMosqueScreen() {
         </Text>
 
         {errorMessage ? (
-          <View className="mb-s-4 rounded-md border border-[#b04a3a]/40 bg-[#f8e4df] p-s-3">
-            <Text variant="body-sm" className="text-[#b04a3a]">
+          <View className="mb-s-4 rounded-md border border-danger/40 bg-danger-tint p-s-3">
+            <Text variant="body-sm" className="text-danger">
               {errorMessage}
             </Text>
           </View>

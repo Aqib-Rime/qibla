@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Pressable, ScrollView, View } from "react-native";
 import { useAppDialog } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { signOut, useSession } from "@/lib/auth";
 import { SettingsHeader } from "./settings-header";
 import { SettingsRow } from "./settings-row";
@@ -22,6 +23,7 @@ export function AccountScreen() {
   const { data: session } = useSession();
   const user = session?.user;
   const dialog = useAppDialog();
+  const scheme = useThemeScheme();
 
   const onSignOut = async () => {
     try {
@@ -41,7 +43,7 @@ export function AccountScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SettingsHeader title="Account" />
 
       <ScrollView
@@ -77,7 +79,7 @@ export function AccountScreen() {
           className="mt-s-6 items-center py-s-4"
           style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
         >
-          <Text variant="label" className="text-[#b04a3a]">
+          <Text variant="label" className="text-danger">
             Sign out
           </Text>
         </Pressable>

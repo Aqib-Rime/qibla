@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { MapPin } from "lucide-react-native";
 import { View, type ViewProps } from "react-native";
+import { useThemeColors } from "@/lib/theme";
 
 const markVariants = cva(
   "items-center justify-center rounded-md bg-green shadow-lg",
@@ -33,19 +34,20 @@ type Props = VariantProps<typeof markVariants> &
   };
 
 export function MosqueMark({ size = "md", className, onLayout }: Props) {
+  const colors = useThemeColors();
   return (
     <View
       onLayout={onLayout}
       className={markVariants({ size, className })}
       style={{
-        shadowColor: "#2e5d45",
+        shadowColor: colors.green,
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.35,
         shadowRadius: 20,
         elevation: 8,
       }}
     >
-      <MapPin size={iconSize[size ?? "md"]} color="#fff" />
+      <MapPin size={iconSize[size ?? "md"]} color={colors.white} />
     </View>
   );
 }

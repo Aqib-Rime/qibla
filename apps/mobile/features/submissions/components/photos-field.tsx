@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Pressable, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { PhotoManagerModal } from "./photo-manager-modal";
 
 type Props = {
@@ -17,6 +18,7 @@ export function PhotosField({ photos, onChange, maxPhotos = 12 }: Props) {
   const [open, setOpen] = useState(false);
   const preview = photos.slice(0, PREVIEW_COUNT);
   const extra = Math.max(0, photos.length - PREVIEW_COUNT);
+  const colors = useThemeColors();
 
   return (
     <>
@@ -25,7 +27,7 @@ export function PhotosField({ photos, onChange, maxPhotos = 12 }: Props) {
 
         <Pressable
           onPress={() => setOpen(true)}
-          className="flex-row items-center gap-s-3 rounded-md border border-line bg-white p-s-4"
+          className="flex-row items-center gap-s-3 rounded-md border border-line bg-surface p-s-4"
           style={({ pressed }) => ({ opacity: pressed ? 0.85 : 1 })}
           accessibilityRole="button"
           accessibilityLabel={
@@ -37,7 +39,7 @@ export function PhotosField({ photos, onChange, maxPhotos = 12 }: Props) {
           {photos.length === 0 ? (
             <>
               <View className="h-10 w-10 items-center justify-center rounded-sm bg-green-tint">
-                <Icon name="pin" size={18} color="#2e5d45" />
+                <Icon name="pin" size={18} color={colors.green} />
               </View>
               <View className="flex-1">
                 <Text variant="body">Add photos</Text>
@@ -45,7 +47,7 @@ export function PhotosField({ photos, onChange, maxPhotos = 12 }: Props) {
                   Optional — library or camera, up to {maxPhotos}
                 </Text>
               </View>
-              <Icon name="chevron" size={14} color="#6b7a70" />
+              <Icon name="chevron" size={14} color={colors.muted} />
             </>
           ) : (
             <>
@@ -60,7 +62,7 @@ export function PhotosField({ photos, onChange, maxPhotos = 12 }: Props) {
                       height: 40,
                       borderRadius: 6,
                       borderWidth: 2,
-                      borderColor: "#ffffff",
+                      borderColor: colors.white,
                       marginLeft: i === 0 ? 0 : -10,
                     }}
                   />
@@ -84,7 +86,7 @@ export function PhotosField({ photos, onChange, maxPhotos = 12 }: Props) {
                   Tap to manage or add more
                 </Text>
               </View>
-              <Icon name="chevron" size={14} color="#6b7a70" />
+              <Icon name="chevron" size={14} color={colors.muted} />
             </>
           )}
         </Pressable>

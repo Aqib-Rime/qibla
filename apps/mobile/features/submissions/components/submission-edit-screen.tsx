@@ -9,6 +9,7 @@ import { useAppDialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
 import { useAppToast } from "@/components/ui/toast";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import {
   useDeleteMySubmission,
   useMySubmission,
@@ -30,6 +31,7 @@ export function SubmissionEditScreen() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dialog = useAppDialog();
   const toast = useAppToast();
+  const scheme = useThemeScheme();
 
   const form = useForm({
     defaultValues: EMPTY_SUBMISSION,
@@ -123,7 +125,7 @@ export function SubmissionEditScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SafeAreaView edges={["top"]} className="bg-cream">
         <View className="flex-row items-center justify-between px-s-5 py-s-2">
           <IconButton
@@ -155,7 +157,7 @@ export function SubmissionEditScreen() {
           showsVerticalScrollIndicator={false}
         >
           {readOnly ? (
-            <View className="mb-s-4 rounded-md border border-line bg-white p-s-4">
+            <View className="mb-s-4 rounded-md border border-line bg-surface p-s-4">
               <Text variant="label">
                 This mosque is already {submission.status}
               </Text>
@@ -167,8 +169,8 @@ export function SubmissionEditScreen() {
           ) : null}
 
           {errorMessage ? (
-            <View className="mb-s-4 rounded-md border border-[#b04a3a]/40 bg-[#f8e4df] p-s-3">
-              <Text variant="body-sm" className="text-[#b04a3a]">
+            <View className="mb-s-4 rounded-md border border-danger/40 bg-danger-tint p-s-3">
+              <Text variant="body-sm" className="text-danger">
                 {errorMessage}
               </Text>
             </View>

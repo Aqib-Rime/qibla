@@ -4,6 +4,7 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import { forwardRef, useCallback, useMemo } from "react";
 import { type MosqueListItem, MosqueSheetContent } from "@/features/mosques";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   mosque: MosqueListItem | null;
@@ -12,6 +13,7 @@ type Props = {
 
 export const MapMosqueSheet = forwardRef<BottomSheet, Props>(
   function MapMosqueSheet({ mosque, onClose }, ref) {
+    const colors = useThemeColors();
     const snapPoints = useMemo(() => ["32%", "85%"], []);
 
     const renderBackdrop = useCallback(
@@ -34,8 +36,8 @@ export const MapMosqueSheet = forwardRef<BottomSheet, Props>(
         snapPoints={snapPoints}
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        backgroundStyle={{ backgroundColor: "#fffbf1" }}
-        handleIndicatorStyle={{ backgroundColor: "#c5c0ad" }}
+        backgroundStyle={{ backgroundColor: colors.surface }}
+        handleIndicatorStyle={{ backgroundColor: colors.line }}
         onClose={onClose}
       >
         {mosque ? <MosqueSheetContent mosque={mosque} /> : null}

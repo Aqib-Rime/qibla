@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 import { type AuthMode, useSignIn } from "../hooks/use-sign-in";
 
 type Props = {
@@ -16,6 +17,7 @@ export function SignInForm({ mode }: Props) {
   const [name, setName] = useState("");
 
   const { mutate, isPending, error } = useSignIn();
+  const colors = useThemeColors();
 
   return (
     <>
@@ -46,7 +48,7 @@ export function SignInForm({ mode }: Props) {
           onChangeText={setPassword}
         />
         {error ? (
-          <Text variant="body-sm" className="text-[#b42318]">
+          <Text variant="body-sm" className="text-danger">
             {error}
           </Text>
         ) : null}
@@ -55,7 +57,7 @@ export function SignInForm({ mode }: Props) {
       <View className="mt-s-4">
         <Button
           label={mode === "in" ? "Sign in" : "Create account"}
-          trailing={<Icon name="arrow" size={16} color="#fff" />}
+          trailing={<Icon name="arrow" size={16} color={colors.white} />}
           loading={isPending}
           onPress={() => mutate({ mode, email, password, name })}
         />

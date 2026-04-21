@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { ScrollView, View } from "react-native";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { SettingsHeader } from "./settings-header";
 
 type Faq = {
@@ -37,9 +38,10 @@ const FAQS: Faq[] = [
 ];
 
 export function HelpScreen() {
+  const scheme = useThemeScheme();
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SettingsHeader title="Help & guides" />
 
       <ScrollView

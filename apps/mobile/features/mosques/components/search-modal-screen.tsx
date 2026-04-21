@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { api } from "@/lib/api";
+import { useThemeColors } from "@/lib/theme";
 import { useUserLocation } from "@/lib/use-user-location";
 import { useMosquesList } from "../hooks/use-mosques";
 import { SearchInputBar } from "./search-input-bar";
@@ -20,6 +22,8 @@ export function SearchModalScreen() {
   const { data } = useMosquesList({ pageSize: 50 });
   const mosques = data?.data ?? [];
   const userPos = useUserLocation();
+  const scheme = useThemeScheme();
+  const colors = useThemeColors();
 
   // Debounce before hitting Google Places so slider-quick typing
   // doesn't burn quota. 400ms feels responsive without being chatty.
@@ -61,7 +65,7 @@ export function SearchModalScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SearchInputBar value={query} onChange={setQuery} />
 
       <ScrollView
@@ -82,8 +86,8 @@ export function SearchModalScreen() {
             {showSkeleton ? (
               <SearchPlacesSkeleton />
             ) : placeResults.length === 0 ? (
-              <View className="items-center gap-s-2 rounded-md bg-white px-s-5 py-s-8">
-                <Icon name="search" size={28} color="#6b7a70" />
+              <View className="items-center gap-s-2 rounded-md bg-surface px-s-5 py-s-8">
+                <Icon name="search" size={28} color={colors.muted} />
                 <Text variant="label" tone="muted">
                   No places found for "{query.trim()}"
                 </Text>

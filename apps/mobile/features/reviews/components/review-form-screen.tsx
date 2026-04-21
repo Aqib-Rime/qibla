@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { useMosque } from "@/features/mosques/hooks/use-mosques";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
+import { useThemeColors } from "@/lib/theme";
 import { useCreateReview } from "../hooks/use-reviews";
 import { RatingStarsInput } from "./rating-stars-input";
 import { ReviewFormHeader } from "./review-form-header";
@@ -19,6 +21,8 @@ export function ReviewFormScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const create = useCreateReview();
+  const scheme = useThemeScheme();
+  const colors = useThemeColors();
 
   const submit = async () => {
     if (!mosqueId) return;
@@ -41,7 +45,7 @@ export function ReviewFormScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <ReviewFormHeader mosqueName={data?.mosque.name} />
       <KeyboardAwareScrollView
         bottomOffset={20}
@@ -67,12 +71,12 @@ export function ReviewFormScreen() {
           </Text>
         </View>
 
-        <View className="mt-s-6 rounded-md border border-line bg-white p-s-4">
+        <View className="mt-s-6 rounded-md border border-line bg-surface p-s-4">
           <TextInput
             value={body}
             onChangeText={setBody}
             placeholder="Share what stood out — facilities, imam, cleanliness…"
-            placeholderTextColor="#6b7a70"
+            placeholderTextColor={colors.muted}
             multiline
             numberOfLines={6}
             maxLength={1000}
@@ -81,7 +85,7 @@ export function ReviewFormScreen() {
               textAlignVertical: "top",
               fontFamily: "Geist_400Regular",
               fontSize: 15,
-              color: "#1a2a22",
+              color: colors.ink,
             }}
           />
           <Text variant="caption" tone="muted" className="mt-s-2 text-right">
@@ -90,7 +94,7 @@ export function ReviewFormScreen() {
         </View>
 
         {error ? (
-          <Text variant="body-sm" className="mt-s-3 text-[#b42318]">
+          <Text variant="body-sm" className="mt-s-3 text-danger">
             {error}
           </Text>
         ) : null}
@@ -101,7 +105,7 @@ export function ReviewFormScreen() {
             label="Submit review"
             loading={create.isPending}
             onPress={submit}
-            trailing={<Icon name="arrow" size={16} color="#fff" />}
+            trailing={<Icon name="arrow" size={16} color={colors.white} />}
           />
         </View>
       </KeyboardAwareScrollView>

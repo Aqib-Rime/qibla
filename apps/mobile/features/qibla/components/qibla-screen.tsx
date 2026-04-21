@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { View } from "react-native";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { useUserLocation } from "@/lib/use-user-location";
 import { useDeviceHeading } from "../hooks/use-device-heading";
 import {
@@ -24,6 +25,7 @@ export function QiblaScreen() {
   const [permissionKey, setPermissionKey] = useState(0);
   const userPos = useUserLocation();
   const heading = useDeviceHeading();
+  const scheme = useThemeScheme();
 
   const qiblaBearing = useMemo(
     () => (userPos ? bearingToMecca(userPos) : null),
@@ -65,7 +67,7 @@ export function QiblaScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <QiblaHeader />
 
       {showGate && !userPos ? (

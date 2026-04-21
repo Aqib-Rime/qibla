@@ -2,6 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { View } from "react-native";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
 import { useMosque } from "../hooks/use-mosques";
 import { usePushRecentMosque } from "../hooks/use-recent-mosques";
 import { MosqueDetailContent } from "./mosque-detail-content";
@@ -14,6 +15,7 @@ export function MosqueDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data, isLoading, error, refetch } = useMosque(id);
   const pushRecent = usePushRecentMosque();
+  const scheme = useThemeScheme();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: pushRecent is a stable mutation; we only want to fire when the id changes
   useEffect(() => {
@@ -22,7 +24,7 @@ export function MosqueDetailScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <MosqueDetailHeader mosqueId={data?.mosque.id} isSaved={data?.isSaved} />
 
       {isLoading ? (

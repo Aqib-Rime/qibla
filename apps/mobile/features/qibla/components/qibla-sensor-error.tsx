@@ -1,11 +1,13 @@
 import { View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 export function QiblaSensorError() {
+  const colors = useThemeColors();
   return (
     <View className="flex-1 items-center justify-center gap-s-3 px-s-6">
-      <Icon name="alert" size={32} color="#6b7a70" />
+      <Icon name="alert" size={32} color={colors.muted} />
       <Text variant="display-sm" className="text-center">
         Compass unavailable
       </Text>

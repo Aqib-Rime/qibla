@@ -4,6 +4,8 @@ import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
+import { useThemeColors } from "@/lib/theme";
 import {
   countActive,
   type FilterKey,
@@ -50,10 +52,12 @@ const FILTERS: FilterDef[] = [
 export function FilterModalScreen() {
   const filters = useMosqueFilters();
   const active = countActive(filters);
+  const scheme = useThemeScheme();
+  const colors = useThemeColors();
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <FilterModalHeader activeCount={active} />
 
       <ScrollView
@@ -95,7 +99,7 @@ export function FilterModalScreen() {
           <View className="flex-1">
             <Button
               label={active ? `Show (${active})` : "Done"}
-              trailing={<Icon name="arrow" size={16} color="#ffffff" />}
+              trailing={<Icon name="arrow" size={16} color={colors.white} />}
               onPress={() => router.back()}
             />
           </View>
