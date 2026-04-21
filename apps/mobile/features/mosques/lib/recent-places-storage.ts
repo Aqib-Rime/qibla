@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-const KEY = "qibla:recent-place-searches";
+const KEY = "qibla.recent-place-searches";
 const MAX = 10;
 
 export type RecentPlace = {

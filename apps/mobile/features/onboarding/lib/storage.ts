@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-const KEY = "qibla:onboarded";
+const KEY = "qibla.onboarded";
 
 export async function hasCompletedOnboarding(): Promise<boolean> {
   try {

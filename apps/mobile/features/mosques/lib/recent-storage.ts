@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-const KEY = "qibla:recent-mosques";
+const KEY = "qibla.recent-mosques";
 const MAX = 8;
 
 export async function getRecentMosqueIds(): Promise<string[]> {

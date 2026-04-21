@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-const PRAYER_REMINDERS_KEY = "qibla:prayer-reminders";
+const PRAYER_REMINDERS_KEY = "qibla.prayer-reminders";
 
 export async function getPrayerRemindersEnabled(): Promise<boolean> {
   try {
