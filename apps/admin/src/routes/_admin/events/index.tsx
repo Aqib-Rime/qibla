@@ -1,32 +1,21 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@qibla/ui/components/card";
 import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
+import { EventsPage } from "@/features/events";
 
-export const Route = createFileRoute("/_admin/events/")({
-  component: EventsPage,
+const searchSchema = z.object({
+  page: z.number().optional().default(1),
+  pageSize: z.number().optional().default(20),
 });
 
-function EventsPage() {
+export const Route = createFileRoute("/_admin/events/")({
+  validateSearch: searchSchema,
+  component: EventsRoute,
+});
+
+function EventsRoute() {
+  const search = Route.useSearch();
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Events</h2>
-        <p className="text-sm text-muted-foreground">
-          Manage mosque events (Jummah, tafseer circles, Ramadan programs).
-        </p>
-      </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Coming soon</CardTitle>
-        </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
-          Event management UI will ship in the next batch.
-        </CardContent>
-      </Card>
-    </div>
+    <EventsPage page={search.page ?? 1} pageSize={search.pageSize ?? 20} />
   );
 }
