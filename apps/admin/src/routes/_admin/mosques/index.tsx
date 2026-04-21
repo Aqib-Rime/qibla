@@ -170,6 +170,11 @@ function MosquesPage() {
                         {m.subtitle}
                       </div>
                     )}
+                    {m.status === "pending" && m.submitterEmail && (
+                      <div className="text-xs text-amber-700">
+                        Submitted by {m.submitterName ?? m.submitterEmail}
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell onClick={() => setEditId(m.id)}>
                     {m.area ?? "—"}

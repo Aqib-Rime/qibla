@@ -1,4 +1,5 @@
 import { db } from "@qibla/db";
+import { user } from "@qibla/db/schema/auth";
 import { mosque } from "@qibla/db/schema/mosque";
 import { createServerFn } from "@tanstack/react-start";
 import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
@@ -34,9 +35,36 @@ export const listMosquesFn = createServerFn({ method: "GET" })
 
     const where = conditions.length ? and(...conditions) : undefined;
 
+    // Left join the user table so the admin UI can label pending rows with
+    // the submitter's email. Left join because admin-created mosques may
+    // have createdBy null after the submitter account is deleted.
     const rows = await db
-      .select()
+      .select({
+        id: mosque.id,
+        name: mosque.name,
+        subtitle: mosque.subtitle,
+        about: mosque.about,
+        address: mosque.address,
+        street: mosque.street,
+        area: mosque.area,
+        city: mosque.city,
+        lat: mosque.lat,
+        lng: mosque.lng,
+        rating: mosque.rating,
+        reviewsCount: mosque.reviewsCount,
+        open: mosque.open,
+        tags: mosque.tags,
+        facilities: mosque.facilities,
+        photos: mosque.photos,
+        status: mosque.status,
+        createdBy: mosque.createdBy,
+        createdAt: mosque.createdAt,
+        updatedAt: mosque.updatedAt,
+        submitterEmail: user.email,
+        submitterName: user.name,
+      })
       .from(mosque)
+      .leftJoin(user, eq(mosque.createdBy, user.id))
       .where(where)
       .orderBy(desc(mosque.createdAt))
       .limit(pageSize)
