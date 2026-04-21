@@ -1,35 +1,38 @@
-// Dark Google Maps style tuned to the app's dark palette (lib/theme.ts).
-// Pushed deeper than the `surface` token so floating UI (top pill, FAB,
-// bottom sheet) pops against the map instead of camouflaging into it.
+// Dark Google Maps style that flips the usual pattern: the map is a
+// readable mid-dark gray (land #272b29, roads lifted) while the floating
+// UI (bg-surface = #181d1a) sits DARKER than the map. This mirrors the
+// Uber/Lyft dark treatment — chrome is the deepest tone, map is a tier
+// lighter with visible roads — so buttons pop without relying on hue
+// games. Parks keep a hint of brand green.
 // Passed to <MapView customMapStyle={...} /> when the theme is dark.
 export const DARK_MAP_STYLE = [
-  { elementType: "geometry", stylers: [{ color: "#05080a" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#7a847f" }] },
-  { elementType: "labels.text.stroke", stylers: [{ color: "#000000" }] },
+  { elementType: "geometry", stylers: [{ color: "#272b29" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#8a908c" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#1c201e" }] },
   {
     featureType: "administrative",
     elementType: "geometry",
-    stylers: [{ color: "#1a1f1c" }],
+    stylers: [{ color: "#3a3e3c" }],
   },
   {
     featureType: "administrative.country",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#9aa39e" }],
+    stylers: [{ color: "#a8aeaa" }],
   },
   {
     featureType: "administrative.locality",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#c8cbc6" }],
+    stylers: [{ color: "#cbd0cc" }],
   },
   {
     featureType: "poi",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#7a847f" }],
+    stylers: [{ color: "#8a908c" }],
   },
   {
     featureType: "poi.park",
     elementType: "geometry",
-    stylers: [{ color: "#0d1612" }],
+    stylers: [{ color: "#1f2a23" }],
   },
   {
     featureType: "poi.park",
@@ -39,51 +42,51 @@ export const DARK_MAP_STYLE = [
   {
     featureType: "road",
     elementType: "geometry",
-    stylers: [{ color: "#14191a" }],
+    stylers: [{ color: "#3a3e3c" }],
   },
   {
     featureType: "road",
     elementType: "geometry.stroke",
-    stylers: [{ color: "#000000" }],
+    stylers: [{ color: "#1c201e" }],
   },
   {
     featureType: "road",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#8a948f" }],
+    stylers: [{ color: "#a0a6a2" }],
   },
   {
     featureType: "road.highway",
     elementType: "geometry",
-    stylers: [{ color: "#1f2624" }],
+    stylers: [{ color: "#4c5250" }],
   },
   {
     featureType: "road.highway",
     elementType: "geometry.stroke",
-    stylers: [{ color: "#000000" }],
+    stylers: [{ color: "#1c201e" }],
   },
   {
     featureType: "road.highway",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#c8cbc6" }],
+    stylers: [{ color: "#d0d4d0" }],
   },
   {
     featureType: "transit",
     elementType: "geometry",
-    stylers: [{ color: "#0d1612" }],
+    stylers: [{ color: "#2e3230" }],
   },
   {
     featureType: "transit.station",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#7a847f" }],
+    stylers: [{ color: "#8a908c" }],
   },
   {
     featureType: "water",
     elementType: "geometry",
-    stylers: [{ color: "#000000" }],
+    stylers: [{ color: "#14181a" }],
   },
   {
     featureType: "water",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#3a4d42" }],
+    stylers: [{ color: "#4a5450" }],
   },
 ];
