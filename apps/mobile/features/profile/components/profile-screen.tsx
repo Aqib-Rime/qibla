@@ -65,6 +65,20 @@ export function ProfileScreen() {
           />
         </ProfileSection>
 
+        <ProfileSection title="Contribute">
+          <ProfileRow
+            icon="pin"
+            label="Submit a mosque"
+            onPress={() => router.push("/submit")}
+          />
+          <ProfileRow
+            icon="pencil"
+            label="My submissions"
+            onPress={() => router.push("/submissions")}
+            isLast
+          />
+        </ProfileSection>
+
         <ProfileSection title="Settings">
           <ProfileRow
             icon="settings"
