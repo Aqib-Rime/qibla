@@ -29,6 +29,7 @@
     "@gorhom/bottom-sheet": "^5.2.9",
     "@qibla/api-client": "workspace:*",
     "@qibla/auth": "workspace:*",
+    "@react-native-community/slider": "5.0.1",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",

@@ -9,6 +9,7 @@ import {
   type FilterKey,
   useMosqueFilters,
 } from "../lib/filters-store";
+import { FilterDistanceRow } from "./filter-distance-row";
 import { FilterModalHeader } from "./filter-modal-header";
 import { FilterToggleRow } from "./filter-toggle-row";
 
@@ -64,6 +65,10 @@ export function FilterModalScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View className="gap-s-3">
+          <FilterDistanceRow
+            radiusKm={filters.radiusKm}
+            onChange={filters.setRadius}
+          />
           {FILTERS.map((f) => (
             <FilterToggleRow
               key={f.key}
