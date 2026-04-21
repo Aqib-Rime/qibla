@@ -9,6 +9,8 @@ const iconButtonVariants = cva("items-center justify-center", {
     size: {
       sm: "h-10 w-10",
       md: "h-14 w-14",
+      // 150% of md — used for the floating action button on the map.
+      xl: "size-[60px]",
     },
     shape: {
       pill: "rounded-pill",
@@ -27,9 +29,10 @@ const iconButtonVariants = cva("items-center justify-center", {
   },
 });
 
-const ICON_SIZE: Record<"sm" | "md", number> = {
+const ICON_SIZE: Record<"sm" | "md" | "xl", number> = {
   sm: 18,
   md: 22,
+  xl: 33,
 };
 
 const SHADOW_SM = {
@@ -86,7 +89,7 @@ export function IconButton({
   const resolvedTone: Tone =
     tone ?? (variantKey === "filled" ? "white" : "ink");
   const shadow =
-    variantKey === "ghost" ? null : sizeKey === "md" ? SHADOW_MD : SHADOW_SM;
+    variantKey === "ghost" ? null : sizeKey === "sm" ? SHADOW_SM : SHADOW_MD;
 
   return (
     <Pressable

@@ -16,6 +16,7 @@ import {
 import { usePrayerTimes } from "@/features/prayer-times";
 import { useUserLocation } from "@/lib/use-user-location";
 import { DHAKA_REGION } from "../lib/region";
+import { MapAddFab } from "./map-add-fab";
 import { MapMarkers } from "./map-markers";
 import { MapMosqueSheet } from "./map-mosque-sheet";
 import { MapTopOverlay } from "./map-top-overlay";
@@ -192,6 +193,8 @@ export function MapScreen() {
         onOpenMenu={() => setMenuOpen(true)}
         onCloseMenu={() => setMenuOpen(false)}
       />
+
+      <MapAddFab />
 
       <MapMosqueSheet
         ref={sheetRef}
