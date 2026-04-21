@@ -1,7 +1,11 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { Text as RNText, type TextProps } from "react-native";
 
-export const textVariants = cva("text-ink", {
+// No base color — rely on the `tone` variant (default: "ink") to set color.
+// Previously a `text-ink` base conflicted with `tone="danger"` (and other
+// tones) in NativeWind's class resolution, causing `text-danger` to silently
+// fall back to ink.
+export const textVariants = cva("", {
   variants: {
     variant: {
       "display-xl": "text-display-xl font-sans-semibold",
