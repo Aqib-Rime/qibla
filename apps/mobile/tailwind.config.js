@@ -10,7 +10,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Qibla design tokens — keep in sync with packages/ui/src/styles/globals.css
+        // Qibla design tokens — keep in sync with packages/ui/src/styles/globals.css.
+        // Semantic tokens live here so a future dark-mode pass only has to swap
+        // these values (or wire them to CSS variables) — components should use
+        // the semantic classes, not raw hex.
         cream: "#faf6ec",
         surface: "#fffbf1",
         ink: "#1a2a22",
@@ -21,7 +24,14 @@ module.exports = {
           dark: "#1f4330",
           tint: "#eef3e6",
         },
-        gold: "#b68a3c",
+        gold: {
+          DEFAULT: "#b68a3c",
+          tint: "#f4ead0",
+        },
+        danger: {
+          DEFAULT: "#b04a3a",
+          tint: "#f8e4df",
+        },
         dark: "#0d1612",
       },
       fontFamily: {

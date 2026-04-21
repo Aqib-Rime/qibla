@@ -22,6 +22,7 @@ export const textVariants = cva("text-ink", {
       gold: "text-gold",
       white: "text-white",
       "white-muted": "text-white/60",
+      danger: "text-danger",
     },
   },
   defaultVariants: {
