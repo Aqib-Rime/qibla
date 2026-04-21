@@ -3,7 +3,8 @@ import * as Location from "expo-location";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Alert, Pressable, ScrollView, Share, View } from "react-native";
+import { Pressable, ScrollView, Share, View } from "react-native";
+import { useAppDialog } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
 import { signOut, useSession } from "@/lib/auth";
 import {
@@ -24,6 +25,7 @@ export function SettingsScreen() {
   const { data: session } = useSession();
   const prayerReminders = useSettingsStore((s) => s.prayerReminders);
   const setPrayerReminders = useSettingsStore((s) => s.setPrayerReminders);
+  const dialog = useAppDialog();
 
   const [locationStatus, setLocationStatus] = useState<
     "granted" | "denied" | "unknown"
@@ -45,14 +47,14 @@ export function SettingsScreen() {
     }
     const granted = await ensureNotificationPermission();
     if (!granted) {
-      Alert.alert(
-        "Notifications disabled",
-        "Enable notifications in Settings to get prayer reminders.",
-        [
-          { text: "Not now", style: "cancel" },
-          { text: "Open Settings", onPress: () => Linking.openSettings() },
+      dialog.show({
+        title: "Notifications disabled",
+        body: "Enable notifications in Settings to get prayer reminders.",
+        actions: [
+          { label: "Not now", variant: "outline" },
+          { label: "Open Settings", onPress: () => Linking.openSettings() },
         ],
-      );
+      });
       return;
     }
     setPrayerReminders(true);
@@ -163,6 +165,8 @@ export function SettingsScreen() {
           </Text>
         </View>
       </ScrollView>
+
+      {dialog.element}
     </View>
   );
 }

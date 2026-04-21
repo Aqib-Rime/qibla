@@ -4,9 +4,6 @@
   "workspaces": {
     "": {
       "name": "qibla",
-      "dependencies": {
-        "aws4fetch": "^1.0.20",
-      },
       "devDependencies": {
         "@biomejs/biome": "2.3.9",
         "tailwindcss": "3.4.19",

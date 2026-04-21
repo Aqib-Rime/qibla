@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Alert, Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
+import { useAppDialog } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
 import { signOut, useSession } from "@/lib/auth";
 import { SettingsHeader } from "./settings-header";
@@ -20,6 +21,7 @@ function formatJoinDate(input: Date | string | undefined) {
 export function AccountScreen() {
   const { data: session } = useSession();
   const user = session?.user;
+  const dialog = useAppDialog();
 
   const onSignOut = async () => {
     try {
@@ -30,11 +32,11 @@ export function AccountScreen() {
   };
 
   const onDeleteAccount = () => {
-    Alert.alert(
-      "Delete account",
-      "Account deletion is coming soon. For now, contact support via the repo's issue tracker and we'll remove your data.",
-      [{ text: "OK", style: "default" }],
-    );
+    dialog.show({
+      title: "Delete account",
+      body: "Account deletion is coming soon. For now, contact support via the repo's issue tracker and we'll remove your data.",
+      actions: [{ label: "OK" }],
+    });
   };
 
   return (
@@ -80,6 +82,8 @@ export function AccountScreen() {
           </Text>
         </Pressable>
       </ScrollView>
+
+      {dialog.element}
     </View>
   );
 }

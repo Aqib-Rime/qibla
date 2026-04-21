@@ -1,6 +1,7 @@
 import * as Linking from "expo-linking";
 import { StatusBar } from "expo-status-bar";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
+import { useAppDialog } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
 import {
   useHydrateSettings,
@@ -18,6 +19,7 @@ export function EmailPreferencesScreen() {
   useHydrateSettings();
   const prayerReminders = useSettingsStore((s) => s.prayerReminders);
   const setPrayerReminders = useSettingsStore((s) => s.setPrayerReminders);
+  const dialog = useAppDialog();
 
   const onTogglePrayerReminders = async (next: boolean) => {
     if (!next) {
@@ -27,14 +29,14 @@ export function EmailPreferencesScreen() {
     }
     const granted = await ensureNotificationPermission();
     if (!granted) {
-      Alert.alert(
-        "Notifications disabled",
-        "Enable notifications in Settings to get prayer reminders.",
-        [
-          { text: "Not now", style: "cancel" },
-          { text: "Open Settings", onPress: () => Linking.openSettings() },
+      dialog.show({
+        title: "Notifications disabled",
+        body: "Enable notifications in Settings to get prayer reminders.",
+        actions: [
+          { label: "Not now", variant: "outline" },
+          { label: "Open Settings", onPress: () => Linking.openSettings() },
         ],
-      );
+      });
       return;
     }
     setPrayerReminders(true);
@@ -71,6 +73,8 @@ export function EmailPreferencesScreen() {
           </Text>
         </View>
       </ScrollView>
+
+      {dialog.element}
     </View>
   );
 }

@@ -2,7 +2,6 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
   Dimensions,
   Modal,
   Pressable,
@@ -11,6 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
+import { useAppDialog } from "@/components/ui/dialog";
 import { Icon } from "@/components/ui/icon";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
@@ -39,6 +39,7 @@ export function PhotoManagerModal({
 }: Props) {
   const upload = usePickAndUploadPhotos();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const dialog = useAppDialog();
   const remaining = maxPhotos - photos.length;
   const addDisabled = remaining <= 0 || upload.isPending;
 
@@ -53,10 +54,11 @@ export function PhotoManagerModal({
       const next = [...photos, ...urls].slice(0, maxPhotos);
       onChange(next);
     } catch (err) {
-      Alert.alert(
-        "Upload failed",
-        err instanceof Error ? err.message : "Try again.",
-      );
+      dialog.show({
+        title: "Upload failed",
+        body: err instanceof Error ? err.message : "Try again.",
+        actions: [{ label: "OK" }],
+      });
     }
   };
 
@@ -116,7 +118,7 @@ export function PhotoManagerModal({
             <View className="mt-s-4 flex-row items-center justify-center gap-s-2">
               <ActivityIndicator color="#2e5d45" />
               <Text variant="caption" tone="muted">
-                Uploading to R2…
+                Uploading photos…
               </Text>
             </View>
           ) : null}
@@ -161,6 +163,8 @@ export function PhotoManagerModal({
           url={previewUrl}
           onClose={() => setPreviewUrl(null)}
         />
+
+        {dialog.element}
       </View>
     </Modal>
   );

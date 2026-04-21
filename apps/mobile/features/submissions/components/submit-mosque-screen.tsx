@@ -2,9 +2,10 @@ import { useForm, useStore } from "@tanstack/react-form";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
+import { useAppDialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
 import { useSubmitMosque } from "../hooks/use-submissions";
@@ -18,6 +19,7 @@ import { SubmissionFormFields } from "./submission-form-fields";
 export function SubmitMosqueScreen() {
   const submit = useSubmitMosque();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const dialog = useAppDialog();
 
   const form = useForm({
     defaultValues: EMPTY_SUBMISSION,
@@ -25,16 +27,16 @@ export function SubmitMosqueScreen() {
     onSubmit: async ({ value }) => {
       try {
         await submit.mutateAsync(value as MosqueSubmissionInput);
-        Alert.alert(
-          "Submitted for review",
-          "Thanks for the contribution! An admin will review and approve it soon.",
-          [
+        dialog.show({
+          title: "Submitted for review",
+          body: "Thanks for the contribution! An admin will review and approve it soon.",
+          actions: [
             {
-              text: "OK",
+              label: "Done",
               onPress: () => router.replace("/submissions"),
             },
           ],
-        );
+        });
       } catch (err) {
         setErrorMessage(
           err instanceof Error ? err.message : "Could not submit mosque",
@@ -95,6 +97,8 @@ export function SubmitMosqueScreen() {
           />
         </View>
       </ScrollView>
+
+      {dialog.element}
     </View>
   );
 }

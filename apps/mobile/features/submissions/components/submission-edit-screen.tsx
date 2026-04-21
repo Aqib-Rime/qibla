@@ -2,9 +2,10 @@ import { useForm, useStore } from "@tanstack/react-form";
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
+import { useAppDialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
 import {
@@ -25,6 +26,7 @@ export function SubmissionEditScreen() {
   const update = useUpdateMySubmission();
   const del = useDeleteMySubmission();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const dialog = useAppDialog();
 
   const form = useForm({
     defaultValues: EMPTY_SUBMISSION,
@@ -36,9 +38,11 @@ export function SubmissionEditScreen() {
           id,
           ...(value as MosqueSubmissionInput),
         });
-        Alert.alert("Saved", "Your changes are live.", [
-          { text: "OK", onPress: () => router.back() },
-        ]);
+        dialog.show({
+          title: "Saved",
+          body: "Your changes are live.",
+          actions: [{ label: "Done", onPress: () => router.back() }],
+        });
       } catch (err) {
         setErrorMessage(
           err instanceof Error ? err.message : "Could not save changes",
@@ -75,28 +79,29 @@ export function SubmissionEditScreen() {
 
   const handleDelete = () => {
     if (!id) return;
-    Alert.alert(
-      "Withdraw submission?",
-      "This removes the pending row. You can submit again later.",
-      [
-        { text: "Cancel", style: "cancel" },
+    dialog.show({
+      title: "Withdraw submission?",
+      body: "This removes the pending row. You can submit again later.",
+      actions: [
+        { label: "Cancel", variant: "outline" },
         {
-          text: "Withdraw",
-          style: "destructive",
+          label: "Withdraw",
+          variant: "destructive",
           onPress: async () => {
             try {
               await del.mutateAsync(id);
               router.back();
             } catch (err) {
-              Alert.alert(
-                "Could not withdraw",
-                err instanceof Error ? err.message : "Try again.",
-              );
+              dialog.show({
+                title: "Could not withdraw",
+                body: err instanceof Error ? err.message : "Try again.",
+                actions: [{ label: "OK" }],
+              });
             }
           },
         },
       ],
-    );
+    });
   };
 
   return (
@@ -174,6 +179,8 @@ export function SubmissionEditScreen() {
           ) : null}
         </ScrollView>
       )}
+
+      {dialog.element}
     </View>
   );
 }

@@ -19,6 +19,7 @@ const buttonVariants = cva(
         outline: "border border-line bg-white",
         ghost: "bg-white/10",
         subtle: "bg-green-tint",
+        destructive: "bg-[#b04a3a]",
       },
       size: {
         md: "py-s-4",
@@ -43,6 +44,7 @@ const labelVariants = cva("font-sans-semibold", {
       outline: "text-ink",
       ghost: "text-white",
       subtle: "text-green",
+      destructive: "text-white",
     },
     size: {
       md: "text-body",
