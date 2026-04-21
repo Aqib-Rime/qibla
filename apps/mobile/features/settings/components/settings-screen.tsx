@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Pressable, ScrollView, Share, View } from "react-native";
 import { useAppDialog } from "@/components/ui/dialog";
 import { Text } from "@/components/ui/text";
+import { useThemeScheme } from "@/features/theme/hooks/use-theme-scheme";
+import { useThemeStore } from "@/features/theme/hooks/use-theme-store";
 import { signOut, useSession } from "@/lib/auth";
 import {
   useHydrateSettings,
@@ -25,6 +27,8 @@ export function SettingsScreen() {
   const { data: session } = useSession();
   const prayerReminders = useSettingsStore((s) => s.prayerReminders);
   const setPrayerReminders = useSettingsStore((s) => s.setPrayerReminders);
+  const scheme = useThemeScheme();
+  const setThemePreference = useThemeStore((s) => s.setPreference);
   const dialog = useAppDialog();
 
   const [locationStatus, setLocationStatus] = useState<
@@ -80,7 +84,7 @@ export function SettingsScreen() {
 
   return (
     <View className="flex-1 bg-cream">
-      <StatusBar style="dark" />
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <SettingsHeader />
 
       <ScrollView
@@ -110,6 +114,13 @@ export function SettingsScreen() {
             description="Daily local notifications at each prayer time"
             value={prayerReminders}
             onValueChange={onTogglePrayerReminders}
+          />
+          <SettingsToggleRow
+            icon="sparkle"
+            label="Dark mode"
+            description="Switch to a darker palette"
+            value={scheme === "dark"}
+            onValueChange={(v) => setThemePreference(v ? "dark" : "light")}
           />
           <SettingsRow
             icon="compass"
@@ -154,7 +165,7 @@ export function SettingsScreen() {
           className="mt-s-6 items-center py-s-4"
           style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
         >
-          <Text variant="label" className="text-[#b04a3a]">
+          <Text variant="label" className="text-danger">
             Sign out
           </Text>
         </Pressable>

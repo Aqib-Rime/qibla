@@ -7,32 +7,36 @@ module.exports = {
     "./lib/**/*.{js,jsx,ts,tsx}",
   ],
   presets: [require("nativewind/preset")],
+  darkMode: "class",
   theme: {
     extend: {
+      // Colors resolve through CSS variables set by the ThemeProvider via
+      // NativeWind's vars() helper. The `rgb(var(...) / <alpha-value>)`
+      // pattern lets alpha modifiers (e.g. `border-line/80`) work —
+      // without it, Tailwind silently drops the alpha and the browser
+      // falls back to black. CSS vars therefore store RGB triplets
+      // (e.g. "232 229 219"), not hex. Raw palette and conversion
+      // live in apps/mobile/lib/theme.ts.
       colors: {
-        // Qibla design tokens — keep in sync with packages/ui/src/styles/globals.css.
-        // Semantic tokens live here so a future dark-mode pass only has to swap
-        // these values (or wire them to CSS variables) — components should use
-        // the semantic classes, not raw hex.
-        cream: "#faf6ec",
-        surface: "#fffbf1",
-        ink: "#1a2a22",
-        muted: "#6b7a70",
-        line: "#e6e0cc",
+        cream: "rgb(var(--color-cream) / <alpha-value>)",
+        surface: "rgb(var(--color-surface) / <alpha-value>)",
+        ink: "rgb(var(--color-ink) / <alpha-value>)",
+        muted: "rgb(var(--color-muted) / <alpha-value>)",
+        line: "rgb(var(--color-line) / <alpha-value>)",
         green: {
-          DEFAULT: "#2e5d45",
-          dark: "#1f4330",
-          tint: "#eef3e6",
+          DEFAULT: "rgb(var(--color-green) / <alpha-value>)",
+          dark: "rgb(var(--color-green-dark) / <alpha-value>)",
+          tint: "rgb(var(--color-green-tint) / <alpha-value>)",
         },
         gold: {
-          DEFAULT: "#b68a3c",
-          tint: "#f4ead0",
+          DEFAULT: "rgb(var(--color-gold) / <alpha-value>)",
+          tint: "rgb(var(--color-gold-tint) / <alpha-value>)",
         },
         danger: {
-          DEFAULT: "#b04a3a",
-          tint: "#f8e4df",
+          DEFAULT: "rgb(var(--color-danger) / <alpha-value>)",
+          tint: "rgb(var(--color-danger-tint) / <alpha-value>)",
         },
-        dark: "#0d1612",
+        dark: "rgb(var(--color-dark) / <alpha-value>)",
       },
       fontFamily: {
         sans: ["Geist_400Regular"],

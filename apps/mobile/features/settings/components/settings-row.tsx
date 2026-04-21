@@ -1,6 +1,7 @@
 import { Pressable, View } from "react-native";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   icon: IconName;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export function SettingsRow({ icon, label, right, onPress, isLast }: Props) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={onPress}
@@ -21,7 +23,7 @@ export function SettingsRow({ icon, label, right, onPress, isLast }: Props) {
       style={({ pressed }) => ({ opacity: pressed && onPress ? 0.7 : 1 })}
     >
       <View className="h-8 w-8 items-center justify-center rounded-sm bg-green-tint">
-        <Icon name={icon} size={15} color="#2e5d45" />
+        <Icon name={icon} size={15} color={colors.green} />
       </View>
       <Text variant="body" className="flex-1">
         {label}
@@ -31,7 +33,7 @@ export function SettingsRow({ icon, label, right, onPress, isLast }: Props) {
           {right}
         </Text>
       ) : null}
-      <Icon name="chevron" size={14} color="#6b7a70" />
+      <Icon name="chevron" size={14} color={colors.muted} />
     </Pressable>
   );
 }

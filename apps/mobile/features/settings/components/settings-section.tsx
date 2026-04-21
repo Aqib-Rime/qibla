@@ -12,7 +12,7 @@ export function SettingsSection({ title, children }: Props) {
       <Text variant="eyebrow" tone="muted">
         {title}
       </Text>
-      <View className="mt-s-2 overflow-hidden rounded-lg border border-line/80 bg-white">
+      <View className="mt-s-2 overflow-hidden rounded-lg border border-line/80 bg-surface">
         {children}
       </View>
     </View>

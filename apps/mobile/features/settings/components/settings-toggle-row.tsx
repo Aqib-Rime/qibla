@@ -1,6 +1,7 @@
 import { Switch, View } from "react-native";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { useThemeColors } from "@/lib/theme";
 
 type Props = {
   icon: IconName;
@@ -21,6 +22,7 @@ export function SettingsToggleRow({
   disabled,
   isLast,
 }: Props) {
+  const colors = useThemeColors();
   return (
     <View
       className={`flex-row items-center gap-s-3 px-s-4 py-s-3 ${
@@ -28,7 +30,7 @@ export function SettingsToggleRow({
       }`}
     >
       <View className="h-8 w-8 items-center justify-center rounded-sm bg-green-tint">
-        <Icon name={icon} size={15} color="#2e5d45" />
+        <Icon name={icon} size={15} color={colors.green} />
       </View>
       <View className="flex-1">
         <Text variant="body">{label}</Text>
@@ -42,9 +44,9 @@ export function SettingsToggleRow({
         value={value}
         onValueChange={onValueChange}
         disabled={disabled}
-        trackColor={{ false: "#d7ddd4", true: "#2e5d45" }}
-        thumbColor="#ffffff"
-        ios_backgroundColor="#d7ddd4"
+        trackColor={{ false: colors.switchTrackOff, true: colors.green }}
+        thumbColor={colors.white}
+        ios_backgroundColor={colors.switchTrackOff}
       />
     </View>
   );
