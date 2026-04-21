@@ -75,6 +75,15 @@ const config: ExpoConfig = {
           "Qibla uses your location to show nearby mosques and direction to Mecca.",
       },
     ],
+    [
+      "expo-image-picker",
+      {
+        photosPermission:
+          "Qibla needs access to your photos so you can attach them to mosque submissions.",
+        cameraPermission:
+          "Qibla uses the camera so you can take photos for mosque submissions.",
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,
