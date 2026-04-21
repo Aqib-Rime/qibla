@@ -1,6 +1,7 @@
+import * as Linking from "expo-linking";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Share, View } from "react-native";
 import { useHydrateSettings, useSettingsStore } from "@/features/settings";
 import { useSession } from "@/lib/auth";
 import { useProfileStats } from "../hooks/use-profile-stats";
@@ -59,7 +60,7 @@ export function ProfileScreen() {
             icon="clock"
             label="Prayer reminders"
             right={prayerReminders ? "On" : "Off"}
-            onPress={() => router.push("/settings")}
+            onPress={() => router.push("/settings/email-preferences")}
             isLast
           />
         </ProfileSection>
@@ -73,7 +74,7 @@ export function ProfileScreen() {
           <ProfileRow
             icon="user"
             label="Account"
-            onPress={() => router.push("/settings")}
+            onPress={() => router.push("/settings/account")}
             isLast
           />
         </ProfileSection>
@@ -82,17 +83,25 @@ export function ProfileScreen() {
           <ProfileRow
             icon="book"
             label="Help & guides"
-            onPress={() => router.push("/settings")}
+            onPress={() => router.push("/settings/help")}
           />
           <ProfileRow
             icon="star"
             label="Rate Qibla"
-            onPress={() => router.push("/settings")}
+            onPress={() => {
+              Linking.openURL("https://github.com/Aqib-Rime/qibla").catch(
+                () => {},
+              );
+            }}
           />
           <ProfileRow
             icon="share"
             label="Invite friends"
-            onPress={() => router.push("/settings")}
+            onPress={() => {
+              Share.share({
+                message: "Try Qibla — find nearby mosques and prayer times.",
+              }).catch(() => {});
+            }}
             isLast
           />
         </ProfileSection>

@@ -64,6 +64,10 @@ export function SettingsScreen() {
     }).catch(() => {});
   };
 
+  const onRate = () => {
+    Linking.openURL("https://github.com/Aqib-Rime/qibla").catch(() => {});
+  };
+
   const onSignOut = async () => {
     try {
       await signOut();
@@ -118,13 +122,23 @@ export function SettingsScreen() {
             icon="user"
             label="Account"
             right={session?.user?.email ?? ""}
+            onPress={() => router.push("/settings/account")}
           />
-          <SettingsRow icon="mail" label="Email preferences" isLast />
+          <SettingsRow
+            icon="mail"
+            label="Email preferences"
+            onPress={() => router.push("/settings/email-preferences")}
+            isLast
+          />
         </SettingsSection>
 
         <SettingsSection title="About">
-          <SettingsRow icon="book" label="Help & guides" />
-          <SettingsRow icon="star" label="Rate Qibla" />
+          <SettingsRow
+            icon="book"
+            label="Help & guides"
+            onPress={() => router.push("/settings/help")}
+          />
+          <SettingsRow icon="star" label="Rate Qibla" onPress={onRate} />
           <SettingsRow
             icon="share"
             label="Invite friends"

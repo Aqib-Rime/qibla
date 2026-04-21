@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { IconButton } from "@/components/ui/icon-button";
 import { Text } from "@/components/ui/text";
 
-export function SettingsHeader() {
+export function SettingsHeader({ title = "Settings" }: { title?: string }) {
   return (
     <SafeAreaView edges={["top"]} className="bg-cream">
       <View className="flex-row items-center justify-between px-s-5 py-s-2">
@@ -15,7 +15,7 @@ export function SettingsHeader() {
           onPress={() => router.back()}
           accessibilityLabel="Back"
         />
-        <Text variant="display-sm">Settings</Text>
+        <Text variant="display-sm">{title}</Text>
         <View className="h-10 w-10" />
       </View>
     </SafeAreaView>
