@@ -4,6 +4,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@qibla/ui/components/dropdown-menu";
 import {
@@ -18,8 +21,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@qibla/ui/components/sidebar";
-import { IconLogout, IconMoon } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconDeviceDesktop,
+  IconLogout,
+  IconMoon,
+  IconSun,
+} from "@tabler/icons-react";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { navItems } from "@/features/admin-sidebar/nav-items";
 import { authClient } from "@/lib/auth-client";
@@ -31,6 +42,24 @@ export function AdminSidebar({
 }) {
   const router = useRouter();
   const { location } = useRouterState();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "d" && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const target = e.target as HTMLElement;
+        if (
+          target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable
+        )
+          return;
+        setTheme(resolvedTheme === "dark" ? "light" : "dark");
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [resolvedTheme, setTheme]);
 
   const handleSignOut = async () => {
     await authClient.signOut();
@@ -103,9 +132,37 @@ export function AdminSidebar({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-56">
-            <DropdownMenuItem disabled>
-              <IconMoon className="mr-2 size-4" /> Theme (coming soon)
-            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                {resolvedTheme === "dark" ? (
+                  <IconMoon className="mr-2 size-4" />
+                ) : (
+                  <IconSun className="mr-2 size-4" />
+                )}
+                Theme
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  <IconSun className="mr-2 size-4" />
+                  Light
+                  {theme === "light" && (
+                    <IconCheck className="ml-auto size-4" />
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  <IconMoon className="mr-2 size-4" />
+                  Dark
+                  {theme === "dark" && <IconCheck className="ml-auto size-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  <IconDeviceDesktop className="mr-2 size-4" />
+                  System
+                  {theme === "system" && (
+                    <IconCheck className="ml-auto size-4" />
+                  )}
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>
               <IconLogout className="mr-2 size-4" /> Sign out

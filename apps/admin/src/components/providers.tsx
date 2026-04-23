@@ -1,5 +1,6 @@
 import { TooltipProvider } from "@qibla/ui/components/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
 import { useState } from "react";
 import { Toaster } from "sonner";
 
@@ -18,10 +19,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider delayDuration={100}>
-        {children}
-        <Toaster richColors position="top-right" />
-      </TooltipProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <TooltipProvider delayDuration={100}>
+          {children}
+          <Toaster richColors position="top-right" />
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -16,8 +16,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      {/* biome-ignore lint/style/noHeadElement: required by TanStack Start's shellComponent pattern (not a Next.js app) */}
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

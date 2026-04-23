@@ -18,6 +18,7 @@
       "!.turbo",
       "!dist",
       "!build",
+      "!**/.wrangler",
       "!ios",
       "!android",
       "!**/*.css",
@@ -47,7 +48,6 @@
       }
     },
     "domains": {
-      "next": "recommended",
       "react": "recommended"
     }
   },
